@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../Button/Button';
 import './style.scss';
 
 function Header() {
@@ -8,7 +7,6 @@ function Header() {
         <h1>
             MyAmiDice
         </h1>
-        <Button className='button-connection' />
     </header>
   )
 }
