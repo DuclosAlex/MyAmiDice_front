@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+
 import './style.scss';
 
 function Header() {
@@ -12,6 +13,9 @@ function Header() {
 
           <Button className='header-container-buttonconnect' negative>Connexion</Button>
         </div>
+        <h1>
+            MyAmiDice
+        </h1>
     </header>
   )
 }
