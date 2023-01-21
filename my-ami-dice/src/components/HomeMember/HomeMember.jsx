@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import CharactersList from '../CharactersList/CharactersList';
 import GameList from '../GameList/GameList';
-import NewMemberList from '../NewsMemberList/NewMemberList';
+import NewMemberList from '../NewMemberList/NewMemberList';
 
 function Home() {
   return (
