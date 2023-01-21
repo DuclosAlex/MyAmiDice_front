@@ -7,7 +7,7 @@ function CharacterCreationModal() {
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
     const [fourthOpen, setFourthOpen] = useState(false);
-    const [confirmOpen, setConfirmOpen] = useState(false);]
+    const [confirmOpen, setConfirmOpen] = useState(false);
     
   return (
     <>
@@ -109,7 +109,7 @@ function CharacterCreationModal() {
                 </Modal.Content>
             </Modal>
 
-            {/* Modale de confirmation de création de personnage en BDD */}
+            {/* Modale de confirmation de création de personnage en BDD 
             <Modal
                 size={'tiny'}
                 open={setConfirmOpen(true)}
@@ -127,7 +127,7 @@ function CharacterCreationModal() {
             Yes
           </Button>
         </Modal.Actions>
-      </Modal>
+      </Modal>*/}
     </>
   )
 }
