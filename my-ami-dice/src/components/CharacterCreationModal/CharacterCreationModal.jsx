@@ -109,7 +109,7 @@ function CharacterCreationModal() {
                 </Modal.Content>
             </Modal>
 
-            {/* Modale de confirmation de création de personnage en BDD */}
+            {/* Modale de confirmation de création de personnage en BDD 
             <Modal
                 onClose={() => (setConfirmOpen(false))}
                 open={confirmOpen}
@@ -124,7 +124,7 @@ function CharacterCreationModal() {
             C'est parti !
           </Button>
         </Modal.Actions>
-      </Modal>
+      </Modal>*/}
     </>
   )
 }
