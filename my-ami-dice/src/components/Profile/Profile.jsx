@@ -22,7 +22,8 @@ function Profile() {
           <div className='profile'>
             <h1>Mon Profil</h1>
             <div className='profile--pseudo'>
-              <p>Pseudo: {user.pseudo}</p>              
+              <p>Pseudo: {user.pseudo}</p>
+              <Button>Modifier</Button>              
             </div>
             <div className='profile--firstName'>
               <p>Prénom: {user.firstName}</p>              
@@ -34,7 +35,7 @@ function Profile() {
               <p>Email: {user.email} </p>
             </div>
             <div className='profile-buttons'>
-              <Button>Modifier</Button>  {//faire la gestion des modales pour modifier le profil un boutton modifier par elememt et un modale par button}
+              <Button>Modifier</Button>  {/*faire la gestion des modales pour modifier le profil un boutton modifier par elememt et un modale par button*/}
               <Button>Supprimer</Button>              
             </div>
           </div>
