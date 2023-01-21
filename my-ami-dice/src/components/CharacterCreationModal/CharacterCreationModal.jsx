@@ -117,7 +117,7 @@ function CharacterCreationModal() {
       >
         <Modal.Header>Confirmation de création de personnage</Modal.Header>
         <Modal.Content>
-          <p>Félicitations, vous êtes prêt pour l'aventure !</p>
+          <p>Félicitations, vous êtes prêt pour la méga aventure !</p>
         </Modal.Content>
         <Modal.Actions>
           <Button negative onClick={() => setConfirmOpen(false)}>
