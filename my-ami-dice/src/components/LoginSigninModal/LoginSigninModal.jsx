@@ -6,17 +6,19 @@ function LoginSigninModal() {
   const [secondOpen, setSecondOpen] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
 
+  function handleClick() {
+    if(!isLogged) {
+        setFirstOpen(true);
+    } else {
+        setIsLogged(!isLogged);
+    }
+  }
+
 
   return (
     <>
-         
-        {/* Si l'utilisateur est connecté, on affiche le bouton "Déconnexion" */}
-        {isLogged ? 
-            <Button onClick={setIsLogged(false)} negative>Déconnexion</Button>
-         :        
-            /* Sinon, on affiche le bouton "Connexion" */
-            <Button onClick={() => setFirstOpen(true)} negative>Connexion</Button>
-        }
+        {/* Si l'utilisateur est connecté, on affiche le bouton "Déconnexion", sinon "Connexion */} 
+        <Button onClick={handleClick} negative>{isLogged ? "Déconnexion" : "Connexion"} </Button>
             
             {/* 1ère modale (connexion) */}
             <Modal
@@ -72,7 +74,7 @@ function LoginSigninModal() {
         </Modal>
       </Modal>
     </>
-  )
+  );
 }
 
 export default LoginSigninModal;

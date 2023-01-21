@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import InviteModal from '../InviteModal/InviteModal'
+import LoginSigninModal from '../LoginSigninModal/LoginSigninModal';
 import './style.scss';
 
 
@@ -27,7 +28,7 @@ function Header() {
               MyAmiDice
           </h1>
           { isConnect? <Button>Mon Profil</Button> : null}
-          <Button className='header-container-buttonconnect' negative>Connexion</Button>
+          <LoginSigninModal className='header-container-buttonconnect' negative>Connexion</LoginSigninModal>
         </div>
         
     </header>
