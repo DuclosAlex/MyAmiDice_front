@@ -1,33 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './style.scss';
+import { Header, Label, Modal } from 'semantic-ui-react';
 
-function News() {
+function News({title, content, author, date}) {
+
+    const [open, setOpen] = useState(false)
+
   return (
-    <div className='news'>
-            <div className='news-content'>
-                
-                <div className='article'>
-                    <div className="article-text"> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est magnam rem dicta quae eveniet reiciendis et possimus nemo corporis obcaecati.</div>
-                </div>
-                
-                <div className='article'>
-                    <div className="article-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel dolores error tenetur numquam consequuntur natus omnis nemo esse at provident.</div>
-                </div>
-                
-                <div className='article'>
-                    <div className="article-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex, maxime! Aliquam omnis laboriosam repudiandae corrupti rerum earum dolorum quis enim.</div>
-                </div>
-
+    <>
+    <article className='news-container'>
+        <Modal
+            closeIcon
+            open={open}
+            trigger={<h1>{title}</h1>}
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
+        >
+        <Header content = {title} />
+        <Modal.Content>
+            <div className='newsModale'>
+                <time>{date}</time>
+                <Label>{author}</Label>
+                <p>{content}</p>
             </div>
-        </div>
-
-
-
-
-
-
-   
+        </Modal.Content>      
+        </Modal>
+        <time>{date}</time>
+        <Label>{author}</Label>
+        <p>{content}</p>        
+    </article>
+    </>  
   )
 }
+
+News.propTypes = {
+    title: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
+};
 
 export default News
