@@ -7,7 +7,7 @@ function CharacterCreationModal() {
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
     const [fourthOpen, setFourthOpen] = useState(false);
-    const [confirmOpen, setConfirmOpen] = useState(false);]
+    const [confirmOpen, setConfirmOpen] = useState(false);
     
   return (
     <>
@@ -98,7 +98,7 @@ function CharacterCreationModal() {
                 <Modal.Header>Compétences</Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={() => {
-                        
+                        setConfirmOpen(true);
                         setFourthOpen(false);
                         }}
                         unstackable>
@@ -111,20 +111,17 @@ function CharacterCreationModal() {
 
             {/* Modale de confirmation de création de personnage en BDD */}
             <Modal
+                onClose={() => (setConfirmOpen(false))}
+                open={confirmOpen}
                 size={'tiny'}
-                open={setConfirmOpen(true)}
-                onClose={(setConfirmOpen(false))}
       >
-        <Modal.Header>Delete Your Account</Modal.Header>
+        <Modal.Header>Confirmation de création de personnage</Modal.Header>
         <Modal.Content>
-          <p>Are you sure you want to delete your account</p>
+          <p>Félicitations, vous êtes prêt pour partir à l'aventure !</p>
         </Modal.Content>
         <Modal.Actions>
-          <Button negative onClick={() => dispatch({ type: 'close' })}>
-            No
-          </Button>
-          <Button positive onClick={() => dispatch({ type: 'close' })}>
-            Yes
+          <Button negative onClick={() => setConfirmOpen(false)}>
+            C'est parti !
           </Button>
         </Modal.Actions>
       </Modal>
