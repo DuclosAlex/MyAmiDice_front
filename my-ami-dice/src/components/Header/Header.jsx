@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'semantic-ui-react';
 import InviteModal from '../InviteModal/InviteModal'
+import LoginSigninModal from '../LoginSigninModal/LoginSigninModal';
 import './style.scss';
 
 function Header() {
@@ -15,7 +16,7 @@ function Header() {
           <h1 className='header-container-title'>
               MyAmiDice
           </h1>
-          <Button className='header-container-buttonconnect' negative>Connexion</Button>
+          <LoginSigninModal className='header-container-buttonconnect' negative>Connexion</LoginSigninModal>
         </div>
         
     </header>
