@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import InviteModal from '../InviteModal/InviteModal'
 import LoginSigninModal from '../LoginSigninModal/LoginSigninModal';
@@ -22,13 +22,14 @@ function Header() {
     <header className='header'>
         <div className='header-container'>
 
-          { onProfil? <Button>Accueil</Button> : null }
+          { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null }
           { isConnect? <InviteModal/> : null }
           <h1 className='header-container-title'>
               MyAmiDice
           </h1>
-          { isConnect? <Button>Mon Profil</Button> : null}
+          { isConnect? <Button as={NavLink} to="/home/profile">Mon Profil</Button> : null}          
           <LoginSigninModal className='header-container-buttonconnect' negative>Connexion</LoginSigninModal>
+
         </div>
         
     </header>
