@@ -1,18 +1,10 @@
 {
-    "parserOptions": {
-      "ecmaVersion": 2020
-    },
-    "extends": "eslint:recommended",
+    "extends": "airbnb",
     "parser": "@babel/eslint-parser",
     "env": {
-      "browser": true,
-      "es6": true
+      "browser": true
     },
     "rules": {
-      "semi": "error",
-      "indent": ["error", 2],
-      "no-var": "error",
-      "camelcase": "error",
       "max-len": ["warn", {"ignoreComments": true, "code": 120}],
       "brace-style": ["error", "stroustrup"],
       "no-param-reassign": [
@@ -58,4 +50,3 @@
       }
     }
   }
-  
