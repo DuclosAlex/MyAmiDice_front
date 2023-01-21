@@ -1,0 +1,19 @@
+.header {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    background-color:black;
+    color: white;
+
+    &-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        &-buttonconnect {
+            margin-right: 0;
+            margin-left: auto;
+        }
+    }
+}
