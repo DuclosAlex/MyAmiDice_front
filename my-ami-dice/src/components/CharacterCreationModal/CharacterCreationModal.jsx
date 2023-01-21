@@ -109,7 +109,7 @@ function CharacterCreationModal() {
                 </Modal.Content>
             </Modal>
 
-            {/* Modale de confirmation de création de personnage en BDD 
+            {/* Modale de confirmation de création de personnage en BDD */}
             <Modal
                 onClose={() => (setConfirmOpen(false))}
                 open={confirmOpen}
@@ -117,14 +117,14 @@ function CharacterCreationModal() {
       >
         <Modal.Header>Confirmation de création de personnage</Modal.Header>
         <Modal.Content>
-          <p>Félicitations, vous êtes prêt pour la méga aventure !</p>
+          <p>Félicitations, vous êtes prêt pour partir enfin à l'aventure !</p>
         </Modal.Content>
         <Modal.Actions>
           <Button negative onClick={() => setConfirmOpen(false)}>
             C'est parti !
           </Button>
         </Modal.Actions>
-      </Modal>*/}
+      </Modal>
     </>
   )
 }
