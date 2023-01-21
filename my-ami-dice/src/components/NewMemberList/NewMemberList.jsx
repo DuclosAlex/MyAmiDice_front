@@ -36,7 +36,7 @@ const news = [
     
     Le mystère est donc éclairci. Léodagan ironise en disant que les Gaulois doivent être fiers de "l'enfant du pays", ce à quoi Arthur rétorque que les enfants du pays de Provence nés au pays de Galles sont plutôt rares. Perceval dit que ça n'empêche pas qu'il est malgré tout une légende.`,
     author: "Provencal de Galle",
-    date: "16 janvier 1200"
+    date: "16 janvier 1400"
   }
 ]
 
