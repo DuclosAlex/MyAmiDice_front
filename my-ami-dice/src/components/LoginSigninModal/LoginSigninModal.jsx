@@ -2,6 +2,9 @@ import React, { useState, useReducer } from 'react';
 import api from "../../api";
 import { Button, Form, Icon, Modal } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';  
+
+import validator from "email-validator";
 
 function LoginSigninModal() {
 
@@ -17,29 +20,48 @@ function LoginSigninModal() {
     const [passwordSignin, setPasswordSignin] = useState("");
     const [confirmPasswordSignin, setConfirmPasswordSignin] = useState(""); */
 
+    
     const initialState = {
         isLogged: false,
         email: "",
         password: "",
-        token: "",
+        // token: "",
+        error: "",
 
         pseudo: "",
         emailSignin: "",
+        emailConfirmSignin: "",
         firstName: "",
         lastName: "",
         passwordSignin: "",
         confirmPasswordSignin: "",
     }
 
-    
+    // A chaque ouverture / fermeture d'une modale, on reset error.
+    useEffect(() => {
+        dispatch({
+            type: RESET_ERROR,
+        });
+        dispatch({
+            type: RESET_FORM,
+        });
+
+    }, [firstOpen, secondOpen])
+
     const SAVE_FORM = "SAVE_FORM";
     const actionSaveForm = (name, value) => ({type: SAVE_FORM, payload: {name, value}});
 
     const LOGIN = "LOGIN";
-    const actionLogin = (email, password) => ({ type: LOGIN, payload: {email, password}});
+    // const actionLogin = (email, password) => ({ type: LOGIN, payload: {email, password}});
 
     const LOGOUT = "LOGOUT";
-    const actionLogout = () => ({ type: LOGOUT });
+    // const actionLogout = () => ({ type: LOGOUT });
+
+    const ERROR = "ERROR";
+
+    const RESET_ERROR = "RESET_ERROR";
+
+    const RESET_FORM = "RESET_FORM"
 
     function userReducer(state, action) {
         switch (action.type) {
@@ -47,25 +69,51 @@ function LoginSigninModal() {
                 return {
                     ...state,
                     isLogged: true,
-                    token: action.payload.token
+                    // token: action.payload.token
                 };
             
             case LOGOUT:
                 return {
                     ...state,
-                    isLogged: false
+                    isLogged: false,
+                    // token: ''
                 }
             case SAVE_FORM:
                 return {
                     ...state,
                     [action.payload.name]: action.payload.value,
                 };
+            case ERROR:
+                return {
+                    ...state,
+                    error: action.payload.error,
+                };
+            case RESET_ERROR:
+                return {
+                    ...state,
+                    error: "",
+                }
+            case RESET_FORM:
+                return {
+                    ...state,
+                    email: "",
+                    password: "",
+                    error: "",
+                    pseudo: "",
+                    emailSignin: "",
+                    emailConfirmSignin: "",
+                    firstName: "",
+                    lastName: "",
+                    passwordSignin: "",
+                    confirmPasswordSignin: "",
+                }
+
             default: {
                 throw new Error ("Action non reconnue");
             }
-
         }
-    }
+
+    }    
 
     const [state, dispatch] = useReducer(userReducer, initialState);
 
@@ -73,23 +121,38 @@ function LoginSigninModal() {
         dispatch(actionSaveForm(event.target.name, event.target.value));
     }
 
+    function isValidPassword(password) {
+        let pattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{10,})/;
+        return pattern.test(password);
+      }
+    
     async function handleLogin(event) {
         event.preventDefault();
+
         try {
             await api.post("/login", {
                 email: state.email,
                 password: state.password
             })
-            
-            api.defaults.headers.common.Authorization = `Bearer ${res.data.token}`
+            if (response.data.status === 'success') {
+                // On stocke le token dans le localStorage
+                localStorage.setItem("token", response.data.token);
+                api.defaults.headers.common.Authorization = `Bearer ${res.data.token}`
                 
-            dispatch({
-                type: LOGIN,
-                payload: {
-                    email: res.data.email,
-                    token: res.data.token
-                }
-            })  
+                dispatch({
+                    type: LOGIN,
+                    payload: {
+                        email: res.data.email
+                        // token: res.data.token
+                    }
+                });
+            } else {
+                dispatch({
+                    type: ERROR,
+                    payload: { error: "Email ou mot de passe incorrect." },
+                  });
+            }
+
             navigate("home/user");
         } catch (error) {
             throw new Error (error);
@@ -97,12 +160,15 @@ function LoginSigninModal() {
     }
   
     function handleLogout() {
-        setIsLogged(false);
-        setToken("");
+        localStorage.removeItem("token");
+        dispatch({
+            type: "LOGOUT",
+          });
     }
 
-    function handleSignin(event) {
+    async function handleSignin(event) {
         event.preventDefault();
+        
         const formData = {
             pseudo: state.pseudo,
             email: state.email,
@@ -111,15 +177,54 @@ function LoginSigninModal() {
             lastName: state.lastName
         }
 
-        api.post("/signin", {
-            formData
-        })
-        .then(res => {
-            
-        })
-        .catch(error => {
-            throw new Error (error);
-        })
+        // Si le mail et la confirmation sont différents => ERROR
+        if(!state.emailSignin === state.emailConfirmSignin) {
+            dispatch({
+                type: ERROR,
+                payload: { error: "Confirmation de votre mail erronée." },
+            });
+
+            return
+        }
+
+        // Si le mail n'est pas valide => ERROR
+        if(!validator.validate(state.emailSignin)) {
+            dispatch({
+                type: ERROR,
+                payload: { error: "Merci de saisir un mail valide." },
+            });
+
+            return
+        }
+
+        if(state.passwordSignin === state.confirmPasswordSignin) {
+            if(!isValidPassword(state.passwordSignin)) {
+                dispatch({
+                    type: ERROR,
+                    payload: { error: "Votre mot de passe doit contenir au moins 10 caractères, une majuscule, un caractère spécial et un chiffre." },
+                });
+
+                return
+            }
+                
+            try {
+
+                await api.post("/signin", formData);
+                dispatch({
+                    type: RESET_ERROR,
+                });
+
+            } catch (error) {
+                throw new Error (error);
+            }
+
+        } else {
+            dispatch({
+                type: ERROR,
+                payload: { error: "Confirmation du mot de passe erronée." },
+            });
+        }
+
     }
 
     return (
@@ -141,6 +246,7 @@ function LoginSigninModal() {
                         <Modal.Header>Connexion</Modal.Header>
                         <Modal.Content>
                             <Form
+                                name="connect-form"
                                 onSubmit={handleLogin}
                                 unstackable
                             >
@@ -148,6 +254,7 @@ function LoginSigninModal() {
                                     widths={2}
                                 >
                                     <Form.Input
+                                        type='email'
                                         placeholder='Email'
                                         name="email"
                                         value={state.email}
@@ -163,16 +270,18 @@ function LoginSigninModal() {
                                         required
                                     />
                                 </Form.Group>
-                                <Form.Checkbox
+                               {/*  <Form.Checkbox
+                                    name="not-a-robot"
                                     label='Je ne suis pas ChatGPT'
                                     required
-                                />
+                                /> */}
                                 <Button
                                     type='submit'
                                     negative
                                 >
                                     Je me connecte !
                                 </Button>
+                                {state.error && <p>{state.error}</p>}
                             </Form>
                         </Modal.Content>
                 
@@ -207,10 +316,20 @@ function LoginSigninModal() {
                                         required
                                     />
                                     <Form.Input
+                                        type='email'
                                         label='Email'
                                         placeholder='Email'
                                         name="emailSignin"
                                         value={state.emailSignin}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                     <Form.Input
+                                        type='email'
+                                        label='Confirmation de votre email'
+                                        placeholder='Confirmation de votre email'
+                                        name="emailConfirmSignin"
+                                        value={state.emailConfirmSignin}
                                         onChange={handleChange}
                                         required
                                     />
@@ -246,11 +365,12 @@ function LoginSigninModal() {
                                         onChange={handleChange}
                                         required
                                     />
-                                    <Form.Checkbox
+                                   {/*  <Form.Checkbox
                                         label='Je ne suis pas ChatGPT'
                                         required
-                                    />
+                                    /> */}
                                     <Button type='submit' negative>Je crée mon compte !</Button>
+                                    {state.error && <p>{state.error}</p>}
                                 </Form>
                             </Modal.Content>
                         </Modal>
