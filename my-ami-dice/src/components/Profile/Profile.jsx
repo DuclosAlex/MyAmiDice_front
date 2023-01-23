@@ -2,6 +2,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { Button } from 'semantic-ui-react';
 import './style.scss'
+import ModifyProfileModal from '../ModifyProfileModal/ModifyProfileModal';
 
 const user = {
     pseudo: "Provencal",
@@ -9,6 +10,8 @@ const user = {
     lastName: "DeGalle",
     email: "gercevalDeGalle@chevalier.com"
   }
+
+  
 
 
 
@@ -21,22 +24,28 @@ function Profile() {
         <div className='profile-container'>
           <div className='profile'>
             <h1>Mon Profil</h1>
-            <div className='profile--pseudo'>
+            <div className='profile-pseudo'>
               <p>Pseudo: {user.pseudo}</p>
-              <Button>Modifier</Button>              
+              <ModifyProfileModal data={"Modifier votre Pseudo"}/>
             </div>
-            <div className='profile--firstName'>
-              <p>Prénom: {user.firstName}</p>              
+            <div className='profile-firstName'>
+              <p>Prénom: {user.firstName}</p>
+              <ModifyProfileModal data={"Modifier votre Prénom"}/>              
             </div>
-            <div className='profile--pseudo'>
+            <div className='profile-lastName'>
               <p>Nom: {user.lastName}</p>
+              <ModifyProfileModal data={"Modifier votre Nom"}/>
             </div>
-            <div className='profile--pseudo'>
+            <div className='profile-email'>
               <p>Email: {user.email} </p>
+              <ModifyProfileModal data={"Modifier votre Email"} isEmail={true}/>
             </div>
-            <div className='profile-buttons'>
-              <Button>Modifier</Button>  {/*faire la gestion des modales pour modifier le profil un boutton modifier par elememt et un modale par button*/}
-              <Button>Supprimer</Button>              
+            <div className='profile-password'>
+              <p>Password  </p>
+              <ModifyProfileModal data={"Modifier votre Password"} isPassword={true}/>
+            </div>
+            <div className='profile-delete'>
+            <ModifyProfileModal data={"Vous êtes sur de vouloir supprimer votre compte?"} toDelete={true} />
             </div>
           </div>
         </div>
