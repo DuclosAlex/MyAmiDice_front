@@ -36,15 +36,14 @@ function Profile() {
             <div className='profile-email'>
               <p>Email: {user.email} </p>
             </div>
-            <ModifyProfileModal data={"Modifier votre profil"}/>
-          </div>
-          <div className='profile-password'>
+            <div className='profile-password'>
               <p>Password  </p>
               <ModifyProfileModal data={"Modifier votre Password"} isPassword={true}/>
-          </div>          
-        </div>
-        <div className='profile-delete'>
+            </div>
+            <div className='profile-delete'>
             <ModifyProfileModal data={"Vous êtes sur de vouloir supprimer votre compte?"} toDelete={true} />
+            </div>
+          </div>
         </div>
         <Footer />
         </>
