@@ -85,7 +85,7 @@ const handleSubmit = (event) => {
 		} else {
 			dispatch({
 				type:ERROR,
-				payload: {error: "Votre confirmation n'est pas identique à votre email" }
+				payload: {error: "Votre confirmation n'est pas identique à votre email." }
 			})
 		}
 	} else if( event.target.name === "formPassword"){
