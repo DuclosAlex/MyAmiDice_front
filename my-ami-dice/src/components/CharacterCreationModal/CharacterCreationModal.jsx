@@ -46,12 +46,12 @@ function CharacterCreationModal() {
     const [state, dispatch] = useReducer (reducer, initialState);
 
     function handleChange(event) {
-        dispatch(actionSaveForm(event.target.name, event.target.value))
+        dispatch(actionSaveForm(event.target.name, event.target.value));
     };
 
     function handleSubmit(event) {
         event.preventDefault();
-console.log("Dans le handleSubmit ok")
+console.log("Dans le handleSubmit ok") //TODO: je ne passe pas dans la fonction, pourquoi ?
         try {
         } catch (error) {
             
