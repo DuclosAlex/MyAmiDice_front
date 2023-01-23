@@ -13,11 +13,42 @@ function ModifyProfileModal({data, toDelete, isPassword}) {
 
   const handleSubmit = (event) => {
 	event.preventDefault()
-	if(modifyEmail === confirmEmail){
-		alert("GG")
-	} else {
-		alert("t nul")
-	}
+  
+	if (event.target.name === "formProfile"){
+		if(state.email === state.confirmEmail){
+			if(validator.validate(state.email)){
+				alert('gg')
+			} else {
+				dispatch({
+					type:ERROR,
+					payload: {error: "Le format de votre adresse mail est invalide" }
+				})
+			}
+		} else {
+			dispatch({
+				type:ERROR,
+				payload: {error: "Votre confirmation n'est pas identique à votre email." }
+			})
+		}
+	} else if( event.target.name === "formPassword"){
+		if(state.password === state.confirmPassword){
+			if(!isValidPassword(state.password)){
+				dispatch({
+					type:ERROR,
+					payload: { error: "Votre mot de passe doit contenir au moins 10 caractères, une majuscule, un caractère spécial et un chiffre." }
+				});
+				return
+			}
+			
+			
+
+		} else {
+			dispatch({
+				type:ERROR,
+				payload: {error: "Votre confirmation n'est pas identique à votre password" }
+			})
+		}
+    }
   }
 
   
