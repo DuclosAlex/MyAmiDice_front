@@ -26,19 +26,15 @@ function Profile() {
             <h1>Mon Profil</h1>
             <div className='profile-pseudo'>
               <p>Pseudo: {user.pseudo}</p>
-              <ModifyProfileModal data={"Modifier votre Pseudo"}/>
             </div>
             <div className='profile-firstName'>
               <p>Prénom: {user.firstName}</p>
-              <ModifyProfileModal data={"Modifier votre Prénom"}/>              
             </div>
             <div className='profile-lastName'>
               <p>Nom: {user.lastName}</p>
-              <ModifyProfileModal data={"Modifier votre Nom"}/>
             </div>
             <div className='profile-email'>
               <p>Email: {user.email} </p>
-              <ModifyProfileModal data={"Modifier votre Email"} isEmail={true}/>
             </div>
             <div className='profile-password'>
               <p>Password  </p>

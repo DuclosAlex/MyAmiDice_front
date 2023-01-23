@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { Button, Form, Header, Modal } from 'semantic-ui-react'
 
-function ModifyProfileModal({data, toDelete, isEmail, isPassword}) {
+function ModifyProfileModal({data, toDelete, isPassword}) {
 
   const [open, setOpen] = useState(false)
 
   const [modifyEmail, setModifyEmail] = useState('');
   const [confirmEmail, setConfirmEmail] = useState('');
+
+  const [modifyPassword, setModifyPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSubmit = (event) => {
 	event.preventDefault()
@@ -36,16 +39,32 @@ function ModifyProfileModal({data, toDelete, isEmail, isPassword}) {
 		<Button>Oui</Button>
 		</div>
 		:
-		<div className='modifyForm'>
-			{isEmail?
+		<div className='modifyForm'>{/* changer l'inverion du password pour apres */}
+			{!isPassword? 
 				<Form onSubmit={handleSubmit}>
 					<Form.Field>
-						<label>Votre email</label>
-						<input onChange={event => setModifyEmail(event.target.value)} value={modifyEmail}/>
+						<label>Votre Pseudo</label>
+						<input />
 					</Form.Field>
 					<Form.Field>
 						<label>Confirmer votre email</label>
-						<input onChange={event => setConfirmEmail(event.target.value)} value={confirmEmail}/>
+						<input />
+					</Form.Field>
+					<Form.Field>
+						<label>Votre email</label>
+						<input />
+					</Form.Field>
+					<Form.Field>
+						<label>Confirmer votre email</label>
+						<input />
+					</Form.Field>
+					<Form.Field>
+						<label>Votre email</label>
+						<input />
+					</Form.Field>
+					<Form.Field>
+						<label>Confirmer votre email</label>
+						<input />
 					</Form.Field>
 					<Button type='submit'>Submit</Button>
 				</Form>			
