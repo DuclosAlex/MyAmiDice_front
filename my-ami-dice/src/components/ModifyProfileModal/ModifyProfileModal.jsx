@@ -1,77 +1,19 @@
-import { useEffect, useReducer, useState } from 'react'
-import { Button, Form, Header, Modal } from 'semantic-ui-react';
-import validator from "email-validator";
-
-const initialState = {
-	pseudo: '',
-	firstName: '',
-	lastName: '',
-	email: '',
-	confirmEmail: '',
-	password: '',
-	confirmPassword: '',
-	error: ''
-}
-
-
-
-const MODIFY_PROFILE = "MODIFY_PROFILE";
-const ERROR = "ERROR";
-const RESET_ERROR = "RESET_ERROR";
-const RESET_FORM = "RESET_FORM"
-
-const actionModifyProfile = (name, value) => ({type: MODIFY_PROFILE, payload: {name, value}});
-
-function reducer (state, action){
-	switch (action.type){
-		case MODIFY_PROFILE:
-			return {
-				...state,
-				[action.payload.name]: action.payload.value,
-			};
-		case ERROR:
-			return{
-				...state,
-				error: action.payload.error,
-			}
-		case RESET_ERROR:
-			return{
-				...state,
-				error:"",
-			}
-		case RESET_FORM:
-			return{
-				...initialState,
-			}				
-		default:{
-			throw new Error ('action not recognized')
-		}
-	}
-}
-
-function isValidPassword (password){
-	const pattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{10,})/;
-	return pattern.test(password)
-}
+import React, { useState } from 'react'
+import { Button, Form, Header, Modal } from 'semantic-ui-react'
 
 function ModifyProfileModal({data, toDelete, isPassword}) {
 
   const [open, setOpen] = useState(false)
-  const [state, dispatch] = useReducer(reducer, initialState)
 
-useEffect(() => {
-	dispatch({
-		type: RESET_ERROR,
-	});
-	dispatch({
-		type: RESET_FORM,
-	})
-}, [open])
+  const [modifyEmail, setModifyEmail] = useState('');
+  const [confirmEmail, setConfirmEmail] = useState('');
 
-  
+  const [modifyPassword, setModifyPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
 	event.preventDefault()
+  
 	if (event.target.name === "formProfile"){
 		if(state.email === state.confirmEmail){
 			if(validator.validate(state.email)){
@@ -106,15 +48,8 @@ const handleSubmit = (event) => {
 				payload: {error: "Votre confirmation n'est pas identique à votre password" }
 			})
 		}
-		
-	}
+    }
   }
-
-  const handleChange = (event) => {
-	event.preventDefault();
-	dispatch(actionModifyProfile(event.target.name, event.target.value))
-  }
-  
 
   
 
@@ -135,44 +70,42 @@ const handleSubmit = (event) => {
 		<Button>Oui</Button>
 		</div>
 		:
-		<div className='modifyForm'>
+		<div className='modifyForm'>{/* changer l'inverion du password pour apres */}
 			{!isPassword? 
-				<Form onSubmit={handleSubmit} name="formProfile">
+				<Form onSubmit={handleSubmit}>
 					<Form.Field>
 						<label>Votre Pseudo</label>
-						<input name="pseudo" value={state.pseudo} onChange={handleChange}/>
+						<input />
 					</Form.Field>
 					<Form.Field>
-						<label>Votre Prénom</label>
-						<input name="firstName" value={state.firstName} onChange={handleChange}/>
+						<label>Confirmer votre email</label>
+						<input />
 					</Form.Field>
 					<Form.Field>
-						<label>Votre Nom</label>
-						<input name="lastName" value={state.lastName} onChange={handleChange}/>
+						<label>Votre email</label>
+						<input />
 					</Form.Field>
 					<Form.Field>
-						<label>Votre nouvel Email</label>
-						<input type="email" name="email" value={state.email} onChange={handleChange}/>
+						<label>Confirmer votre email</label>
+						<input />
 					</Form.Field>
 					<Form.Field>
-						<label>Confirmez votre Email</label>
-						<input type="email" name="confirmEmail" value={state.confirmEmail} onChange={handleChange}/>
-					</Form.Field>					
+						<label>Votre email</label>
+						<input />
+					</Form.Field>
+					<Form.Field>
+						<label>Confirmer votre email</label>
+						<input />
+					</Form.Field>
 					<Button type='submit'>Submit</Button>
-					{state.error && <p>{state.error}</p>}
 				</Form>			
 			:
-				<Form onSubmit={handleSubmit} name="formPassword">
+				<Form>
 					<Form.Field>
-						<label>Votre nouveau Password</label>
-						<input name="password" value={state.password} onChange={handleChange}/>
-					</Form.Field>
-					<Form.Field>
-						<label>Confirmez votre Password</label>
-						<input name="confirmPassword" value={state.confirmPassword} onChange={handleChange}/>
+						<label>{data}</label>
+						<input />
 					</Form.Field>
 					<Button type='submit'>Submit</Button>
-					{state.error && <p>{state.error}</p>}
 				</Form>}
 		</div>}
 	  </Modal.Content>      
