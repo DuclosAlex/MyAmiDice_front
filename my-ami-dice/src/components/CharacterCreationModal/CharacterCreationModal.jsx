@@ -24,67 +24,91 @@ function CharacterCreationModal() {
         charisma: "",
         hp: "",
         level: "",
-        item1name: "",
-        item1quantity: "",
-        item1description: "",
-        
-        /* items: [
-            {
-                name: "",
-                quantity: "",
-                description: ""
-            },
-            {
-                name: "",
-                quantity: "",
-                description: ""
-            },
-            {
-                name: "",
-                quantity: "",
-                description: ""
-            },
-            {
-                name: "",
-                quantity: "",
-                description: ""
-            },
-            {
-                name: "",
-                quantity: "",
-                description: ""
-            },
-        ],
-        skills: [
-            {
-                name: "",
-                description: "",
-            },
-            {
-                name: "",
-                description: "",
-            },
-            {
-                name: "",
-                description: "",
-            },
-            {
-                name: "",
-                description: "",
-            },
-            {
-                name: "",
-                description: "",
-            },
-        ] */
     }
 
+    const initialSecondState = {
+        firstItem: {
+                name: "",
+                quantity: "",
+                description: ""
+            },
+        secondItem:{
+                name: "",
+                quantity: "",
+                description: ""
+            },
+        thirdItem:{
+                name: "",
+                quantity: "",
+                description: ""
+            },
+        fourthItem:{
+                name: "",
+                quantity: "",
+                description: ""
+            },
+        fifthItem:{
+                name: "",
+                quantity: "",
+                description: ""
+            },        
+    }
+
+    const initialThirdState= {
+        firstSkill:{
+                name: "",
+                description: "",
+            },
+        secondSkill:{
+                name: "",
+                description: "",
+            },
+        thirdSkill:{
+                name: "",
+                description: "",
+            },
+        fourthSkill:{
+                name: "",
+                description: "",
+            },
+        fifthSkill:{
+                name: "",
+                description: "",
+            },
+       
+
+    }
+        
+    
+    
     const SAVE_FORM = "SAVE_FORM";
     const actionSaveForm = (name, value) => ({type: SAVE_FORM, payload: {name, value}});
+    
+   
+    const SAVE_FIRSTITEM = "SAVE_FIRSTITEM";
+    const SAVE_SECONDITEM = "SAVE_SECONDITEM";
+    const SAVE_THIRDITEM = "SAVE_THIRDITEM";
+    const SAVE_FOURTHITEM = "SAVE_FOURTHITEM";
+    const SAVE_FIFTHITEM = "SAVE_FIFTHITEM";
 
-    /* const SAVE_ITEM = "SAVE_ITEM";
-    const actionSaveItem = (name, value) => ({type: SAVE_ITEM, payload: {name, value}}); */
+    const SAVE_FIRSTSKILL = "SAVE_FIRSTSKILL";
+    const SAVE_SECONDSKILL = "SAVE_SECONDSKILL";
+    const SAVE_THIRDSKILL = "SAVE_THIRDSKILL";
+    const SAVE_FOURTHSKILL = "SAVE_FOURTHSKILL";
+    const SAVE_FIFTHSKILL = "SAVE_FIFTHSKILL";
+    
+    const actionSaveFirstItem = (name, value) => ({type: SAVE_FIRSTITEM, payload: {name, value}});
+    const actionSaveSecondItem = (name, value) => ({type: SAVE_SECONDITEM, payload: {name, value}});
+    const actionSaveThirdItem = (name, value) => ({type: SAVE_THIRDITEM, payload: {name, value}});
+    const actionSaveFourthItem = (name, value) => ({type: SAVE_FOURTHITEM, payload: {name, value}});
+    const actionSaveFifthItem = (name, value) => ({type: SAVE_FIFTHITEM, payload: {name, value}});
 
+    const actionSaveFirstSkill = (name, value) => ({type: SAVE_FIRSTSKILL, payload: {name, value}});
+    const actionSaveSecondSkill = (name, value) => ({type: SAVE_SECONDSKILL, payload: {name, value}});
+    const actionSaveThirdSkill = (name, value) => ({type: SAVE_THIRDSKILL, payload: {name, value}});
+    const actionSaveFourthSkill = (name, value) => ({type: SAVE_FOURTHSKILL, payload: {name, value}});
+    const actionSaveFifthSkill = (name, value) => ({type: SAVE_FIFTHSKILL, payload: {name, value}});
+    
     function reducer(state, action) {
         switch (action.type) {
             case SAVE_FORM:
@@ -92,36 +116,161 @@ function CharacterCreationModal() {
                     ...state,
                     [action.payload.name]: action.payload.value,
                 };
-            /* case SAVE_ITEM:
-console.log(action.payload.name, " = ", action.payload.value);
-console.log("items", items); // Undefined
-console.log("state.items", state.items);
-                return {
-                    ...state,
-                    items: [
-                        ...state.items,
-                        [action.payload.name]= action.payload.value,
-                    ]
-                }; */
                 default: {
                     throw new Error ("Action non reconnue");
                 }
+        }
+    }
+    
+    function secondReducer(secondState, action){
+        switch (action.type) {
+            case SAVE_FIRSTITEM:
+                return {
+                    ...secondState,
+                    firstItem:{
+                        ...secondState.firstItem,
+                        [action.payload.name]: action.payload.value,
+                    }
+                }            
+            case SAVE_SECONDITEM:
+                return {
+                    ...secondState,
+                    secondItem:{
+                        ...secondState.secondItem,
+                        [action.payload.name]: action.payload.value,
+                    }
+                }    
+            case SAVE_THIRDITEM:
+                return {
+                    ...secondState,
+                    thirdItem:{
+                        ...secondState.thirdItem,
+                        [action.payload.name]: action.payload.value,
+                    }
+                }
+            case SAVE_FOURTHITEM:
+                return {
+                    ...secondState,
+                    fourthItem:{
+                        ...secondState.fourthItem,
+                        [action.payload.name]: action.payload.value,
+                    }
+                }
+            case SAVE_FIFTHITEM:
+                return {
+                    ...secondState,
+                    fifthItem:{
+                        ...secondState.fifthItem,
+                        [action.payload.name]: action.payload.value,
+                    }
+                }    
+            default: {
+                throw new Error ("Action non reconnue");
+            }
             }
         }
 
-    const [state, dispatch] = useReducer (reducer, initialState);
-
-    function handleChange(event) {
-console.log(event.target.name, " = ", event.target.value);
-        dispatch(actionSaveForm(event.target.name, event.target.value));
-    };
-
-    function handleChangeItem(event) {
-        console.log(event.target.name, " = ", event.target.value);
-                dispatch(actionSaveItem(event.target.name, event.target.value));
+        function thirdReducer(thirdState, action){
+            switch (action.type) {
+                case SAVE_FIRSTSKILL:
+                    return {
+                        ...thirdState,
+                        firstSkill:{
+                            ...thirdState.firstSkill,
+                            [action.payload.name]: action.payload.value,
+                        }
+                    }            
+                case SAVE_SECONDSKILL:
+                    return {
+                        ...thirdState,
+                        secondSkill:{
+                            ...thirdState.secondSkill,
+                            [action.payload.name]: action.payload.value,
+                        }
+                    }    
+                case SAVE_THIRDSKILL:
+                    return {
+                        ...thirdState,
+                        thirdSkill:{
+                            ...thirdState.thirdSkill,
+                            [action.payload.name]: action.payload.value,
+                        }
+                    }
+                case SAVE_FOURTHSKILL:
+                    return {
+                        ...thirdState,
+                        fourthSkill:{
+                            ...thirdState.fourthSkill,
+                            [action.payload.name]: action.payload.value,
+                        }
+                    }
+                case SAVE_FIFTHSKILL:
+                    return {
+                        ...thirdState,
+                        fifthSkill:{
+                            ...thirdState.fifthSkill,
+                            [action.payload.name]: action.payload.value,
+                        }
+                    }    
+                default: {
+                    throw new Error ("Action non reconnue");
+                }
+                }
+            }
+        
+        
+        const [state, dispatch] = useReducer (reducer, initialState);
+        const [secondState, secondDispatch] = useReducer(secondReducer, initialSecondState) 
+        const [thirdState, thirdDispatch] = useReducer(thirdReducer, initialThirdState) 
+        
+        function handleChange(event) {
+            console.log(event.target.name, " = ", event.target.value);
+                dispatch(actionSaveForm(event.target.name, event.target.value));
             };
 
+        function handleChangeFirstItem(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            secondDispatch(actionSaveFirstItem(event.target.name, event.target.value));
+        };
+        function handleChangeSecondItem(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            secondDispatch(actionSaveSecondItem(event.target.name, event.target.value));
+        };
+        function handleChangeThirdItem(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            secondDispatch(actionSaveThirdItem(event.target.name, event.target.value));
+        };
+        function handleChangeFourthItem(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            secondDispatch(actionSaveFourthItem(event.target.name, event.target.value));
+        };
+        function handleChangeFifthItem(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            secondDispatch(actionSaveFifthItem(event.target.name, event.target.value));
+        };
 
+        function handleChangeFirstSkill(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            thirdDispatch(actionSaveFirstSkill(event.target.name, event.target.value));
+        };
+        function handleChangeSecondSkill(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            thirdDispatch(actionSaveSecondSkill(event.target.name, event.target.value));
+        };
+        function handleChangeThirdSkill(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            thirdDispatch(actionSaveThirdSkill(event.target.name, event.target.value));
+        };
+        function handleChangeFourthSkill(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            thirdDispatch(actionSaveFourthSkill(event.target.name, event.target.value));
+        };
+        function handleChangeFifthSkill(event) {
+            console.log(event.target.name, " = ", event.target.value);
+            thirdDispatch(actionSaveFifthSkill(event.target.name, event.target.value));
+        };
+            
+            
     function handleSubmitCharacter(event) {
         event.preventDefault();
         setFirstOpen(false);
@@ -294,68 +443,45 @@ console.log(event.target.name, " = ", event.target.value);
                             <Form.Input
                                 label="Nom de l'objet"
                                 type="text"
-                                name="items[0].name"
-                                value={state.items[0].name}
-                                onChange={handleChangeItem}
-                            />
-                             <Form.Input
-                                label="Quantité"
-                                type="number"
-                                name="items[0].quantity"
-                                value={state.items[0].quantity}
-                                onChange={handleChangeItem}
-                            />
-                            <Form.TextArea
-                                label="Description"
-                                name="items[0].description"
-                                value={state.items[0].description}
-                                onChange={handleChangeItem}
-                                inline
-                            />
-                        </Form.Group>
-                   {/*      <Form.Group widths={2} >
-                            <Form.Input
-                                label="Nom de l'objet"
-                                type="text"
                                 name="name"
-                                value={state.item2.name}
-                                onChange={handleChange}
+                                value={secondState.firstItem.name}
+                                onChange={handleChangeFirstItem}
                             />
                              <Form.Input
                                 label="Quantité"
                                 type="number"
                                 name="quantity"
-                                value={state.item2.quantity}
-                                onChange={handleChange}
+                                value={secondState.firstItem.quantity}
+                                onChange={handleChangeFirstItem}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value={state.item2.description}
-                                onChange={handleChange}
+                                value={secondState.firstItem.description}
+                                onChange={handleChangeFirstItem}
                                 inline
                             />
                         </Form.Group>
-                        <Form.Group widths={2} >
+                         <Form.Group widths={2} >
                             <Form.Input
                                 label="Nom de l'objet"
                                 type="text"
                                 name="name"
-                                value={state.item3.name}
-                                onChange={handleChange}
+                                value={secondState.secondItem.name}
+                                onChange={handleChangeSecondItem}
                             />
                              <Form.Input
                                 label="Quantité"
                                 type="number"
                                 name="quantity"
-                                value={state.item3.quantity}
-                                onChange={handleChange}
+                                value={secondState.secondItem.quantity}
+                                onChange={handleChangeSecondItem}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value={state.item3.description}
-                                onChange={handleChange}
+                                value={secondState.secondItem.description}
+                                onChange={handleChangeSecondItem}
                                 inline
                             />
                         </Form.Group>
@@ -364,21 +490,21 @@ console.log(event.target.name, " = ", event.target.value);
                                 label="Nom de l'objet"
                                 type="text"
                                 name="name"
-                                value={state.item4.name}
-                                onChange={handleChange}
+                                value={secondState.thirdItem.name}
+                                onChange={handleChangeThirdItem}
                             />
                              <Form.Input
                                 label="Quantité"
                                 type="number"
                                 name="quantity"
-                                value={state.item4.quantity}
-                                onChange={handleChange}
+                                value={secondState.thirdItem.quantity}
+                                onChange={handleChangeThirdItem}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value={state.item4.description}
-                                onChange={handleChange}
+                                value={secondState.thirdItem.description}
+                                onChange={handleChangeThirdItem}
                                 inline
                             />
                         </Form.Group>
@@ -387,24 +513,47 @@ console.log(event.target.name, " = ", event.target.value);
                                 label="Nom de l'objet"
                                 type="text"
                                 name="name"
-                                value={state.item5.name}
-                                onChange={handleChange}
+                                value={secondState.fourthItem.name}
+                                onChange={handleChangeFourthItem}
                             />
                              <Form.Input
                                 label="Quantité"
                                 type="number"
                                 name="quantity"
-                                value={state.item5.quantity}
-                                onChange={handleChange}
+                                value={secondState.fourthItem.quantity}
+                                onChange={handleChangeFourthItem}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value={state.item5.description}
-                                onChange={handleChange}
+                                value={secondState.fourthItem.description}
+                                onChange={handleChangeFourthItem}
                                 inline
                             />
-                        </Form.Group> */}
+                        </Form.Group>
+                        <Form.Group widths={2} >
+                            <Form.Input
+                                label="Nom de l'objet"
+                                type="text"
+                                name="name"
+                                value={secondState.fifthItem.name}
+                                onChange={handleChangeFifthItem}
+                            />
+                             <Form.Input
+                                label="Quantité"
+                                type="number"
+                                name="quantity"
+                                value={secondState.fifthItem.quantity}
+                                onChange={handleChangeFifthItem}
+                            />
+                            <Form.TextArea
+                                label="Description"
+                                name="description"
+                                value={secondState.fifthItem.description}
+                                onChange={handleChangeFifthItem}
+                                inline
+                            />
+                        </Form.Group> 
 
                         <Button type= "submit" negative >Valider et passer aux compétences</Button>
                     </Form>
@@ -429,14 +578,14 @@ console.log(event.target.name, " = ", event.target.value);
                                 label="Nom de la compétence"
                                 type="text"
                                 name="name"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.firstSkill.name}
+                                onChange={handleChangeFirstSkill}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.firstSkill.description}
+                                onChange={handleChangeFirstSkill}
                                 inline
                             />
                         </Form.Group>
@@ -445,62 +594,62 @@ console.log(event.target.name, " = ", event.target.value);
                                 label="Nom de la compétence"
                                 type="text"
                                 name="name"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.secondSkill.name}
+                                onChange={handleChangeSecondSkill}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.secondSkill.description}
+                                onChange={handleChangeSecondSkill}
                                 inline
                             />
                         </Form.Group>
                         <Form.Group widths={2} >
-                            <Form.Input
+                        <Form.Input
                                 label="Nom de la compétence"
                                 type="text"
                                 name="name"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.thirdSkill.name}
+                                onChange={handleChangeThirdSkill}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.thirdSkill.description}
+                                onChange={handleChangeThirdSkill}
                                 inline
                             />
                         </Form.Group>
                         <Form.Group widths={2} >
-                            <Form.Input
+                        <Form.Input
                                 label="Nom de la compétence"
                                 type="text"
                                 name="name"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.fourthSkill.name}
+                                onChange={handleChangeFourthSkill}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.fourthSkill.description}
+                                onChange={handleChangeFourthSkill}
                                 inline
                             />
                         </Form.Group>
                         <Form.Group widths={2} >
-                            <Form.Input
+                        <Form.Input
                                 label="Nom de la compétence"
                                 type="text"
                                 name="name"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.fifthSkill.name}
+                                onChange={handleChangeFifthSkill}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value=""
-                                onChange={handleChange}
+                                value={thirdState.fifthSkill.description}
+                                onChange={handleChangeFifthSkill}
                                 inline
                             />
                         </Form.Group>
@@ -518,7 +667,7 @@ console.log(event.target.name, " = ", event.target.value);
       >
         <Modal.Header>Confirmation de création de personnage</Modal.Header>
         <Modal.Content>
-          <p>Félicitations, vous êtes prêt pour partir à l"aventure !</p>
+          <p>Félicitations, vous êtes prêt pour partir à l'aventure !</p>
         </Modal.Content>
         <Modal.Actions>
           <Button negative onClick={() => setConfirmOpen(false)}>
