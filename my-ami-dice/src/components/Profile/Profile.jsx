@@ -36,6 +36,7 @@ function Profile() {
             <div className='profile-email'>
               <p>Email: {user.email} </p>
             </div>
+            <ModifyProfileModal data={"Modifier votre Profil"} />
             <div className='profile-password'>
               <p>Password  </p>
               <ModifyProfileModal data={"Modifier votre Password"} isPassword={true}/>

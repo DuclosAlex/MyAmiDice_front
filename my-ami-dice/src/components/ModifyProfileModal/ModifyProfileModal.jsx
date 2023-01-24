@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from 'react'
 import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import api from '../../api'
 import validator from "email-validator";
 
 const initialState = {
@@ -12,8 +13,6 @@ const initialState = {
 	confirmPassword: '',
 	error: ''
 }
-
-
 
 const MODIFY_PROFILE = "MODIFY_PROFILE";
 const ERROR = "ERROR";
@@ -48,7 +47,7 @@ function reducer (state, action){
 		}
 	}
 }
-
+{/* Regex pour la verification du mot de passe */}
 function isValidPassword (password){
 	const pattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{10,})/;
 	return pattern.test(password)
@@ -59,6 +58,7 @@ function ModifyProfileModal({data, toDelete, isPassword}) {
   const [open, setOpen] = useState(false)
   const [state, dispatch] = useReducer(reducer, initialState)
 
+ {/* useEffect s'active a chaque overtute ou fermeture de modale pour clear le formulaire et les erreurs s'il y a n'a */} 
 useEffect(() => {
 	dispatch({
 		type: RESET_ERROR,
@@ -70,12 +70,28 @@ useEffect(() => {
 
   
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
 	event.preventDefault()
+
+	const formData = {
+		pseudo: state.pseudo,
+		firstName: state.firstName,
+		lastName: state.lastName,
+		email: state.email,
+	}
+
+	const formDataPassword = {
+		password: state.password
+	}
+
 	if (event.target.name === "formProfile"){
-		if(state.email === state.confirmEmail){
-			if(validator.validate(state.email)){
-				alert('gg')
+		if(state.email === state.confirmEmail){  {/* vérifie que les deux champs email sont identique*/}
+			if(validator.validate(state.email)){  {/* verifie via emailValidator que le format de l'email soit bon */}
+				try {
+					 await api.post(`/user/${userID}`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
+				} catch (error) {
+					throw new Error (error)
+				}
 			} else {
 				dispatch({
 					type:ERROR,
@@ -89,17 +105,19 @@ const handleSubmit = (event) => {
 			})
 		}
 	} else if( event.target.name === "formPassword"){
-		if(state.password === state.confirmPassword){
-			if(!isValidPassword(state.password)){
+		if(state.password === state.confirmPassword){ {/* vérifie que les deux champs password sont identique*/}
+			if(!isValidPassword(state.password)){		{/* vérifie que le password corresponde au exigence de la Regex*/}
 				dispatch({
 					type:ERROR,
 					payload: { error: "Votre mot de passe doit contenir au moins 10 caractères, une majuscule, un caractère spécial et un chiffre." }
 				});
 				return
 			}
-			
-			
-
+			try {
+				await api.post(`/user/${userID}`, formDataPassword);  {/* Envoi au serveur du formulaire de modification password*/}
+			} catch (error) {
+				throw new Error (error);
+			};
 		} else {
 			dispatch({
 				type:ERROR,
@@ -113,6 +131,10 @@ const handleSubmit = (event) => {
   const handleChange = (event) => {
 	event.preventDefault();
 	dispatch(actionModifyProfile(event.target.name, event.target.value))
+  }
+
+  const handleClick = async () => {
+	await api.delete(`/user/${userID}`); {/* Envoi au serveur la demande de suppression de compte*/}
   }
   
 
@@ -132,7 +154,7 @@ const handleSubmit = (event) => {
 	   {toDelete? 
 	   <div className='confirmDeleteButton'>
 		<Button onClick={() => setOpen(false)} >Non</Button>
-		<Button>Oui</Button>
+		<Button onClick={handleClick}>Oui</Button>
 		</div>
 		:
 		<div className='modifyForm'>
