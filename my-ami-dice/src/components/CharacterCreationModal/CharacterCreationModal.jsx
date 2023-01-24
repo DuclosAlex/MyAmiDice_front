@@ -1,10 +1,11 @@
 import React, { useReducer, useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
+
 import api from "../../api";
 
 
 function CharacterCreationModal() {
-    const [firstOpen, setFirstOpen] = useState(false);
+    const [firstOpen, setFirstOpen] = useState(true);
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
@@ -107,7 +108,6 @@ console.log("Dans le handleSubmit ok") //TODO: je ne passe pas dans la fonction,
 
   return (
     <>
-        <Button onClick={() => setFirstOpen(true)} negative>Créer mon personnage !</Button>
             
             {/* 1ère modale (Form Character) */}
             <Modal
@@ -507,5 +507,7 @@ console.log("onSubmit : ok");
     </>
   )
 }
+
+
 
 export default CharacterCreationModal;
