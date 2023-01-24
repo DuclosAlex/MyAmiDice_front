@@ -24,7 +24,11 @@ function CharacterCreationModal() {
         charisma: "",
         hp: "",
         level: "",
-        items: [
+        item1name: "",
+        item1quantity: "",
+        item1description: "",
+        
+        /* items: [
             {
                 name: "",
                 quantity: "",
@@ -72,11 +76,14 @@ function CharacterCreationModal() {
                 name: "",
                 description: "",
             },
-        ],
+        ] */
     }
 
     const SAVE_FORM = "SAVE_FORM";
     const actionSaveForm = (name, value) => ({type: SAVE_FORM, payload: {name, value}});
+
+    /* const SAVE_ITEM = "SAVE_ITEM";
+    const actionSaveItem = (name, value) => ({type: SAVE_ITEM, payload: {name, value}}); */
 
     function reducer(state, action) {
         switch (action.type) {
@@ -85,21 +92,41 @@ function CharacterCreationModal() {
                     ...state,
                     [action.payload.name]: action.payload.value,
                 };
-            default: {
-                throw new Error ("Action non reconnue");
+            /* case SAVE_ITEM:
+console.log(action.payload.name, " = ", action.payload.value);
+console.log("items", items); // Undefined
+console.log("state.items", state.items);
+                return {
+                    ...state,
+                    items: [
+                        ...state.items,
+                        [action.payload.name]= action.payload.value,
+                    ]
+                }; */
+                default: {
+                    throw new Error ("Action non reconnue");
+                }
             }
         }
-    }
 
     const [state, dispatch] = useReducer (reducer, initialState);
 
     function handleChange(event) {
+console.log(event.target.name, " = ", event.target.value);
         dispatch(actionSaveForm(event.target.name, event.target.value));
     };
 
-    function handleSubmit(event) {
+    function handleChangeItem(event) {
+        console.log(event.target.name, " = ", event.target.value);
+                dispatch(actionSaveItem(event.target.name, event.target.value));
+            };
+
+
+    function handleSubmitCharacter(event) {
         event.preventDefault();
-console.log("Dans le handleSubmit ok") //TODO: je ne passe pas dans la fonction, pourquoi ?
+        setFirstOpen(false);
+        setSecondOpen(true);
+
         try {
         } catch (error) {
             
@@ -117,12 +144,7 @@ console.log("Dans le handleSubmit ok") //TODO: je ne passe pas dans la fonction,
             >
                 <Modal.Header>Je crée mon personnage !</Modal.Header>
                 <Modal.Content>
-                    <Form onSubmit={() => {
-                        setFirstOpen(false);
-                        setSecondOpen(true);
-                        handleSubmit;
-console.log("onSubmit : ok");
-                        }}
+                    <Form onSubmit={handleSubmitCharacter}
                     unstackable>
                     
                         {/* // Données pour la table Character */}
@@ -274,19 +296,42 @@ console.log("onSubmit : ok");
                                 type="text"
                                 name="items[0].name"
                                 value={state.items[0].name}
-                                onChange={handleChange}
+                                onChange={handleChangeItem}
                             />
                              <Form.Input
                                 label="Quantité"
                                 type="number"
-                                name="quantity"
+                                name="items[0].quantity"
                                 value={state.items[0].quantity}
-                                onChange={handleChange}
+                                onChange={handleChangeItem}
                             />
                             <Form.TextArea
                                 label="Description"
-                                name="description"
+                                name="items[0].description"
                                 value={state.items[0].description}
+                                onChange={handleChangeItem}
+                                inline
+                            />
+                        </Form.Group>
+                   {/*      <Form.Group widths={2} >
+                            <Form.Input
+                                label="Nom de l'objet"
+                                type="text"
+                                name="name"
+                                value={state.item2.name}
+                                onChange={handleChange}
+                            />
+                             <Form.Input
+                                label="Quantité"
+                                type="number"
+                                name="quantity"
+                                value={state.item2.quantity}
+                                onChange={handleChange}
+                            />
+                            <Form.TextArea
+                                label="Description"
+                                name="description"
+                                value={state.item2.description}
                                 onChange={handleChange}
                                 inline
                             />
@@ -296,20 +341,20 @@ console.log("onSubmit : ok");
                                 label="Nom de l'objet"
                                 type="text"
                                 name="name"
-                                value={state.items[1].name}
+                                value={state.item3.name}
                                 onChange={handleChange}
                             />
                              <Form.Input
                                 label="Quantité"
                                 type="number"
                                 name="quantity"
-                                value={state.items[1].quantity}
+                                value={state.item3.quantity}
                                 onChange={handleChange}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value={state.items[1].description}
+                                value={state.item3.description}
                                 onChange={handleChange}
                                 inline
                             />
@@ -319,20 +364,20 @@ console.log("onSubmit : ok");
                                 label="Nom de l'objet"
                                 type="text"
                                 name="name"
-                                value={state.items[2].name}
+                                value={state.item4.name}
                                 onChange={handleChange}
                             />
                              <Form.Input
                                 label="Quantité"
                                 type="number"
                                 name="quantity"
-                                value={state.items[2].quantity}
+                                value={state.item4.quantity}
                                 onChange={handleChange}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value={state.items[2].description}
+                                value={state.item4.description}
                                 onChange={handleChange}
                                 inline
                             />
@@ -342,47 +387,24 @@ console.log("onSubmit : ok");
                                 label="Nom de l'objet"
                                 type="text"
                                 name="name"
-                                value={state.items[3].name}
+                                value={state.item5.name}
                                 onChange={handleChange}
                             />
                              <Form.Input
                                 label="Quantité"
                                 type="number"
                                 name="quantity"
-                                value={state.items[3].quantity}
+                                value={state.item5.quantity}
                                 onChange={handleChange}
                             />
                             <Form.TextArea
                                 label="Description"
                                 name="description"
-                                value={state.items[3].description}
+                                value={state.item5.description}
                                 onChange={handleChange}
                                 inline
                             />
-                        </Form.Group>
-                        <Form.Group widths={2} >
-                            <Form.Input
-                                label="Nom de l'objet"
-                                type="text"
-                                name="name"
-                                value={state.items[3].name}
-                                onChange={handleChange}
-                            />
-                             <Form.Input
-                                label="Quantité"
-                                type="number"
-                                name="quantity"
-                                value={state.items[3].quantity}
-                                onChange={handleChange}
-                            />
-                            <Form.TextArea
-                                label="Description"
-                                name="description"
-                                value={state.items[3].description}
-                                onChange={handleChange}
-                                inline
-                            />
-                        </Form.Group>
+                        </Form.Group> */}
 
                         <Button type= "submit" negative >Valider et passer aux compétences</Button>
                     </Form>
