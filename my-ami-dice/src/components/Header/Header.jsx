@@ -16,6 +16,7 @@ function Header() {
   const onProfil = location.pathname.includes("profile");
   const onDemo = location.pathname.includes("demo");
   const onCreateGame = location.pathname.includes("creategame");
+  
 
 
   return (
