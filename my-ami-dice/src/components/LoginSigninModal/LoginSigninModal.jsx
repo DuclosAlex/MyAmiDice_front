@@ -170,11 +170,11 @@ function LoginSigninModal() {
         event.preventDefault();
         
         const formData = {
-            pseudo: state.pseudo,
-            email: state.email,
+            pseudo: state.pseudo.trim(),
+            email: state.email.trim(),
             password: state.passwordSignin,
-            firstName: state.firstName,
-            lastName: state.lastName
+            firstName: state.firstName.trim(),
+            lastName: state.lastName.trim()
         }
 
         // Si le mail et la confirmation sont différents => ERROR
@@ -184,7 +184,7 @@ function LoginSigninModal() {
                 payload: { error: "Confirmation de votre mail erronée." },
             });
 
-            return
+            return;
         }
 
         // Si le mail n'est pas valide => ERROR
@@ -194,7 +194,7 @@ function LoginSigninModal() {
                 payload: { error: "Merci de saisir un mail valide." },
             });
 
-            return
+            return;
         }
 
         if(state.passwordSignin === state.confirmPasswordSignin) {
@@ -204,7 +204,7 @@ function LoginSigninModal() {
                     payload: { error: "Votre mot de passe doit contenir au moins 10 caractères, une majuscule, un caractère spécial et un chiffre." },
                 });
 
-                return
+                return;
             }
                 
             try {

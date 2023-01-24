@@ -6,7 +6,7 @@ import CharactersList from '../CharactersList/CharactersList';
 import GameList from '../GameList/GameList';
 import NewMemberList from '../NewMemberList/NewMemberList';
 
-function Home() {
+function HomeMember() {
   return (
     <div className='home'>
         <Header />
@@ -18,4 +18,4 @@ function Home() {
   )
 }
 
-export default Home
+export default HomeMember
