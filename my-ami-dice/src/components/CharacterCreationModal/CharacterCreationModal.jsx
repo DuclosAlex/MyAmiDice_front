@@ -1,10 +1,11 @@
 import React, { useReducer, useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
+
 import api from "../../api";
 
 
 function CharacterCreationModal() {
-    const [firstOpen, setFirstOpen] = useState(false);
+    const [firstOpen, setFirstOpen] = useState(true);
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
@@ -134,8 +135,6 @@ console.log(event.target.name, " = ", event.target.value);
 
   return (
     <>
-
-        <Button onClick={() => setFirstOpen(true)} negative>Créer mon personnage !</Button>
             
             {/* 1ère modale (Form Character) */}
             <Modal
@@ -530,5 +529,7 @@ console.log(event.target.name, " = ", event.target.value);
     </>
   )
 }
+
+
 
 export default CharacterCreationModal;
