@@ -12,6 +12,7 @@ function Header() {
   
   const location = useLocation();
   const onProfil = location.pathname.includes("profile");
+  const onDemo = location.pathname.includes("demo");
 
   
   
@@ -22,7 +23,8 @@ function Header() {
     <header className='header'>
         <div className='header-container'>
 
-          { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null }
+          { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null }; {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil */}
+          { onDemo? <Button as={NavLink} to="/" >Accueil</Button> : null }; {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Demo */}
           { isConnect? <InviteModal/> : null }
           <h1 className='header-container-title'>
               MyAmiDice
