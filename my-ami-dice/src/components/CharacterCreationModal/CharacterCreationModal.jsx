@@ -2,7 +2,6 @@ import React, { useReducer, useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
 
 import api from "../../api";
-import FileUploader from "../FileUploader/FileUploader";
 
 
 function CharacterCreationModal() {
@@ -10,7 +9,7 @@ function CharacterCreationModal() {
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
-    
+
     const initialState = {
         avatarFile: null,
         firstName: "",
