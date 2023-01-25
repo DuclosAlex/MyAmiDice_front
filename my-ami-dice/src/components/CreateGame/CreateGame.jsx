@@ -28,6 +28,7 @@ function CreateGame() {
       name: game.name.trim(),
       description: game.description.trim(),
       max_player: game.max_player
+      //TODO: user_id: 
     }
 
     // Envoi en BDD de la demande de création de partie
