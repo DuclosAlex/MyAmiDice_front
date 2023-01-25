@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import CreateGame from '../CreateGame/CreateGame';
 import Demo from '../Demo/Demo';
+import GameRoom from '../GameRoom/GameRoom';
 import Home from '../Home/Home';
 import HomeMember from '../HomeMember/HomeMember';
 import Page404 from '../Page404/Page404';
@@ -17,8 +18,8 @@ function App() {
       <Route path="/demo/" element={<Demo />} />
       <Route path="/home/creategame/" element={<CreateGame />} />
       <Route path="*" element={<Page404 />} />
-      {/* <Route path="/home/admin/" element={< />} />
-      <Route path="/home/gameroom/:id" element={< />} /> */}
+      <Route path="/home/gameroom/" element={<GameRoom />} /> 
+      {/* <Route path="/home/admin/" element={< />} />*/}
     </Routes>
   )
 }

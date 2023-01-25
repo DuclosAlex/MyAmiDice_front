@@ -1,9 +1,16 @@
+import DiceGenerator from "../DiceGenerator/DiceGenerator"
+import ContextGameRoom from "../ContextGameRoom/ContextGameRoom"
 
 function GameRoom() {
+
+
+
   return (
-    <div className='GameRoom'>
-       gameroom
-    </div>
+    <ContextGameRoom.Provider value = {5}>
+      <div className='GameRoom'>
+         <DiceGenerator />
+      </div>
+    </ContextGameRoom.Provider>
   )
 }
 
