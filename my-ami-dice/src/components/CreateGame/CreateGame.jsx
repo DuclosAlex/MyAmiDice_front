@@ -30,11 +30,6 @@ function CreateGame() {
       max_player: game.max_player
     }
 
-    if(game.max_player < 1) {
-      setError("Il serait préférable d'avoir au moins 1 personne dans votre partie pour un minimum de fun.")
-      return;
-    }
-
     // Envoi en BDD de la demande de création de partie
     try {
       await api.post("/games", formData);
@@ -75,6 +70,7 @@ function CreateGame() {
               name="max_player"
               value={game.max_player}
               onChange={handleChange}
+              min="1"
               inline
               required
           />

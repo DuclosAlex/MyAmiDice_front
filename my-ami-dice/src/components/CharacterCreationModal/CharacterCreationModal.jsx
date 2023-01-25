@@ -2,6 +2,7 @@ import React, { useReducer, useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
 
 import api from "../../api";
+import FileUploader from "../FileUploader/FileUploader";
 
 
 function CharacterCreationModal() {
@@ -11,6 +12,7 @@ function CharacterCreationModal() {
     const [confirmOpen, setConfirmOpen] = useState(false);
     
     const initialState = {
+        avatarFile: null,
         firstName: "",
         lastName: "",
         description: "",
@@ -23,6 +25,7 @@ function CharacterCreationModal() {
         wisdom: "",
         charisma: "",
         hp: "",
+        mana: "",
         level: "",
     }
 
@@ -77,13 +80,10 @@ function CharacterCreationModal() {
             },
        
 
-    }
-        
-    
+    }    
     
     const SAVE_FORM = "SAVE_FORM";
     const actionSaveForm = (name, value) => ({type: SAVE_FORM, payload: {name, value}});
-    
    
     const SAVE_FIRSTITEM = "SAVE_FIRSTITEM";
     const SAVE_SECONDITEM = "SAVE_SECONDITEM";
@@ -215,71 +215,113 @@ function CharacterCreationModal() {
                 default: {
                     throw new Error ("Action non reconnue");
                 }
-                }
             }
+        }
         
         
-        const [state, dispatch] = useReducer (reducer, initialState);
-        const [secondState, secondDispatch] = useReducer(secondReducer, initialSecondState) 
-        const [thirdState, thirdDispatch] = useReducer(thirdReducer, initialThirdState) 
-        
-        function handleChange(event) {
-            console.log(event.target.name, " = ", event.target.value);
-                dispatch(actionSaveForm(event.target.name, event.target.value));
-            };
+    const [state, dispatch] = useReducer (reducer, initialState);
+    const [secondState, secondDispatch] = useReducer(secondReducer, initialSecondState) 
+    const [thirdState, thirdDispatch] = useReducer(thirdReducer, initialThirdState) 
+    
+    function handleChange(event) {
+        dispatch(actionSaveForm(event.target.name, event.target.value));
+    };
 
-        function handleChangeFirstItem(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            secondDispatch(actionSaveFirstItem(event.target.name, event.target.value));
-        };
-        function handleChangeSecondItem(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            secondDispatch(actionSaveSecondItem(event.target.name, event.target.value));
-        };
-        function handleChangeThirdItem(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            secondDispatch(actionSaveThirdItem(event.target.name, event.target.value));
-        };
-        function handleChangeFourthItem(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            secondDispatch(actionSaveFourthItem(event.target.name, event.target.value));
-        };
-        function handleChangeFifthItem(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            secondDispatch(actionSaveFifthItem(event.target.name, event.target.value));
-        };
+    function handleChangeFile(event) {
+        console.log("dans le handleChangefile / event.target.files[0] : ", event.target.files[0])
+            dispatch(actionSaveForm(event.target.name, event.target.files[0]));
+    };
 
-        function handleChangeFirstSkill(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            thirdDispatch(actionSaveFirstSkill(event.target.name, event.target.value));
-        };
-        function handleChangeSecondSkill(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            thirdDispatch(actionSaveSecondSkill(event.target.name, event.target.value));
-        };
-        function handleChangeThirdSkill(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            thirdDispatch(actionSaveThirdSkill(event.target.name, event.target.value));
-        };
-        function handleChangeFourthSkill(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            thirdDispatch(actionSaveFourthSkill(event.target.name, event.target.value));
-        };
-        function handleChangeFifthSkill(event) {
-            console.log(event.target.name, " = ", event.target.value);
-            thirdDispatch(actionSaveFifthSkill(event.target.name, event.target.value));
-        };
+    function handleChangeFirstItem(event) {
+        secondDispatch(actionSaveFirstItem(event.target.name, event.target.value));
+    };
+
+    function handleChangeSecondItem(event) {
+        secondDispatch(actionSaveSecondItem(event.target.name, event.target.value));
+    };
+
+    function handleChangeThirdItem(event) {
+        secondDispatch(actionSaveThirdItem(event.target.name, event.target.value));
+    };
+
+    function handleChangeFourthItem(event) {
+        secondDispatch(actionSaveFourthItem(event.target.name, event.target.value));
+    };
+
+    function handleChangeFifthItem(event) {
+        secondDispatch(actionSaveFifthItem(event.target.name, event.target.value));
+    };
+
+    function handleChangeFirstSkill(event) {
+        thirdDispatch(actionSaveFirstSkill(event.target.name, event.target.value));
+    };
+
+    function handleChangeSecondSkill(event) {
+        thirdDispatch(actionSaveSecondSkill(event.target.name, event.target.value));
+    };
+
+    function handleChangeThirdSkill(event) {
+        thirdDispatch(actionSaveThirdSkill(event.target.name, event.target.value));
+    };
+
+    function handleChangeFourthSkill(event) {
+        thirdDispatch(actionSaveFourthSkill(event.target.name, event.target.value));
+    };
+
+    function handleChangeFifthSkill(event) {
+        thirdDispatch(actionSaveFifthSkill(event.target.name, event.target.value));
+    };
             
-            
-    function handleSubmitCharacter(event) {
+    async function handleSubmitCharacter(event) {
         event.preventDefault();
         setFirstOpen(false);
         setSecondOpen(true);
 
         try {
+console.log("dans le try du submitcharacter");
+            //TODO: peaufiner "avatar" dans formData
+            const formData = {
+                avatar: state.avatarFile,
+                firstName: state.firstName.trim(),
+                lastName: state.lastName.trim(),
+                description: state.description.trim(),
+                race: state.race.trim(),
+                class: state.race.trim(),
+                strength: state.strength,
+                dexterity: state.dexterity,
+                constitution: state.constitution,
+                intelligence: state.intelligence,
+                wisdom: state.wisdom,
+                charisma: state.charisma,
+                current_hp: state.hp,
+                max_hp: state.hp,
+                current_mp: state.mana,
+                max_mp: state.mana,
+                level: state.level,
+            }
+console.log("character formData", formData);
+            await api.post(`/users/${user_id}/games/${game_id}/character`, formData)
+
         } catch (error) {
+            throw new Error (error);
+        }
+    }
+
+    async function handleSubmitItems(event) {
+        event.preventDefault();
+        setSecondOpen(false);
+        setThirdOpen(true)
+        try {
+console.log("dans le try du submitcharacter");
+        const formData = {
             
         }
+console.log("formData", formData);
+        await api.post(`/users/${user_id}/games/${game_id}/character`, formData)
+
+    } catch (error) {
+        throw new Error (error);
+    }
     }
 
   return (
@@ -297,6 +339,14 @@ function CharacterCreationModal() {
                     unstackable>
                     
                         {/* // Données pour la table Character */}
+                        {/*  //TODO: avatar avec FileUploader */}
+                        <Form.Input
+                            label="Image de votre personnage"
+                            type="file"
+                            name="avatarFile"
+                            onChange={handleChangeFile}
+                            inline
+                        />
                         <Form.Input
                             label="Prénom"
                             type="text"
@@ -407,6 +457,15 @@ function CharacterCreationModal() {
                             required
                         />
                         <Form.Input
+                            label="Points de mana"
+                            type="number"
+                            name="mana"
+                            value={state.mana}
+                            onChange={handleChange}
+                            inline
+                            required
+                        />
+                        <Form.Input
                             label="Niveau"
                             type="number"
                             name="level"
@@ -434,10 +493,7 @@ function CharacterCreationModal() {
             >
                 <Modal.Header>Equipement</Modal.Header>
                 <Modal.Content>
-                    <Form onSubmit={() => {
-                        setSecondOpen(false);
-                        setThirdOpen(true);
-                        }}
+                    <Form onSubmit={handleSubmitItems} //TODO: SUBMIT
                         unstackable>
                         <Form.Group widths={2} >
                             <Form.Input
@@ -453,6 +509,7 @@ function CharacterCreationModal() {
                                 name="quantity"
                                 value={secondState.firstItem.quantity}
                                 onChange={handleChangeFirstItem}
+                                min="0"
                             />
                             <Form.TextArea
                                 label="Description"
@@ -476,6 +533,7 @@ function CharacterCreationModal() {
                                 name="quantity"
                                 value={secondState.secondItem.quantity}
                                 onChange={handleChangeSecondItem}
+                                min="0"
                             />
                             <Form.TextArea
                                 label="Description"
@@ -499,6 +557,7 @@ function CharacterCreationModal() {
                                 name="quantity"
                                 value={secondState.thirdItem.quantity}
                                 onChange={handleChangeThirdItem}
+                                min="0"
                             />
                             <Form.TextArea
                                 label="Description"
@@ -522,6 +581,7 @@ function CharacterCreationModal() {
                                 name="quantity"
                                 value={secondState.fourthItem.quantity}
                                 onChange={handleChangeFourthItem}
+                                min="0"
                             />
                             <Form.TextArea
                                 label="Description"
@@ -545,6 +605,7 @@ function CharacterCreationModal() {
                                 name="quantity"
                                 value={secondState.fifthItem.quantity}
                                 onChange={handleChangeFifthItem}
+                                min="0"
                             />
                             <Form.TextArea
                                 label="Description"
@@ -568,7 +629,7 @@ function CharacterCreationModal() {
             >
                 <Modal.Header>Compétences</Modal.Header>
                 <Modal.Content>
-                    <Form onSubmit={() => {
+                    <Form onSubmit={() => { //TODO: handleSubmitSkills
                         setConfirmOpen(true);
                         setThirdOpen(false);
                         }}
