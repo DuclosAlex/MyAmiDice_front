@@ -278,8 +278,6 @@ function CharacterCreationModal() {
         setSecondOpen(true);
 
         try {
-console.log("dans le try du submitcharacter");
-            //TODO: peaufiner "avatar" dans formData
             const formData = {
                 avatar: state.avatarFile,
                 firstName: state.firstName.trim(),
@@ -299,29 +297,58 @@ console.log("dans le try du submitcharacter");
                 max_mp: state.mana,
                 level: state.level,
             }
-console.log("character formData", formData);
+console.log("handleSubmitcharacter formData : ", formData);
             await api.post(`/users/${user_id}/games/${game_id}/character`, formData)
 
         } catch (error) {
             throw new Error (error);
         }
     }
-
+                   
     async function handleSubmitItems(event) {
         event.preventDefault();
-        setSecondOpen(false);
-        setThirdOpen(true)
-        try {
-console.log("dans le try du submitcharacter");
-        const formData = {
-            
-        }
-console.log("formData", formData);
-        await api.post(`/users/${user_id}/games/${game_id}/character`, formData)
 
-    } catch (error) {
-        throw new Error (error);
+        // On check si aucun champ n'est vide => requête axios pour création de l'item
+        if(secondState.firstItem.name !== "" && secondState.firstItem.quantity !== "" && secondState.firstItem.description !== "") {
+            setSecondOpen(false);
+            setThirdOpen(true);
+            
+            const formData = {
+                name: secondState.firstItem.name.trim(),
+                quantity: secondState.firstItem.quantity,
+                description: secondState.firstItem.description.trim()
+            }
+
+            try {
+console.log("handleSubmitItems formData : ", formData);            
+                await api.post(`/character/${character_id}/items`, formData)
+                
+            } catch (error) {
+                throw new Error (error);
+            }
+        }
     }
+
+    async function handleSubmitSkills(event) {
+        event.preventDefault();
+
+        // On check si aucun champ n'est vide => requête axios pour création du skill
+        if(thirdState.firstSkill.name !== "" && thirdState.firstSkill.description !== "") {
+            const formData = {
+                name: thirdState.firstSkill.name.trim(),
+                description: thirdState.firstSkill.description.trim()
+            }
+            setConfirmOpen(true);
+            setThirdOpen(false);
+
+            try {
+console.log("handleSubmitSkills formData : ", formData);                
+                await api.post(`/character/${character_id}/skills`, formData)
+                
+            } catch (error) {
+                throw new Error (error);
+            }
+        }
     }
 
   return (
@@ -339,7 +366,6 @@ console.log("formData", formData);
                     unstackable>
                     
                         {/* // Données pour la table Character */}
-                        {/*  //TODO: avatar avec FileUploader */}
                         <Form.Input
                             label="Image de votre personnage"
                             type="file"
@@ -493,7 +519,7 @@ console.log("formData", formData);
             >
                 <Modal.Header>Equipement</Modal.Header>
                 <Modal.Content>
-                    <Form onSubmit={handleSubmitItems} //TODO: SUBMIT
+                    <Form onSubmit={handleSubmitItems}
                         unstackable>
                         <Form.Group widths={2} >
                             <Form.Input
@@ -519,7 +545,7 @@ console.log("formData", formData);
                                 inline
                             />
                         </Form.Group>
-                         <Form.Group widths={2} >
+                         {/* <Form.Group widths={2} >
                             <Form.Input
                                 label="Nom de l'objet"
                                 type="text"
@@ -615,7 +641,7 @@ console.log("formData", formData);
                                 inline
                             />
                         </Form.Group> 
-
+ */}
                         <Button type= "submit" negative >Valider et passer aux compétences</Button>
                     </Form>
                 </Modal.Content>
@@ -629,10 +655,7 @@ console.log("formData", formData);
             >
                 <Modal.Header>Compétences</Modal.Header>
                 <Modal.Content>
-                    <Form onSubmit={() => { //TODO: handleSubmitSkills
-                        setConfirmOpen(true);
-                        setThirdOpen(false);
-                        }}
+                    <Form onSubmit={handleSubmitSkills}
                         unstackable>
                         <Form.Group widths={2} >
                             <Form.Input
@@ -650,7 +673,7 @@ console.log("formData", formData);
                                 inline
                             />
                         </Form.Group>
-                        <Form.Group widths={2} >
+                        {/* <Form.Group widths={2} >
                             <Form.Input
                                 label="Nom de la compétence"
                                 type="text"
@@ -713,7 +736,7 @@ console.log("formData", formData);
                                 onChange={handleChangeFifthSkill}
                                 inline
                             />
-                        </Form.Group>
+                        </Form.Group> */}
 
                         <Button type= "submit" negative >Valider mon personnage !</Button>
                     </Form>
