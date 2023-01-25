@@ -74,10 +74,10 @@ const handleSubmit = async (event) => {
 	event.preventDefault()
 
 	const formData = {
-		pseudo: state.pseudo,
-		firstName: state.firstName,
-		lastName: state.lastName,
-		email: state.email,
+		pseudo: state.pseudo.trim(),
+		firstName: state.firstName.trim(),
+		lastName: state.lastName.trim(),
+		email: state.email.trim(),
 	}
 
 	const formDataPassword = {
