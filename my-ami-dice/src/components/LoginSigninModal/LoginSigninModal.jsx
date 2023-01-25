@@ -130,7 +130,7 @@ function LoginSigninModal() {
         event.preventDefault();
 
         try {
-            await api.post("/login", {
+            const userInfos = await api.post("/login", { //TODO: récup les infos user et mettre dans localStorage
                 email: state.email,
                 password: state.password
             })

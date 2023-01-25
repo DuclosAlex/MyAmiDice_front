@@ -277,25 +277,32 @@ function CharacterCreationModal() {
         setSecondOpen(true);
 
         try {
-            const formData = {
-                avatar: state.avatarFile,
-                firstName: state.firstName.trim(),
-                lastName: state.lastName.trim(),
-                description: state.description.trim(),
-                race: state.race.trim(),
-                class: state.race.trim(),
-                strength: state.strength,
-                dexterity: state.dexterity,
-                constitution: state.constitution,
-                intelligence: state.intelligence,
-                wisdom: state.wisdom,
-                charisma: state.charisma,
-                current_hp: state.hp,
-                max_hp: state.hp,
-                current_mp: state.mana,
-                max_mp: state.mana,
-                level: state.level,
-            }
+            const formData = [
+                character = {
+                  fakeId: 0, // Pour que le CreateOrUpdate fasse un Create
+                  firstName: state.firstName.trim(),
+                  lastName: state.lastName.trim(),
+                  description: state.description.trim(),
+                  race: state.race.trim(),
+                  class: state.race.trim(),
+                  avatar: state.avatarFile,
+                  //TODO: user_id: 
+                },
+                characteristic ={
+                    strength: state.strength,
+                    dexterity: state.dexterity,
+                    constitution: state.constitution,
+                    intelligence: state.intelligence,
+                    wisdom: state.wisdom,
+                    charisma: state.charisma,
+                    current_hp: state.hp,
+                    max_hp: state.hp,
+                    current_mp: state.mana,
+                    max_mp: state.mana,
+                    level: state.level,
+                }
+            ]
+
 console.log("handleSubmitcharacter formData : ", formData);
             await api.post(`/users/${user_id}/games/${game_id}/character`, formData)
 
