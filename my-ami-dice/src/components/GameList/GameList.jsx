@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import Game from '../Game/Game';
+import GameModal from '../GameModal/GameModal';
 import './style.scss';
 
 const games = [
@@ -35,7 +35,7 @@ function GameList() {
     <div className='game-container'>
         <div className='gameList'>
             {games.map((game) => (
-              <Game
+              <GameModal
                 key = {game.name}
                 name = {game.name}
                 id = {game.id}

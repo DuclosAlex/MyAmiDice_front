@@ -10,7 +10,7 @@ function News({title, content, author, date}) {
   return (
     <>
     <article className='news-container'>
-        <Modal
+        <Modal className='news-modal'
             closeIcon
             open={open}
             trigger={<h1>{title}</h1>}

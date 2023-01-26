@@ -751,21 +751,21 @@ console.log("handleSubmitSkills formData : ", formData);
             </Modal>
 
             {/* Modale de confirmation de création de personnage en BDD */}
-            <Modal
+            <Modal  className="corfirmation-character-modal"
                 onClose={() => (setConfirmOpen(false))}
                 open={confirmOpen}
                 size={"tiny"}
-      >
-        <Modal.Header>Confirmation de création de personnage</Modal.Header>
-        <Modal.Content>
-          <p>Félicitations, vous êtes prêt pour partir à l'aventure !</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button negative onClick={() => setConfirmOpen(false)}>
-            C"est parti !
-          </Button>
-        </Modal.Actions>
-      </Modal>
+            >
+                <Modal.Header>Confirmation de création de personnage</Modal.Header>
+                <Modal.Content>
+                <p>Félicitations, vous êtes prêt pour partir à l'aventure !</p>
+                </Modal.Content>
+                <Modal.Actions>
+                <Button negative onClick={() => setConfirmOpen(false)}>
+                    C"est parti !
+                </Button>
+                </Modal.Actions>
+            </Modal>
     </>
   )
 }

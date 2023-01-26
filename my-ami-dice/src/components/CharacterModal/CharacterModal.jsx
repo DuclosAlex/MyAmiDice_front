@@ -8,7 +8,7 @@ function CharacterModal({name}) {
 
   return (   
 
-    <Modal
+    <Modal className='character-modal'
       closeIcon
       open={open}
       trigger={<Button>{name}</Button>}
