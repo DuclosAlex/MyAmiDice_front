@@ -12,14 +12,14 @@ DEBUT SOCKET.IO
     //const socket = io("http://localhost:3000"); //TODO: régler les cors
     
     // On écoute l'évènement "connect"
-    //socket.on("connect", () => {
+    /* socket.on("connect", () => {
         
-   // })
-
-    // On écoute l'évènement "receive-message"r
-    //socket.on("receive-message", message => {
-      //  displayMessage(message);
-   // })
+    })
+ */
+/*     // On écoute l'évènement "receive-message"
+    socket.on("receive-message", message => {
+        displayMessage(message);
+    }) */
 
 /*
 FIN SOCKET.IO
