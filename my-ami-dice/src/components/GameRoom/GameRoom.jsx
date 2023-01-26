@@ -16,11 +16,16 @@ function GameRoom() {
       <div className='GameRoom'>
         <div className="avatar">
             <AvatarContainer />
-        </div>
-        <Map />
-        <DiceGenerator />
+        </div >
+        <div className="containerMapNote">
         <Notes />
-        <ChatRoom /> 
+        <Map />
+        </div>
+        
+        <div className="containerDiceChat">
+        <DiceGenerator />        
+        <ChatRoom />
+        </div>
 
       </div>
     </ContextGameRoom.Provider>

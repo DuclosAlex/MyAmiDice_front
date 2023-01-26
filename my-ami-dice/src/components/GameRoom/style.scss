@@ -1,0 +1,14 @@
+.containerDiceChat{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.containerMapNote{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding-bottom: 2em;
+    gap: 1.5em;
+}
+
