@@ -1,4 +1,6 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
 import { Button } from 'semantic-ui-react';
 import GameModal from '../GameModal/GameModal';
 import './style.scss';
@@ -46,7 +48,7 @@ function GameList() {
               />
             ))}
         </div>
-        <Button>Créer une partie</Button>
+        <Button as={NavLink} to="/home/creategame">Créer une partie</Button>
     </div>
   )
 }
