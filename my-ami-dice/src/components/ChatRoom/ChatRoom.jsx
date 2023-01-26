@@ -78,7 +78,7 @@ function displayMessage(message) {
             <Form id="form" onSubmit={handleSubmit} >
                 <Form.Group>
                     <Form.Input
-                        label="Message"
+                        placeholder="Message"
                         type="text"
                         name="message-input"
                         value={message}
@@ -91,7 +91,7 @@ function displayMessage(message) {
                     >Envoyer
                     </Button>
                     <Form.Input
-                        label="Salon"
+                        placeholder="Salon"
                         type="text"
                         name="room-input"
                         value={room}

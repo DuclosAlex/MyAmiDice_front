@@ -1,5 +1,6 @@
 import React, { useReducer, useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
+import './style.scss';
 
 import api from "../../api";
 

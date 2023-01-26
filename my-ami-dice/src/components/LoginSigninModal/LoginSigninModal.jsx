@@ -2,7 +2,8 @@ import React, { useState, useReducer } from 'react';
 import api from "../../api";
 import { Button, Form, Icon, Modal } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';  
+import { useEffect } from 'react';
+import './style.scss';
 
 import validator from "email-validator";
 
