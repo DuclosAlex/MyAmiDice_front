@@ -50,7 +50,7 @@ function CreateGame() {
           unstackable
         >            
           <Form.Input
-              label="Nom de la partie"
+              placeholder="Nom de la partie"
               type="text"
               name="name"
               value={game.name} 
@@ -59,7 +59,7 @@ function CreateGame() {
               required
           />
           <Form.TextArea 
-              label="Description de la partie"
+              placeholder="Description de la partie"
               name="description"
               value={game.description}
               onChange={handleChange}
@@ -67,7 +67,7 @@ function CreateGame() {
               required
           />
           <Form.Input
-              label="Nombre de joueurs maximum"
+              placeholder="Nombre de joueurs maximum"
               type="number"
               name="max_player"
               value={game.max_player}

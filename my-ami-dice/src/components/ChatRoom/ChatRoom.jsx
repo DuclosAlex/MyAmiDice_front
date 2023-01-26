@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 
 import React, { useState } from 'react';
-import { Button, Form } from "semantic-ui-react";
+import { Button, Form, TextArea } from "semantic-ui-react";
 import "./style.scss";
 
 function ChatRoom() {
@@ -53,14 +53,10 @@ function handleSubmit(event) {
     // On envoie l'évènement "send-message" au serveur avec "message" dans la room "room"
     //socket.emit("send-message", message, room) //TODO:
     
-    setMessage("");
-    
-    console.log("message : ", message);
-    
+    setMessage("");    
 }
 
 function displayMessage(message) {
-    console.log("dans le displayMessage message : ", message);
         setChatMessages(prevState => ([
             ...prevState,
             message
@@ -72,8 +68,8 @@ function displayMessage(message) {
         <div className="chatroom">
             <ul className="message-container" >
                 {chatMessages.map((chatMessage) => (
-                <li>{chatMessage}</li>
-            ))}
+                    <li>Joueur 1 : {chatMessage}</li>
+                ))}
             </ul>
             <Form id="form" onSubmit={handleSubmit} >
                 <Form.Group>
