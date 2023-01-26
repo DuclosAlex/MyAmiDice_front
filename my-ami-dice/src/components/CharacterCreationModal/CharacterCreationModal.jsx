@@ -10,6 +10,7 @@ function CharacterCreationModal() {
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const [error, setError] = useState("");
 
     const initialState = {
         avatarFile: null,
@@ -326,13 +327,19 @@ console.log("handleSubmitcharacter formData : ", formData);
                 description: secondState.firstItem.description.trim()
             }
 
+console.log("requête axios création de 'Item'. formData : ", formData);            
             try {
-console.log("handleSubmitItems formData : ", formData);            
                 await api.post(`/character/${character_id}/items`, formData)
                 
             } catch (error) {
                 throw new Error (error);
             }
+        } else if(secondState.firstItem.name === "" && secondState.firstItem.quantity === "" && secondState.firstItem.description === "") {
+            setSecondOpen(false);
+            setThirdOpen(true);
+        } else {
+            setError("Merci de compléter les champs requis.")
+            return;
         }
     }
 
@@ -341,20 +348,27 @@ console.log("handleSubmitItems formData : ", formData);
 
         // On check si aucun champ n'est vide => requête axios pour création du skill
         if(thirdState.firstSkill.name !== "" && thirdState.firstSkill.description !== "") {
+            setConfirmOpen(true);
+            setThirdOpen(false);
+
             const formData = {
                 name: thirdState.firstSkill.name.trim(),
                 description: thirdState.firstSkill.description.trim()
             }
-            setConfirmOpen(true);
-            setThirdOpen(false);
-
+            
+console.log("requête axios création de 'Skill'. formData : ", formData);            
             try {
-console.log("handleSubmitSkills formData : ", formData);                
                 await api.post(`/character/${character_id}/skills`, formData)
                 
             } catch (error) {
                 throw new Error (error);
             }
+        } else if(secondState.firstItem.name === "" && secondState.firstItem.quantity === "" && secondState.firstItem.description === "") {
+            setConfirmOpen(true);
+            setThirdOpen(false);
+        } else {
+            setError("Merci de compléter les champs requis.")
+            return;
         }
     }
 
@@ -650,6 +664,7 @@ console.log("handleSubmitSkills formData : ", formData);
                         </Form.Group> 
  */}
                         <Button type= "submit" negative >Valider et passer aux compétences</Button>
+                        {error && <p>{error}</p>}
                     </Form>
                 </Modal.Content>
             </Modal>
@@ -746,6 +761,7 @@ console.log("handleSubmitSkills formData : ", formData);
                         </Form.Group> */}
 
                         <Button type= "submit" negative >Valider mon personnage !</Button>
+                        {error && <p>{error}</p>}
                     </Form>
                 </Modal.Content>
             </Modal>

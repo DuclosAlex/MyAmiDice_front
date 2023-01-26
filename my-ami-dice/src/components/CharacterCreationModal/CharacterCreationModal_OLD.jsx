@@ -53,6 +53,7 @@ function CharacterCreationModal() {
         event.preventDefault();
 console.log("Dans le handleSubmit ok") //TODO: je ne passe pas dans la fonction, pourquoi ?
         try {
+            
         } catch (error) {
             
         }
