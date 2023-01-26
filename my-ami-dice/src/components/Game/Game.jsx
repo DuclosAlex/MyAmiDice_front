@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { Button, Header, Label, Modal } from 'semantic-ui-react'
+import './style.scss';
 
 function Game({name, id, masterName, status, description, nbPlayer }) {
 

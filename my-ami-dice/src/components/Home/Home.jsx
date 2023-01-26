@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import Slideshow from '../Slideshow/Slideshow';
 import Footer from '../Footer/Footer';
 import NewMemberList from '../NewMemberList/NewMemberList';
+import './style.scss';
 
 function Home() {
   return (

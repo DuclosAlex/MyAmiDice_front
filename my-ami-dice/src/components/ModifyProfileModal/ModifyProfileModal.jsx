@@ -1,5 +1,7 @@
 import { useEffect, useReducer, useState } from 'react'
 import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import './style.scss';
+
 import api from '../../api'
 import validator from "email-validator";
 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Modal, Header } from 'semantic-ui-react';
 import CharacterCreationModal from "../CharacterCreationModal/CharacterCreationModal"
+import './style.scss';
 
 const master = 'master';
 const gameName = 'name'

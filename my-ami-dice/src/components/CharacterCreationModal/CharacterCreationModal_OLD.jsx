@@ -1,6 +1,6 @@
 import React, { useReducer, useState } from "react"
 import { Button, Form, Modal } from "semantic-ui-react"
-
+import './style.scss'
 
 function CharacterCreationModal() {
     const [firstOpen, setFirstOpen] = useState(false);

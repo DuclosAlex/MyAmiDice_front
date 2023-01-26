@@ -1,6 +1,7 @@
-import DiceGenerator from "../DiceGenerator/DiceGenerator"
-import ContextGameRoom from "../ContextGameRoom/ContextGameRoom"
-import ChatRoom from "../ChatRoom/ChatRoom"
+import DiceGenerator from "../DiceGenerator/DiceGenerator";
+import ContextGameRoom from "../ContextGameRoom/ContextGameRoom";
+import ChatRoom from "../ChatRoom/ChatRoom";
+import "./style.scss";
 
 function GameRoom() {
 
