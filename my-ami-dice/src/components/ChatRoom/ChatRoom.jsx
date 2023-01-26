@@ -1,4 +1,4 @@
-//import { io } from "socket.io-client";
+import { io } from "socket.io-client";
 
 import React, { useState } from 'react';
 import { Button, Form } from "semantic-ui-react";
@@ -9,17 +9,17 @@ function ChatRoom() {
 DEBUT SOCKET.IO
 */
     // Connexion à socket.io côté serveur
-    //const socket = io("http://localhost:3000"); //TODO: régler les cors
+    const socket = io("http://localhost:3000"); //TODO: régler les cors
     
     // On écoute l'évènement "connect"
-  /*   socket.on("connect", () => {
-        displayMessage(`Connexion avec l'id : ${socket.id}`);
+    socket.on("connect", () => {
+        
     })
 
     // On écoute l'évènement "receive-message"
     socket.on("receive-message", message => {
         displayMessage(message);
-    }) */
+    })
 
 /*
 FIN SOCKET.IO
