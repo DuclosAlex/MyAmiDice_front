@@ -238,7 +238,7 @@ function LoginSigninModal() {
                     <Button onClick={() => setFirstOpen(true)} negative>Connexion</Button>
 
                     {/* 1ère modale (connexion) */}
-                    <Modal
+                    <Modal 
                         size='tiny'
                         onClose={() => setFirstOpen(false)}
                         onOpen={() => setFirstOpen(true)}
@@ -298,7 +298,7 @@ function LoginSigninModal() {
                         </Modal.Actions>
 
                         {/* 2e modale (création de compte) */}
-                        <Modal
+                        <Modal className='creation-account-modal'
                             onClose={() => setSecondOpen(false)}
                             open={secondOpen}
                             size='small'

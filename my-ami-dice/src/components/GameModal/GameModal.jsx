@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Header, Label, Modal } from 'semantic-ui-react'
 import './style.scss';
 
-function Game({name, id, masterName, status, description, nbPlayer }) {
+function GameModal({name, id, masterName, status, description, nbPlayer }) {
 
   const [open, setOpen] = useState(false)
 
@@ -18,13 +18,13 @@ function Game({name, id, masterName, status, description, nbPlayer }) {
                 onOpen={() => setOpen(true)}
             >
             <Header content = {name} />
-            <Modal.Content>
+            <Modal.Content className='game-description'>
                 <div className='gameModale'>
                     <div className='gameModale-label'>
                         <Label className='labelGame-status' color="green" key={"green"}>{status}</Label>
                         <Label className='labelGame-masterName' color="black" key={"black"}>{`MJ: ${masterName}`}</Label>
                         <Label className='labelGame-nbPlayer' color="grey" key={"grey"}>{`${nbPlayer} Joueurs`}</Label>
-                        <p>{description}</p>
+                        <p className='game-description'>{description}</p>
                     </div>
                 </div>
             </Modal.Content>      
@@ -38,7 +38,7 @@ function Game({name, id, masterName, status, description, nbPlayer }) {
   )
 }
 
-Game.propTypes = {
+GameModal.propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.number,
     masterName: PropTypes.string.isRequired,
@@ -48,4 +48,4 @@ Game.propTypes = {
 };
 
 
-export default Game
+export default GameModal

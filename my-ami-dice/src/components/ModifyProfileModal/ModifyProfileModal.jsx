@@ -144,7 +144,7 @@ const handleSubmit = async (event) => {
 
   return (   
 
-	<Modal
+	<Modal className='modify-profile-modal'
 	  closeIcon
 	  open={open}
 	  trigger={ toDelete? <Button>Supprimer votre compte</Button> : <Button>Modifier</Button>}
