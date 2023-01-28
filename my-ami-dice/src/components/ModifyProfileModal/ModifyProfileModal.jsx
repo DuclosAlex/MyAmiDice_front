@@ -57,18 +57,21 @@ function isValidPassword (password){
 
 function ModifyProfileModal({data, toDelete, isPassword}) {
 
-  const [open, setOpen] = useState(false)
-  const [state, dispatch] = useReducer(reducer, initialState)
+	const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
+	const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 	
+
+	const [open, setOpen] = useState(false)
+	const [state, dispatch] = useReducer(reducer, initialState)
 
  {/* useEffect s'active a chaque overtute ou fermeture de modale pour clear le formulaire et les erreurs s'il y a n'a */} 
-useEffect(() => {
-	dispatch({
-		type: RESET_ERROR,
-	});
-	dispatch({
-		type: RESET_FORM,
-	})
-}, [open])
+	useEffect(() => {
+		dispatch({
+			type: RESET_ERROR,
+		});
+		dispatch({
+			type: RESET_FORM,
+		})
+	}, [open])
 
   
 
@@ -76,21 +79,24 @@ const handleSubmit = async (event) => {
 	event.preventDefault()
 
 	const formData = {
+		id: userData.id, 
 		pseudo: state.pseudo.trim(),
-		firstName: state.firstName.trim(),
-		lastName: state.lastName.trim(),
 		email: state.email.trim(),
+		firstname: state.firstName.trim(),
+		lastname: state.lastName.trim(),
 	}
 
 	const formDataPassword = {
-		password: state.password
+		id: userData.id,
+		oldPassword: state.oldPassword,
+		newPassword: state.password
 	}
 
 	if (event.target.name === "formProfile"){
 		if(state.email === state.confirmEmail){  {/* vérifie que les deux champs email sont identique*/}
 			if(validator.validate(state.email)){  {/* verifie via emailValidator que le format de l'email soit bon */}
 				try {
-					 await api.post(`/user/${userID}`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
+					 await api.post(`/users/update`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
 				} catch (error) {
 					throw new Error (error)
 				}
@@ -116,7 +122,7 @@ const handleSubmit = async (event) => {
 				return
 			}
 			try {
-				await api.post(`/user/${userID}`, formDataPassword);  {/* Envoi au serveur du formulaire de modification password*/}
+				await api.post(`/users/password`, formDataPassword);  {/* Envoi au serveur du formulaire de modification password*/}
 			} catch (error) {
 				throw new Error (error);
 			};
@@ -136,7 +142,7 @@ const handleSubmit = async (event) => {
   }
 
   const handleClick = async () => {
-	await api.delete(`/user/${userID}`); {/* Envoi au serveur la demande de suppression de compte*/}
+	await api.delete(`/users/:${userData.id}`); {/* Envoi au serveur la demande de suppression de compte*/} 
   }
   
 

@@ -1,22 +1,12 @@
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { Button } from 'semantic-ui-react';
 import './style.scss'
 import ModifyProfileModal from '../ModifyProfileModal/ModifyProfileModal';
 
-const user = {
-    pseudo: "Provencal",
-    firstName: "Perceval",
-    lastName: "DeGalle",
-    email: "gercevalDeGalle@chevalier.com"
-  }
-
-  
-
-
-
-
 function Profile() {
+
+  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
+  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
 
   return (
         <>
@@ -25,16 +15,16 @@ function Profile() {
           <div className='profile'>
             <h1>Mon Profil</h1>
             <div className='profile-pseudo'>
-              <p>Pseudo: {user.pseudo}</p>
+              <p>Pseudo: {userData.pseudo}</p>
             </div>
             <div className='profile-firstName'>
-              <p>Prénom: {user.firstName}</p>
+              <p>Prénom: {userData.firstname}</p>
             </div>
             <div className='profile-lastName'>
-              <p>Nom: {user.lastName}</p>
+              <p>Nom: {userData.lastname}</p>
             </div>
             <div className='profile-email'>
-              <p>Email: {user.email} </p>
+              <p>Email: {userData.email} </p>
             </div>
             <ModifyProfileModal data={"Modifier votre Profil"} />
             <div className='profile-password'>

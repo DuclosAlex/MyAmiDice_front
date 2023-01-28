@@ -14,6 +14,8 @@ function LoginSigninModal() {
     const [firstOpen, setFirstOpen] = useState(false);
     const [secondOpen, setSecondOpen] = useState(false);
 
+    const [dataStorage, setDataStorage] = useState() //state qui va recupéré le user et le mettre dans le local storage
+
 /*     const [pseudo, setPseudo] = useState("");
     const [emailSignin, setEmailSignin] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -131,19 +133,24 @@ function LoginSigninModal() {
         event.preventDefault();
 
         try {
-            const userInfos = await api.post("/login", { //TODO: récup les infos user et mettre dans localStorage
+            const formData = {
                 email: state.email,
                 password: state.password
-            })
-            if (response.data.status === 'success') {
+            }
+            const userInfos = await api.post("/users/login", formData); 
+            //setDataStorage(userInfos.data);   //TODO: a decommenter une fois le retour de login operationnel
+            //localStorage.setItem('User', JSON.stringify(dataStorage));//TODO: a decommenter une fois le retour de login operationnel
+
+            
+            if (response.data.status === 'success') { //TODO: voir avec le back la gestion token
                 // On stocke le token dans le localStorage
                 localStorage.setItem("token", response.data.token);
-                api.defaults.headers.common.Authorization = `Bearer ${res.data.token}`
+                api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
                 
                 dispatch({
                     type: LOGIN,
                     payload: {
-                        email: res.data.email
+                        email: response.data.email
                         // token: res.data.token
                     }
                 });
@@ -174,8 +181,8 @@ function LoginSigninModal() {
             pseudo: state.pseudo.trim(),
             email: state.email.trim(),
             password: state.passwordSignin,
-            firstName: state.firstName.trim(),
-            lastName: state.lastName.trim()
+            firstname: state.firstName.trim(),
+            lastname: state.lastName.trim()
         }
 
         // Si le mail et la confirmation sont différents => ERROR
@@ -210,13 +217,19 @@ function LoginSigninModal() {
                 
             try {
 
-                await api.post("/signin", formData);
+                setSecondOpen(false);
+                await api.post("/users/create", formData);
                 dispatch({
                     type: RESET_ERROR,
                 });
 
             } catch (error) {
-                throw new Error (error);
+                //TODO:
+                {/*dispatch({   // l'erreur sera a adapter pour soit le pseudo soit pour l'email en focntion de la syntaxer de l'erreur
+                    type: ERROR,
+                    payload: { error: "Votre pseudo est déja utilisé. Veuillez en choisir un autre" },
+                });*/} 
+                throw new Error (error)
             }
 
         } else {

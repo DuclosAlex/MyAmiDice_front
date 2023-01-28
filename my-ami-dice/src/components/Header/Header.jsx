@@ -7,8 +7,12 @@ import './style.scss';
 
 
 function Header() {
+
+  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
+  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
+
   
-  const [isConnect, setIsConnect] = useState(true);
+  
   
   const location = useLocation();
   
@@ -26,11 +30,15 @@ function Header() {
           { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil */}
           { onDemo? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Demo */}
           { onCreateGame? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Création de partie */}
-          { isConnect? <InviteModal/> : null }
+          { userData? <InviteModal
+                        masterName={userData.games_invite[0].pseudo}
+                        gameName={userData.games[0].name} />
+                        :
+                        null }
           <h1 className='header-container-title'>
               MyAmiDice
           </h1>
-          { isConnect? <Button as={NavLink} to="/home/profile">Mon Profil</Button> : null}          
+          { userData? <Button as={NavLink} to="/home/profile">Mon Profil</Button> : null}          
           <LoginSigninModal className='header-container-buttonconnect' negative>Connexion</LoginSigninModal>
 
         </div>

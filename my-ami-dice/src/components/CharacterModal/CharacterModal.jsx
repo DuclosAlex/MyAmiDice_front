@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Header, Modal } from 'semantic-ui-react'
 import './style.scss';
 
-function CharacterModal({name}) {
+function CharacterModal({firstname, lastname}) {
   const [open, setOpen] = useState(false)
 
   return (   
@@ -11,20 +11,21 @@ function CharacterModal({name}) {
     <Modal className='character-modal'
       closeIcon
       open={open}
-      trigger={<Button>{name}</Button>}
+      trigger={<Button>{`${firstname} ${lastname}`}</Button>}
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
     >
-      <Header content = {name} />
+      <Header content = {`${firstname} ${lastname}`} />
       <Modal.Content>
-       <div>fiche perso</div>
+       <div>fiche perso</div> {/*TODO: mettre la vrai fiche perso */}
       </Modal.Content>      
     </Modal>
   )
 }
 
 CharacterModal.propTypes = {
-    name: PropTypes.string.isRequired,
+    firstname: PropTypes.string.isRequired,
+    lastname: PropTypes.string.isRequired,
 };
 
 

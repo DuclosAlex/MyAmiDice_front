@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import News from '../News/News';
 import './style.scss';
 
@@ -41,7 +41,13 @@ const news = [
   }
 ]
 
-function NewMemberList() {
+function NewMemberList () {
+
+ /* useEffect(async () => {
+    const newsData = await api.get("/news")
+
+  }, [])*/
+
   return (
     <div className='news-container'>
         <div className='newsList'>
