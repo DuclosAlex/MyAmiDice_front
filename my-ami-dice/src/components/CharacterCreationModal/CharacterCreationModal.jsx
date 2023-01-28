@@ -283,8 +283,9 @@ function CharacterCreationModal() {
         setSecondOpen(true);
 
         try {
+            //TODO: IL FAUT QUE LES BACKEUX CHANGENT LEUR RECEPTION DE FORMDATA
             const formData = [
-                characters = {
+                {
                   fakeId: 0, // Pour que le CreateOrUpdate fasse un Create
                   firstName: state.firstName.trim(),
                   lastName: state.lastName.trim(),
@@ -295,7 +296,7 @@ function CharacterCreationModal() {
                   game_id: userData.games_invite[0].game_id, 
                   avatar: state.avatarFile,
                 },
-                characteristics ={
+                {
                     strength: state.strength,
                     dexterity: state.dexterity,
                     constitution: state.constitution,
@@ -402,6 +403,7 @@ console.log("requête axios création de 'Skill'. formData : ", formData);
                             name="avatarFile"
                             onChange={handleChangeFile}
                             inline
+                            required
                         />
                         <Form.Input
                             label="Prénom"
