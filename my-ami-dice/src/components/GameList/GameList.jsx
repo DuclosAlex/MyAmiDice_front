@@ -8,7 +8,7 @@ import './style.scss';
 
 
 
-
+//TODO: recup du users.games dans le localStorage/context
 
 function GameList() {
 
@@ -23,10 +23,8 @@ function GameList() {
   useEffect(() => {
     async function getAllGame(){
       try {
-
         const response = await api.get("/games/getall")
-        setAllGamesAdmin(response.data) 
-
+        setAllGamesAdmin(response.data)        
       } catch (error) {
         throw new Error (error)
       }
@@ -39,7 +37,8 @@ function GameList() {
   return (
     <div className='game-container'>
 
-       //TODO: checker ce que l'on donne a l'admin pour la liste des partie qu'est ce qui lui est necessaire (voir avec guillaume)
+      {userData.is_admin? 
+          //TODO: checker ce que l'on donne a l'admin pour la liste des partie qu'est ce qui lui est necessaire (voir avec guillaume)
         <div className='gameList'>        
             {allGamesAdmin.map((game) => (
               <GameModal
@@ -52,7 +51,7 @@ function GameList() {
             ))}
         </div>
 
-        
+        :
         <>
         <div className='gameList'>        
             {allGamesPlayer.map((game) => (
@@ -69,7 +68,7 @@ function GameList() {
         </div>
         <Button as={NavLink} to="/home/creategame">Créer une partie</Button>
         </>
-        
+        }
     </div>
   )
 }
