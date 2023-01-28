@@ -16,7 +16,7 @@ function GameRoom() {
       <div className='GameRoom'>
         <div className="avatar">
             <AvatarContainer />
-        </div >
+        </div>
         <div className="containerMapNote">
         <Notes />
         <Map />
