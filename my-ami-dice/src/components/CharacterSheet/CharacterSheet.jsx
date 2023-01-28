@@ -4,7 +4,7 @@ import './style.scss';
 function CharacterSheet() {   
 
   return (
-    <div className='CharacterSheet'>
+    <div className='character-sheet'>
       ficheperso
     </div>
   )

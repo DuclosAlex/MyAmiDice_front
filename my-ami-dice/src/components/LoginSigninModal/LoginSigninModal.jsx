@@ -137,6 +137,7 @@ function LoginSigninModal() {
                 email: state.email,
                 password: state.password
             }
+console.log(`api.post("/users/login", formData);`);
             const userInfos = await api.post("/users/login", formData); 
             //setDataStorage(userInfos.data);   //TODO: a decommenter une fois le retour de login operationnel
             //localStorage.setItem('User', JSON.stringify(dataStorage));//TODO: a decommenter une fois le retour de login operationnel
@@ -218,6 +219,7 @@ function LoginSigninModal() {
             try {
 
                 setSecondOpen(false);
+console.log(`await api.post("/users/create", formData);`);
                 await api.post("/users/create", formData);
                 dispatch({
                     type: RESET_ERROR,
