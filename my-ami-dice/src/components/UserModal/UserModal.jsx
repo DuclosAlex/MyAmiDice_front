@@ -28,7 +28,7 @@ function UserModal({id, pseudo, email, firstname, lastname }) {
         </div> {/*TODO: stylisé l'affichage des information */}
       </Modal.Content>      
     </Modal>
-  )
+  ) //TODO: faire un bouton delete 
 }
 
 UserModal.propTypes = {

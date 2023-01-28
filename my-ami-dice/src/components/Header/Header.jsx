@@ -30,7 +30,7 @@ function Header() {
           { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil */}
           { onDemo? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Demo */}
           { onCreateGame? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Création de partie */}
-          { userData? <InviteModal
+          { userData.games_invite[0]? <InviteModal
                         masterName={userData.games_invite[0].pseudo}
                         gameName={userData.games[0].name} />
                         :
