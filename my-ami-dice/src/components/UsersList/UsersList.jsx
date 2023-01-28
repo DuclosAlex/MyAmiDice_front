@@ -11,13 +11,15 @@ import './style.scss';
 
 function UsersList() { 
   
+
   const [allUsers, setAllUsers] = useState(null);
+
   
     //TODO: voir pourquoi ça marche pas 
   
-   useEffect(() => {
+    useEffect(() => {
         console.log("alluser", response.data)
-        async function getAllUsers(){
+       /*  async function getAllUsers(){
             try {
             const response = await api.get("/users/getall")
             setAllUsers(response.data)        
@@ -25,8 +27,8 @@ function UsersList() {
             throw new Error (error)
             }
         }
-        getAllUsers()
-        }, [])
+        getAllUsers() */
+    }, [])
   
   return (
     <div className='usersList-container'>

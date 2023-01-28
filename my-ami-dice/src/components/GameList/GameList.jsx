@@ -8,7 +8,7 @@ import './style.scss';
 
 
 
-//TODO: recup du users.games dans le localStorage/context
+
 
 function GameList() {
 
@@ -23,8 +23,10 @@ function GameList() {
   useEffect(() => {
     async function getAllGame(){
       try {
+
         const response = await api.get("/games/getall")
-        setAllGamesAdmin(response.data)        
+        setAllGamesAdmin(response.data) 
+
       } catch (error) {
         throw new Error (error)
       }

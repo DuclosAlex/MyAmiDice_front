@@ -6,11 +6,12 @@ import UsersList from '../UsersList/UsersList';
 import './style.scss';
 
 function HomeAdmin() {
+
   return (
     <div className='home'>
         <Header />
         <GameList />
-        <UsersList />
+        {/*<UsersList />*/}
         <NewMemberList />
         <Footer />
     </div>
