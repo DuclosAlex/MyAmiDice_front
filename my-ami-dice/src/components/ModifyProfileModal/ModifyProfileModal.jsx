@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from 'react'
 import { Button, Form, Header, Modal } from 'semantic-ui-react';
+import bcrypt from "bcryptjs"
 import './style.scss';
 
 import api from '../../api'
@@ -63,7 +64,9 @@ function ModifyProfileModal({data, toDelete, isPassword}) {
 	const [open, setOpen] = useState(false)
 	const [state, dispatch] = useReducer(reducer, initialState)
 
- {/* useEffect s'active a chaque overtute ou fermeture de modale pour clear le formulaire et les erreurs s'il y a n'a */} 
+	
+	
+	{/* useEffect s'active a chaque overtute ou fermeture de modale pour clear le formulaire et les erreurs s'il y a n'a */} 
 	useEffect(() => {
 		dispatch({
 			type: RESET_ERROR,
@@ -72,11 +75,16 @@ function ModifyProfileModal({data, toDelete, isPassword}) {
 			type: RESET_FORM,
 		})
 	}, [open])
-
-  
-
+	
+	
+	
+	
 const handleSubmit = async (event) => {
 	event.preventDefault()
+
+	const salt = await bcrypt.genSalt();
+	const hash = await bcrypt.hash(state.password, salt)
+
 
 	const formData = {
 		id: userData.id, 
@@ -88,15 +96,14 @@ const handleSubmit = async (event) => {
 
 	const formDataPassword = {
 		id: userData.id,
-		oldPassword: state.oldPassword,
-		newPassword: state.password
+		newPassword: hash
 	}
-
+	
 	if (event.target.name === "formProfile"){
 		if(state.email === state.confirmEmail){  {/* vérifie que les deux champs email sont identique*/}
 			if(validator.validate(state.email)){  {/* verifie via emailValidator que le format de l'email soit bon */}
 				try {
-					 await api.post(`/users/update`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
+					await api.post(`/users/update`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
 				} catch (error) {
 					throw new Error (error)
 				}
@@ -112,7 +119,9 @@ const handleSubmit = async (event) => {
 				payload: {error: "Votre confirmation n'est pas identique à votre email." }
 			})
 		}
-	} else if( event.target.name === "formPassword"){
+	}
+
+	if( event.target.name === "formPassword"){
 		if(state.password === state.confirmPassword){ {/* vérifie que les deux champs password sont identique*/}
 			if(!isValidPassword(state.password)){		{/* vérifie que le password corresponde au exigence de la Regex*/}
 				dispatch({
@@ -122,6 +131,7 @@ const handleSubmit = async (event) => {
 				return
 			}
 			try {
+				console.log("hash", formDataPassword.newPassword)
 				await api.post(`/users/password`, formDataPassword);  {/* Envoi au serveur du formulaire de modification password*/}
 			} catch (error) {
 				throw new Error (error);
@@ -132,19 +142,19 @@ const handleSubmit = async (event) => {
 				payload: {error: "Votre confirmation n'est pas identique à votre password" }
 			})
 		}
-		
-	}
-  }
 
-  const handleChange = (event) => {
+	}
+}
+
+const handleChange = (event) => {
 	event.preventDefault();
 	dispatch(actionModifyProfile(event.target.name, event.target.value))
-  }
+}
 
-  const handleClick = async () => {
+const handleClick = async () => {
 	await api.delete(`/users/:${userData.id}`); {/* Envoi au serveur la demande de suppression de compte*/} 
-  }
-  
+}
+
 
   
 
