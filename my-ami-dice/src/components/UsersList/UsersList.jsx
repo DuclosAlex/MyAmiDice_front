@@ -11,7 +11,9 @@ import './style.scss';
 
 function UsersList() { 
   
-  const [allUsers, setAllUsers] = useState({});
+
+  const [allUsers, setAllUsers] = useState(null);
+
   
     //TODO: voir pourquoi ça marche pas 
   

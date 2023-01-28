@@ -39,8 +39,7 @@ function GameList() {
   return (
     <div className='game-container'>
 
-      {userData.is_admin? 
-          //TODO: checker ce que l'on donne a l'admin pour la liste des partie qu'est ce qui lui est necessaire (voir avec guillaume)
+       //TODO: checker ce que l'on donne a l'admin pour la liste des partie qu'est ce qui lui est necessaire (voir avec guillaume)
         <div className='gameList'>        
             {allGamesAdmin.map((game) => (
               <GameModal
@@ -53,7 +52,7 @@ function GameList() {
             ))}
         </div>
 
-        :
+        
         <>
         <div className='gameList'>        
             {allGamesPlayer.map((game) => (
@@ -70,7 +69,7 @@ function GameList() {
         </div>
         <Button as={NavLink} to="/home/creategame">Créer une partie</Button>
         </>
-        }
+        
     </div>
   )
 }
