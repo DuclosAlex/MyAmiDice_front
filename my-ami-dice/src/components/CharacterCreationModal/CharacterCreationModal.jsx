@@ -10,7 +10,11 @@ function CharacterCreationModal() {
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
+    const [characterId, setCharacterId] = useState("");
     const [error, setError] = useState("");
+
+    const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
+    const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
 
     const initialState = {
         avatarFile: null,
@@ -280,33 +284,34 @@ function CharacterCreationModal() {
 
         try {
             const formData = [
-                character = {
+                characters = {
                   fakeId: 0, // Pour que le CreateOrUpdate fasse un Create
                   firstName: state.firstName.trim(),
                   lastName: state.lastName.trim(),
                   description: state.description.trim(),
                   race: state.race.trim(),
                   class: state.race.trim(),
+                  user_id: userData.id, 
+                  game_id: userData.games_invite[0].game_id, 
                   avatar: state.avatarFile,
-                  //TODO: user_id: 
                 },
-                characteristic ={
+                characteristics ={
                     strength: state.strength,
                     dexterity: state.dexterity,
                     constitution: state.constitution,
-                    intelligence: state.intelligence,
                     wisdom: state.wisdom,
                     charisma: state.charisma,
-                    current_hp: state.hp,
-                    max_hp: state.hp,
-                    current_mp: state.mana,
-                    max_mp: state.mana,
+                    intelligence: state.intelligence,
                     level: state.level,
+                    max_hp: state.hp,
+                    max_mana: state.mana,
                 }
             ]
 
 console.log("handleSubmitcharacter formData : ", formData);
-            await api.post(`/users/${user_id}/games/${game_id}/character`, formData)
+            const characterId = await api.post(`/characters`, formData);
+            setCharacterId(characterId) 
+            await api.delete(`/invites/:${userData.games_invite[0].id}`)
 
         } catch (error) {
             throw new Error (error);
@@ -322,14 +327,16 @@ console.log("handleSubmitcharacter formData : ", formData);
             setThirdOpen(true);
             
             const formData = {
+                fake_id: 0,
                 name: secondState.firstItem.name.trim(),
                 quantity: secondState.firstItem.quantity,
-                description: secondState.firstItem.description.trim()
+                description: secondState.firstItem.description.trim(),
+                character_id: characterId 
             }
 
 console.log("requête axios création de 'Item'. formData : ", formData);            
             try {
-                await api.post(`/character/${character_id}/items`, formData)
+                await api.post(`/items`, formData)
                 
             } catch (error) {
                 throw new Error (error);
@@ -352,13 +359,15 @@ console.log("requête axios création de 'Item'. formData : ", formData);
             setThirdOpen(false);
 
             const formData = {
+                fake_id: 0,
                 name: thirdState.firstSkill.name.trim(),
-                description: thirdState.firstSkill.description.trim()
+                description: thirdState.firstSkill.description.trim(),
+                character_id: characterId
             }
             
 console.log("requête axios création de 'Skill'. formData : ", formData);            
             try {
-                await api.post(`/character/${character_id}/skills`, formData)
+                await api.post(`/skills`, formData)
                 
             } catch (error) {
                 throw new Error (error);

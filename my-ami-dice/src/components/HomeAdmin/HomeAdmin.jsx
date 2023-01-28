@@ -1,22 +1,20 @@
-
-import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import CharactersList from '../CharactersList/CharactersList';
 import GameList from '../GameList/GameList';
+import Header from '../Header/Header';
 import NewMemberList from '../NewMemberList/NewMemberList';
+import UsersList from '../UsersList/UsersList';
 import './style.scss';
 
-function HomeMember() {
-
+function HomeAdmin() {
   return (
     <div className='home'>
         <Header />
-        <CharactersList />
         <GameList />
+        <UsersList />
         <NewMemberList />
         <Footer />
     </div>
   )
 }
 
-export default HomeMember
+export default HomeAdmin

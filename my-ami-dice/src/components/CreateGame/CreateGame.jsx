@@ -5,6 +5,9 @@ import './style.scss';
 
 function CreateGame() {
 
+  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
+  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
+
   const [game, setGame] = useState({
     name: "",
     description: "",
@@ -28,8 +31,8 @@ function CreateGame() {
     const formData = {
       name: game.name.trim(),
       description: game.description.trim(),
-      max_player: game.max_player
-      //TODO: user_id: 
+      max_player: game.max_player,
+      user_id: userData.id
     }
 
     // Envoi en BDD de la demande de création de partie
