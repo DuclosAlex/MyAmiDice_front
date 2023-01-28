@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { Button, Form, TextArea } from "semantic-ui-react";
 import "./style.scss";
 
+// Connexion à socket.io côté serveur
+const socket = io("http://localhost:3000"); //TODO: régler les cors
+
 function ChatRoom() {
 /*
 DEBUT SOCKET.IO
 */
-    
-    // Connexion à socket.io côté serveur
-    const socket = io("http://localhost:3000"); //TODO: régler les cors
     
     // On écoute l'évènement "connect"
     socket.on("connect", () => {
@@ -18,7 +18,8 @@ DEBUT SOCKET.IO
     })
  
      // On écoute l'évènement "receive-message"
-    socket.on("receive-message", message => {
+    socket.on("new-message", message => {
+console.log("je reçois un message new-message");
         displayMessage(message);
     })
 
