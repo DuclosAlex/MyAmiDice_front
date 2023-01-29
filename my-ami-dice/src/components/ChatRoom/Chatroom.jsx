@@ -7,7 +7,7 @@ import "./style.scss";
 
 
 // Connexion à socket.io côté serveur
-const socket = io("http://localhost:3000");
+const socket = io("http://178.18.253.7:4000");
 
 // On écoute l'évènement "connect"
 socket.on("connect", () => {
