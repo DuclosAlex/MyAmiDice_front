@@ -10,12 +10,12 @@ import './style.scss';
 function Home() {
   
   const userTemoin = {
-    id: 32,
+    id: 33,
     email: "alex@user.com",
     is_admin: false,
     firstname: "swané",
     lastname: "LeBreton",
-    pseudo: "alex",
+    pseudo: "Guillaume",
     characters: [
       {
         id: 22,

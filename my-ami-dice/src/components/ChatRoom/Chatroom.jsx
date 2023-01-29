@@ -7,6 +7,10 @@ import "./style.scss";
 
 
 function ChatRoom() {
+    // On lie le state de ContextGameRoom au state roomId
+    const [roomId, setRoomId] = useContext(ContextGameRoom);
+
+    const masterId = 33; //FIXME: A remplacer par la game.user_id (du mj)
     
     // Connexion à socket.io côté serveur
     const socket = useContext(SocketContext);
@@ -14,6 +18,10 @@ function ChatRoom() {
     // On écoute l'évènement "connect"
     socket.on("connect", () => {
         console.log("Je me connecte avec l'id : ", socket.id);
+        // Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
+        if (masterId === userData.id) { //TODO: Remplacer gameId par game.user_id
+            setRoomId(socket.id);
+        }
     })
     
     const [message, setMessage] = useState("");
@@ -25,9 +33,6 @@ function ChatRoom() {
     // On récupère "Users" du localStorage
     const dataStorage = localStorage.getItem("User");
     const userData = JSON.parse(dataStorage);
-
-    // On lie le state de ContextGameRoom au state roomId
-    const [roomId, setRoomId] = useContext(ContextGameRoom);
 
     // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io, et on déconnecte
     useEffect(() => {        
