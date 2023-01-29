@@ -1,20 +1,21 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Form } from "semantic-ui-react";
-import { io } from "socket.io-client";
-import ContextGameRoom from '../ContextGameRoom/ContextGameRoom';
+import ContextGameRoom from '../../Context/GameRoomContext';
+import { SocketContext } from '../../Context/SocketContext';
 
 import "./style.scss";
 
 
-// Connexion à socket.io côté serveur
-const socket = io("http://178.18.253.7:4000");
-
-// On écoute l'évènement "connect"
-socket.on("connect", () => {
-    console.log("Je me connecte avec l'id : ", socket.id);
-})
 
 function ChatRoom() {
+    
+    // Connexion à socket.io côté serveur
+    const socket = useContext(SocketContext);
+    
+    // On écoute l'évènement "connect"
+    socket.on("connect", () => {
+        console.log("Je me connecte avec l'id : ", socket.id);
+    })
     
     const [message, setMessage] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
@@ -29,17 +30,16 @@ function ChatRoom() {
     // On lie le state de ContextGameRoom au state roomId
     const [roomId, setRoomId] = useContext(ContextGameRoom);
 
-    // Quand un message est envoyé, on scroll la fenêtre de chat tout en bas
-    useEffect(() => {
+    // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io, et on déconnecte
+    useEffect(() => {        
+        
+        // Quand chatHistory change, on scroll la fenêtre de chat tout en bas
         if (refMessage.current) {
             const { scrollHeight } = refMessage.current;
             refMessage.current.scrollTo(0, scrollHeight);
         }
-    }, [message]);
-    
-    // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io, et on déconnecte
-    useEffect(() => {        
-        
+
+
         // On écoute l'évènement de réception de message "new-message"
         socket.on("new-message", ({pseudo, message}) => {
             console.log("on a reçu un message new-message");
@@ -108,5 +108,6 @@ function ChatRoom() {
     </>
   )
 }
+
 
 export default ChatRoom;
