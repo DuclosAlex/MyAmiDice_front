@@ -6,7 +6,6 @@ import { SocketContext } from '../../Context/SocketContext';
 import "./style.scss";
 
 
-
 function ChatRoom() {
     
     // Connexion à socket.io côté serveur
