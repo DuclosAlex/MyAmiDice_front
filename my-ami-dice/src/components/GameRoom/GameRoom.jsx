@@ -13,7 +13,7 @@ import { socket, SocketContext } from "../../Context/SocketContext";
 function GameRoom() {
 
   const [dataGameRoomContext, setGameRoomDataContext] = useState(null);
-
+  console.log(dataGameRoomContext)
   return (
     <ContextGameRoom.Provider value = {[dataGameRoomContext, setGameRoomDataContext]}>
       <SocketContext.Provider value={socket}>

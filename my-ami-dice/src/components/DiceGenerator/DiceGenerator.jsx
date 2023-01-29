@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import ContextGameRoom from "../../Context/GameRoomContext"
 import { Button } from "semantic-ui-react"
 import './style.scss';
 import {io} from "socket.io-client"
@@ -22,7 +23,7 @@ function DiceGenerator() {
     const userData = JSON.parse(dataStorage) 
     const pseudo = userData.pseudo
 
-
+    const [roomId, setMasterId] = useContext(ContextGameRoom)
 
 
     const [toggleButtonPublic, setToggleButtonPublic] = useState(true)
@@ -47,17 +48,18 @@ function DiceGenerator() {
             ...prevState,
             diceName: `D${maxValueDice}`,
             diceValue: `${rollresult}`,
-            dicePrivate:{toggleButtonPrivate}
+            dicePrivate: toggleButtonPrivate
         }))
 
         
     }
-
-   useEffect(() => {
+    
+    useEffect(() => {
         if(dataDice.diceValue !== ""){
             let room = ""
             if(dataDice.dicePrivate === true){
-                room = "idMJ"
+                room = roomId
+                console.log("room", room)
             }
             const diceMessage = `Résultat du ${dataDice.diceName}: ${dataDice.diceValue}`
             socket.emit("send-message",{pseudo: pseudo, message: diceMessage}, room)
