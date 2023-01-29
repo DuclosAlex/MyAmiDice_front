@@ -6,15 +6,17 @@ import Notes from "../Notes/Notes";
 import "./style.scss";
 import AvatarContainer from "../AvatarContainer/AvatarContainer";
 import ChatRoom from "../ChatRoom/Chatroom";
-
+import { useState } from "react";
 
 
 function GameRoom() {
 
+  const [dataGameRoomContext, setGameRoomDataContext] = useState(null);
 
+  console.log("dataGameRoomContext dans la GameRoom", dataGameRoomContext);
 
   return (
-    <ContextGameRoom.Provider value = {5}>
+    <ContextGameRoom.Provider value = {[dataGameRoomContext, setGameRoomDataContext]}>
       <div className='GameRoom'>
         <div className="avatar">
             <AvatarContainer />
