@@ -4,7 +4,7 @@ import './style.scss';
 import {io} from "socket.io-client"
 
 
-const socket = io("http://localhost:3000");
+const socket = io("http://178.18.253.7:4000");
 
 socket.on("connect", () => {
     console.log("je me connecte depuis le dice generator")
