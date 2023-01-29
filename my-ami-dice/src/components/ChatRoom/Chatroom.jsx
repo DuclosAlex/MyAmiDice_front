@@ -1,26 +1,33 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Form } from "semantic-ui-react";
 import { io } from "socket.io-client";
+import ContextGameRoom from '../ContextGameRoom/ContextGameRoom';
 
 import "./style.scss";
+
 
 // Connexion à socket.io côté serveur
 const socket = io("http://localhost:3000");
 
 // On écoute l'évènement "connect"
 socket.on("connect", () => {
-    console.log("Je me connecte");
+    console.log("Je me connecte avec l'id : ", socket.id);
 })
 
 function ChatRoom() {
     
-
     const [message, setMessage] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
-    const [userData, setUserData] = useState(null);
+    const [recipientId, setRecipientId] = useState("");
     
     const refMessage = useRef();
-    
+
+    // On récupère "Users" du localStorage
+    const dataStorage = localStorage.getItem("User");
+    const userData = JSON.parse(dataStorage);
+
+    // On lie le state de ContextGameRoom au state roomId
+    const [roomId, setRoomId] = useContext(ContextGameRoom);
 
     // Quand un message est envoyé, on scroll la fenêtre de chat tout en bas
     useEffect(() => {
@@ -31,25 +38,23 @@ function ChatRoom() {
     }, [message]);
     
     // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io, et on déconnecte
-    useEffect(() => {
+    useEffect(() => {        
         
-        // On récupère "Users du localStorage
-        const dataStorage = localStorage.getItem("User");
-        setUserData(JSON.parse(dataStorage));
-
         // On écoute l'évènement de réception de message "new-message"
-        socket.on("new-message", data => {
-console.log("on a reçu un message new-message");
-            setChatHistory([...chatHistory, data]) //TODO: Se rafraîchit quand chatHistory change, du coup on reçoit 1, puis 2, puis 3....
-console.log("chatHistory", chatHistory);
+        socket.on("new-message", ({pseudo, message}) => {
+            console.log("on a reçu un message new-message");
+            setChatHistory([...chatHistory, {pseudo, message}]) //TODO: Se rafraîchit quand chatHistory change, du coup on reçoit 1, puis 2, puis 3.... Normal ?
+            console.log("chatHistory", chatHistory);
         });
         
-
         /* return () => {
-console.log("deconnexion")
+            console.log("deconnexion")
             socket.disconnect(); //FIXME:
         } */
+        
     }, [chatHistory]);
+    
+    const myPseudo = userData.pseudo;
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -57,10 +62,12 @@ console.log("deconnexion")
         // Si "message" est vide, on ne fait rien
         if(message === "") return;
 
-        setChatHistory([...chatHistory, message]);
-console.log("on envoie un message: ", message);
+        const room = recipientId;
+
+        setChatHistory([...chatHistory, {pseudo: myPseudo, message: message}]);
+        console.log("on envoie un message: ", myPseudo, message);
         // On envoie une requête "send-message" au serveur socket.io
-        socket.emit("send-message", message);
+        socket.emit("send-message", {pseudo: myPseudo, message}, room);
         setMessage("");
     }
     
@@ -69,7 +76,7 @@ console.log("on envoie un message: ", message);
         <div className="chatroom">
             <ul className="message-container" ref={refMessage}>
                 {chatHistory.map((data, index) => (
-                    <li key={index}>{userData.pseudo}: {data}</li>
+                    <li key={index}>{data.pseudo}: {data.message}</li>
                 ))}
             </ul>
             <Form id="form" onSubmit={handleSubmit} >
@@ -80,6 +87,14 @@ console.log("on envoie un message: ", message);
                         name="message-input"
                         value={message}
                         onChange={event => setMessage(event.target.value)}
+                        inline
+                    />
+                    <Form.Input
+                        placeholder="Destinataire"
+                        type="text"
+                        name="id-input"
+                        value={recipientId}
+                        onChange={event => setRecipientId(event.target.value)}
                         inline
                     />
                     <Button
