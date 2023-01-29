@@ -27,7 +27,9 @@ function ChatRoom() {
     const [message, setMessage] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
     const [recipientId, setRecipientId] = useState("");
-    
+    const [strength, setStrength] = useState(10);
+
+
     const refMessage = useRef();
 
     // On récupère "Users" du localStorage
@@ -50,7 +52,7 @@ function ChatRoom() {
             setChatHistory([...chatHistory, {pseudo, message}]) //TODO: Se rafraîchit quand chatHistory change, du coup on reçoit 1, puis 2, puis 3.... Normal ?
             console.log("chatHistory", chatHistory);
         });
-        
+
         /* return () => {
             console.log("deconnexion")
             socket.disconnect(); //FIXME:
@@ -59,6 +61,23 @@ function ChatRoom() {
     }, [chatHistory]);
     
     const myPseudo = userData.pseudo;
+
+    //TODO: Un user valide un changement de carac
+    function handleModification(event) {
+        const data = event.target.name;
+        const newValue = event.target.value;
+        socket.emit("data-change", {data, newValue}, room); // room = socketId du MJ
+    }
+
+    //TODO: On écoute un changement de carac
+    socket.on("data-return", ({data, newValue}) => {
+        // Impacter le changement sur la fiche perso du mj
+        // switchcase data :
+        //  case: "strength"
+        //  setStrength(value);
+        // case: "dexterity"
+        // ...
+    })
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -85,6 +104,15 @@ function ChatRoom() {
             </ul>
             <Form id="form" onSubmit={handleSubmit} >
                 <Form.Group>
+                    <Form.Input
+                        placeholder="Force"
+                        type="number"
+                        name="strength"
+                        value={strength}
+                        onChange={event => setStrength(event.target.value)}
+                        onClick={handleModification}
+                        inline
+                    />
                     <Form.Input
                         placeholder="Message"
                         type="text"
