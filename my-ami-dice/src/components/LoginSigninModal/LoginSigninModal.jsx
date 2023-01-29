@@ -143,7 +143,7 @@ console.log(`api.post("/users/login", formData);`);
             //localStorage.setItem('User', JSON.stringify(dataStorage));//TODO: a decommenter une fois le retour de login operationnel
 
             
-            if (response.data.status === 'success') { //TODO: voir avec le back la gestion token
+            if (response.data.status === 'success') { //TODO: voir avec le back la gestion token OK
                 // On stocke le token dans le localStorage
                 localStorage.setItem("token", response.data.token);
                 api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
