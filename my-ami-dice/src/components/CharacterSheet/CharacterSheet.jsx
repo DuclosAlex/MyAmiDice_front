@@ -8,7 +8,7 @@ function CharacterSheet() {
       <div className="headContainer">
         <img className="character-avatar" src="" alt="character-avatar" />
         <div className="info-character">
-          <div className="presentaton-character">
+          <div className="presentation-character">
             <div>nom</div>
             <div>prenom</div>
             <div>race</div>

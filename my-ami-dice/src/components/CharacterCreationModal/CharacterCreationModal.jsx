@@ -311,7 +311,9 @@ function CharacterCreationModal() {
 
 console.log("handleSubmitcharacter formData : ", formData);
             const characterId = await api.post(`/characters`, formData);
-            setCharacterId(characterId) 
+console.log("characterId : ", characterId);
+            setCharacterId(characterId)
+            // On supprime l'invitation correspondante
             await api.delete(`/invites/:${userData.games_invite[0].id}`)
 
         } catch (error) {
@@ -335,8 +337,8 @@ console.log("handleSubmitcharacter formData : ", formData);
                 character_id: characterId 
             }
 
-console.log("requête axios création de 'Item'. formData : ", formData);            
             try {
+                console.log("requête axios création de 'Item'. formData : ", formData);            
                 await api.post(`/items`, formData)
                 
             } catch (error) {
