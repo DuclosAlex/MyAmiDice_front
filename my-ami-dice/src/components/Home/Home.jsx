@@ -9,13 +9,13 @@ import './style.scss';
 
 function Home() {
   
-  const userTemoin = {
-    id: 32,
+  /* const userTemoin = {
+    id: 33,
     email: "alex@user.com",
     is_admin: false,
     firstname: "swané",
     lastname: "LeBreton",
-    pseudo: "Clément",
+    pseudo: "Guillaume",
     characters: [
       {
         id: 22,
@@ -53,7 +53,7 @@ function Home() {
       }
     ]
   } 
-  localStorage.setItem("User", JSON.stringify(userTemoin));
+  localStorage.setItem("User", JSON.stringify(userTemoin)); */
 
   return (
     <div className='home'>
