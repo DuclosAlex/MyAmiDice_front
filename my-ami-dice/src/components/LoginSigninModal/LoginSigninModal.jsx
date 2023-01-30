@@ -14,7 +14,8 @@ function LoginSigninModal() {
     const [firstOpen, setFirstOpen] = useState(false);
     const [secondOpen, setSecondOpen] = useState(false);
 
-    const [dataStorage, setDataStorage] = useState() //state qui va recupérer le user et le mettre dans le local storage
+
+
 
 /*     const [pseudo, setPseudo] = useState("");
     const [emailSignin, setEmailSignin] = useState("");
@@ -138,20 +139,26 @@ function LoginSigninModal() {
                 password: state.password
             }
 console.log(`api.post("/users/login", formData);`, formData);
-            const data = await api.post("/users/login", formData); 
-console.log("data", data);
-            setDataStorage(userInfos.data);
-            localStorage.setItem('User', JSON.stringify(dataStorage));
+            const response = await api.post("/users/login", formData); 
 
-            if (data.status === 'success') { //TODO: voir avec le back la gestion token
+            const userInfos= response.data.user
+            localStorage.setItem('User', JSON.stringify(userInfos));
+
+
+
+
+
+console.log("data.user", response.data.user);
+
+            if (response.status === 200) { //TODO: voir avec le back la gestion token
                 // On stocke le token dans le localStorage
                 //localStorage.setItem("token", response.data.token);
                 //api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-                
+
                 dispatch({
                     type: LOGIN,
                     payload: {
-                        email: response.data.email
+                        email: response.data.user.email
                         // token: res.data.token
                     }
                 });
