@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from 'react'
 import { Button, Form, Header, Modal } from 'semantic-ui-react';
-import bcrypt from "bcryptjs"
+//import bcrypt from "bcryptjs"
 import './style.scss';
 
 import api from '../../api'
@@ -64,8 +64,7 @@ function ModifyProfileModal({data, toDelete, isPassword}) {
 	const [open, setOpen] = useState(false)
 	const [state, dispatch] = useReducer(reducer, initialState)
 
-	
-	
+
 	{/* useEffect s'active a chaque overtute ou fermeture de modale pour clear le formulaire et les erreurs s'il y a n'a */} 
 	useEffect(() => {
 		dispatch({
@@ -75,15 +74,13 @@ function ModifyProfileModal({data, toDelete, isPassword}) {
 			type: RESET_FORM,
 		})
 	}, [open])
-	
-	
-	
-	
+
+
 const handleSubmit = async (event) => {
 	event.preventDefault()
 
-	const salt = await bcrypt.genSalt();
-	const hash = await bcrypt.hash(state.password, salt)
+	//const salt = await bcrypt.genSalt();
+	//const hash = await bcrypt.hash(state.password, salt)
 
 
 	const formData = {
@@ -96,7 +93,7 @@ const handleSubmit = async (event) => {
 
 	const formDataPassword = {
 		id: userData.id,
-		newPassword: hash
+		newPassword: state.password
 	}
 	
 	if (event.target.name === "formProfile"){

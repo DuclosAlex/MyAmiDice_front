@@ -18,6 +18,7 @@ function ChatRoom() {
     // On écoute l'évènement "connect"
     socket.on("connect", () => {
         console.log("Je me connecte avec l'id : ", socket.id);
+        //TODO: socket.emit('join', game_id);
         // Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
         if (masterId === userData.id) { //TODO: Remplacer gameId par game.user_id
             setRoomId(socket.id);

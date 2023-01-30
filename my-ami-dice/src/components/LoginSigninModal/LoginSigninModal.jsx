@@ -4,6 +4,7 @@ import { Button, Form, Icon, Modal } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import './style.scss';
+//import bcrypt from "bcryptjs"
 
 import validator from "email-validator";
 
@@ -13,9 +14,6 @@ function LoginSigninModal() {
 
     const [firstOpen, setFirstOpen] = useState(false);
     const [secondOpen, setSecondOpen] = useState(false);
-
-
-
 
 /*     const [pseudo, setPseudo] = useState("");
     const [emailSignin, setEmailSignin] = useState("");
@@ -133,7 +131,11 @@ function LoginSigninModal() {
     async function handleLogin(event) {
         event.preventDefault();
 
-        try {
+        try {           
+            
+/*             const salt = await bcrypt.genSalt();
+            const hash = await bcrypt.hash(state.password, salt); */
+
             const formData = {
                 email: state.email,
                 password: state.password
@@ -143,9 +145,6 @@ console.log(`api.post("/users/login", formData);`, formData);
 
             const userInfos= response.data.user
             localStorage.setItem('User', JSON.stringify(userInfos));
-
-
-
 
 
 console.log("data.user", response.data.user);
@@ -193,9 +192,9 @@ console.log("data.user", response.data.user);
             lastname: state.lastName.trim()
         }
 
-        console.log("email", formData.email);
         // Si le mail et la confirmation sont différents => ERROR
-        if(!state.emailSignin === state.emailConfirmSignin) {
+        if(state.emailSignin !== state.emailConfirmSignin) {
+            console.log("ERREUR mail différents");
             dispatch({
                 type: ERROR,
                 payload: { error: "Confirmation de votre mail erronée." },
@@ -362,6 +361,7 @@ console.log("data.user", response.data.user);
                                         name="firstName"
                                         value={state.firstName}
                                         onChange={handleChange}
+                                        required
                                     />
                                     <Form.Input
                                         label='Nom'
@@ -369,6 +369,7 @@ console.log("data.user", response.data.user);
                                         name="lastName"
                                         value={state.lastName}
                                         onChange={handleChange}
+                                        required
                                     />
                                     <Form.Input
                                         type="password"

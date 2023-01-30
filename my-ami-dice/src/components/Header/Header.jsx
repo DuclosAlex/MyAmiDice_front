@@ -11,9 +11,6 @@ function Header() {
   const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
   const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
 
-  
-  
-  
   const location = useLocation();
   
   // On vérifie l'url pour savoir sur quelle page l'utilisteur est
@@ -30,11 +27,12 @@ function Header() {
           { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil */}
           { onDemo? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Demo */}
           { onCreateGame? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Création de partie */}
-          { userData?.games_invite[0]? <InviteModal
+       {/*    { userData.games_invite[0] ? <InviteModal
                         masterName={userData.games_invite[0].pseudo}
                         gameName={userData.games[0].name} />
                         :
-                        null }
+                        null } */}
+
           <h1 className='header-container-title'>
               MyAmiDice
           </h1>
