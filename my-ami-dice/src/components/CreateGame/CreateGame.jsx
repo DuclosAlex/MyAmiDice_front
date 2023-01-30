@@ -37,7 +37,7 @@ function CreateGame() {
 
     // Envoi en BDD de la demande de création de partie
     try {
-      await api.post("/games", formData);
+      await api.post("/games/create", formData);
     } catch (error) {
       throw new Error (error);
     }
