@@ -27,17 +27,22 @@ function CreateGame() {
   async function handleSubmit(event) {
     event.preventDefault();
     setError("");
-
+    
     const formData = {
+      fake_id: 0,
       name: game.name.trim(),
       description: game.description.trim(),
-      max_player: game.max_player,
-      user_id: userData.id
+      max_player: Number(game.max_player),
+      user_id: userData.id,
+      notes: "unenote", //TODO: lié la note
+      status: "En cours"
     }
-
     // Envoi en BDD de la demande de création de partie
-    try {
-      await api.post("/games/create", formData);
+    try {      
+      console.log("response", formData)
+      const data = await api.post("/games/create", formData);
+      console.log("response", data)
+      
     } catch (error) {
       throw new Error (error);
     }
