@@ -18,6 +18,10 @@ function Header() {
   const onDemo = location.pathname.includes("demo");
   const onCreateGame = location.pathname.includes("creategame");
   
+  let isGameInvite = null
+  if(userData){
+    isGameInvite = userData.games_invite
+  }
 
 
   return (
@@ -27,11 +31,11 @@ function Header() {
           { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil */}
           { onDemo? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Demo */}
           { onCreateGame? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Création de partie */}
-       {/*    { userData.games_invite[0] ? <InviteModal
+          { isGameInvite? <InviteModal
                         masterName={userData.games_invite[0].pseudo}
                         gameName={userData.games[0].name} />
                         :
-                        null } */}
+                        null }
 
           <h1 className='header-container-title'>
               MyAmiDice

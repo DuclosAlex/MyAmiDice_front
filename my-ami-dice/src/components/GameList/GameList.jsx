@@ -15,10 +15,13 @@ function GameList() {
   const [allGamesAdmin, setAllGamesAdmin] = useState(null);
 
   const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
-
-  const allGamesPlayer = userData.games
-  
+  const userData = JSON.parse(dataStorage)   // reconstruit les données du user en JSON 
+  let isAdmin = ""
+  let allGamesPlayer=[]
+  if (userData){
+    allGamesPlayer = userData.games
+    isAdmin = userData.is_admin
+  }
 
   useEffect(() => {
     async function getAllGame(){
@@ -37,7 +40,7 @@ function GameList() {
   return (
     <div className='game-container'>
 
-      {userData.is_admin? 
+      {isAdmin? 
           //TODO: checker ce que l'on donne a l'admin pour la liste des partie qu'est ce qui lui est necessaire (voir avec guillaume)
         <div className='gameList'>        
             {allGamesAdmin.map((game) => (
@@ -53,6 +56,7 @@ function GameList() {
 
         :
         <>
+        {allGamesPlayer? 
         <div className='gameList'>        
             {allGamesPlayer.map((game) => (
               <GameModal
@@ -66,6 +70,9 @@ function GameList() {
               />
             ))}
         </div>
+        :
+        null }
+        
         <Button as={NavLink} to="/home/creategame">Créer une partie</Button>
         </>
         }
