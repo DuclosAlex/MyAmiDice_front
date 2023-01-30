@@ -14,7 +14,7 @@ function LoginSigninModal() {
     const [firstOpen, setFirstOpen] = useState(false);
     const [secondOpen, setSecondOpen] = useState(false);
 
-    const [dataStorage, setDataStorage] = useState() //state qui va recupéré le user et le mettre dans le local storage
+    const [dataStorage, setDataStorage] = useState() //state qui va recupérer le user et le mettre dans le local storage
 
 /*     const [pseudo, setPseudo] = useState("");
     const [emailSignin, setEmailSignin] = useState("");
@@ -22,7 +22,6 @@ function LoginSigninModal() {
     const [lastName, setLastName] = useState("");
     const [passwordSignin, setPasswordSignin] = useState("");
     const [confirmPasswordSignin, setConfirmPasswordSignin] = useState(""); */
-
     
     const initialState = {
         isLogged: false,
@@ -144,7 +143,7 @@ console.log("data", data);
             setDataStorage(userInfos.data);
             localStorage.setItem('User', JSON.stringify(dataStorage));
 
-            if (data.status === 'success') { //TODO: voir avec le back la gestion token OK
+            if (data.status === 'success') { //TODO: voir avec le back la gestion token
                 // On stocke le token dans le localStorage
                 //localStorage.setItem("token", response.data.token);
                 //api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
