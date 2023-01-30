@@ -10,12 +10,16 @@ function CharactersList() {
   
   const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
   const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
-
-  const allCharacters = userData.characters
+  let allCharacters = []
+  if (userData){
+     allCharacters = userData.characters
+  }
       
   
   return (
-    <div className='characters-container'>
+      <div className='characters-container'>
+        
+        {allCharacters?
         <div className='charactersList'>
             {allCharacters.map((character) => (
               <CharacterModal 
@@ -25,6 +29,10 @@ function CharactersList() {
               />
             ))}
         </div>
+        :
+        null
+        }
+        
     </div>
   )
 }
