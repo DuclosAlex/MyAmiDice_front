@@ -82,6 +82,7 @@ function LoginSigninModal() {
                     // token: ''
                 }
             case SAVE_FORM:
+                console.log("n ", action.payload.name, " v ", action.payload.value);
                 return {
                     ...state,
                     [action.payload.name]: action.payload.value,
@@ -137,16 +138,16 @@ function LoginSigninModal() {
                 email: state.email,
                 password: state.password
             }
-console.log(`api.post("/users/login", formData);`);
-            const userInfos = await api.post("/users/login", formData); 
-            //setDataStorage(userInfos.data);   //TODO: a decommenter une fois le retour de login operationnel
-            //localStorage.setItem('User', JSON.stringify(dataStorage));//TODO: a decommenter une fois le retour de login operationnel
+console.log(`api.post("/users/login", formData);`, formData);
+            const data = await api.post("/users/login", formData); 
+console.log("data", data);
+            setDataStorage(userInfos.data);
+            localStorage.setItem('User', JSON.stringify(dataStorage));
 
-            
-            if (response.data.status === 'success') { //TODO: voir avec le back la gestion token OK
+            if (data.status === 'success') { //TODO: voir avec le back la gestion token OK
                 // On stocke le token dans le localStorage
-                localStorage.setItem("token", response.data.token);
-                api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
+                //localStorage.setItem("token", response.data.token);
+                //api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
                 
                 dispatch({
                     type: LOGIN,
@@ -180,12 +181,13 @@ console.log(`api.post("/users/login", formData);`);
         
         const formData = {
             pseudo: state.pseudo.trim(),
-            email: state.email.trim(),
+            email: state.emailSignin.trim(),
             password: state.passwordSignin,
             firstname: state.firstName.trim(),
             lastname: state.lastName.trim()
         }
 
+        console.log("email", formData.email);
         // Si le mail et la confirmation sont différents => ERROR
         if(!state.emailSignin === state.emailConfirmSignin) {
             dispatch({
@@ -219,15 +221,14 @@ console.log(`api.post("/users/login", formData);`);
             try {
 
                 setSecondOpen(false);
-console.log(`await api.post("/users/create", formData);`);
-                await api.post("/users/create", formData);
+                const data = await api.post("/users/create", formData);
                 dispatch({
                     type: RESET_ERROR,
                 });
 
             } catch (error) {
                 //TODO:
-                {/*dispatch({   // l'erreur sera a adapter pour soit le pseudo soit pour l'email en focntion de la syntaxer de l'erreur
+                {/*dispatch({   // l'erreur sera a adapter pour soit le pseudo soit pour l'email en fonction de la syntaxer de l'erreur
                     type: ERROR,
                     payload: { error: "Votre pseudo est déja utilisé. Veuillez en choisir un autre" },
                 });*/} 

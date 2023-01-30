@@ -36,6 +36,9 @@ function ChatRoom() {
     const dataStorage = localStorage.getItem("User");
     const userData = JSON.parse(dataStorage);
 
+
+
+
     // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io, et on déconnecte
     useEffect(() => {        
         
@@ -50,9 +53,10 @@ function ChatRoom() {
         socket.on("new-message", ({pseudo, message}) => {
             console.log("on a reçu un message new-message");
             setChatHistory([...chatHistory, {pseudo, message}]) //TODO: Se rafraîchit quand chatHistory change, du coup on reçoit 1, puis 2, puis 3.... Normal ?
-            console.log("chatHistory", chatHistory);
+            socket.removeAllListeners("new-message");
         });
-
+        
+        console.log("chatHistory", chatHistory);
         /* return () => {
             console.log("deconnexion")
             socket.disconnect(); //FIXME:
@@ -105,6 +109,7 @@ function ChatRoom() {
             <Form id="form" onSubmit={handleSubmit} >
                 <Form.Group>
                     <Form.Input
+                        id='force'
                         placeholder="Force"
                         type="number"
                         name="strength"
