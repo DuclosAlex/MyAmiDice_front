@@ -1,14 +1,19 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Form } from "semantic-ui-react";
 import ContextGameRoom from '../../Context/GameRoomContext';
+import GlobalContext from '../../Context/GlobalContext';
 import { SocketContext } from '../../Context/SocketContext';
 
 import "./style.scss";
 
 
 function ChatRoom() {
+    
+    console.log("gameId dans le context" )
+
     // On lie le state de ContextGameRoom au state roomId
-    const [roomId, setRoomId] = useContext(ContextGameRoom);
+    const [masterSocketId, setMasterSocketId] = useContext(ContextGameRoom);
+    const [gameId, setGameId] = useContext(GlobalContext);
 
     const masterId = 33; //FIXME: A remplacer par la game.user_id (du mj)
     
@@ -17,13 +22,16 @@ function ChatRoom() {
     
     // On écoute l'évènement "connect"
     socket.on("connect", () => {
-        console.log("Je me connecte avec l'id : ", socket.id);
-        //TODO: socket.emit('join', game_id);
+console.log("Connexion chatroom id : ", socket.id);
+console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand on a l'info
+        // On rejoint la salle qui correspond à notre partie
+        socket.emit("join-room", 5);// TODO: Remplacer 5 par gameId quand on a l'info
+        
         // Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
-        if (masterId === userData.id) { //TODO: Remplacer gameId par game.user_id
-            setRoomId(socket.id);
-        }
-    })
+        /* if (masterId === userData.id) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
+            setMasterSocketId(socket.id);
+        } */
+    });
     
     const [message, setMessage] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
@@ -67,7 +75,7 @@ function ChatRoom() {
     
     const myPseudo = userData.pseudo;
 
-    //TODO: Un user valide un changement de carac
+/*     //TODO: Un user valide un changement de carac
     function handleModification(event) {
         const data = event.target.name;
         const newValue = event.target.value;
@@ -82,7 +90,7 @@ function ChatRoom() {
         //  setStrength(value);
         // case: "dexterity"
         // ...
-    })
+    }) */
 
     function handleSubmit(event) {
         event.preventDefault();
@@ -109,7 +117,7 @@ function ChatRoom() {
             </ul>
             <Form id="form" onSubmit={handleSubmit} >
                 <Form.Group>
-                    <Form.Input
+                    {/* <Form.Input
                         id='force'
                         placeholder="Force"
                         type="number"
@@ -118,7 +126,7 @@ function ChatRoom() {
                         onChange={event => setStrength(event.target.value)}
                         onClick={handleModification}
                         inline
-                    />
+                    /> */}
                     <Form.Input
                         placeholder="Message"
                         type="text"

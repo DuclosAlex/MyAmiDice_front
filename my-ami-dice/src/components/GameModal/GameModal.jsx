@@ -2,10 +2,18 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { Button, Header, Label, Modal } from 'semantic-ui-react'
 import './style.scss';
+import { useContext } from 'react';
+import GlobalContext from '../../Context/GlobalContext';
 
 function GameModal({name, id, masterName, status, description, nbPlayer }) {
 
-  const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [gameId, setGameId] = useContext(GlobalContext);
+
+    function handleClick() {
+        console.log("handleClick");
+        setGameId(id);
+    };
 
   return (
        <>  
@@ -30,7 +38,7 @@ function GameModal({name, id, masterName, status, description, nbPlayer }) {
             </Modal.Content>      
             </Modal>
             <Label color="green" key={"green"}>{status}</Label>
-            <Button>Rejoindre</Button>
+            <Button onClick={handleClick}>Rejoindre</Button>
 
         </div>
 

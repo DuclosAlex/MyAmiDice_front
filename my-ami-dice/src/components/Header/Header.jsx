@@ -22,7 +22,7 @@ userData ? console.log("userData début", userData) : console.log("userData unde
 
   let isGameInvite = null
   if(userData){
-    isGameInvite = userData.games_invite   
+    isGameInvite = userData.games_invite
   }
 
   return (
