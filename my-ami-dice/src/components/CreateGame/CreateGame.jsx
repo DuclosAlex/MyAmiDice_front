@@ -30,7 +30,7 @@ function CreateGame() {
     setError("");
     
     const formData = {
-      fake_id: 1,
+      fake_id: 0,
       name: game.name.trim(),
       description: game.description.trim(),
       max_player: Number(game.max_player),

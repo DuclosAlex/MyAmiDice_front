@@ -15,7 +15,8 @@ function GameList() {
   const [allGamesAdmin, setAllGamesAdmin] = useState(null);
 
   const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-  const userData = JSON.parse(dataStorage)   // reconstruit les données du user en JSON 
+  const userData = JSON.parse(dataStorage)   // reconstruit les données du user en JSON
+
   let isAdmin = ""
   let allGamesPlayer=[]
   if (userData){
@@ -26,16 +27,14 @@ function GameList() {
   useEffect(() => {
     async function getAllGame(){
       try {
-        const response = await api.get("/games/getall")
-        setAllGamesAdmin(response.data)        
+        const response = await api.get("/games/getall");
+        setAllGamesAdmin(response.data);
       } catch (error) {
         throw new Error (error)
       }
     }
     getAllGame()
   }, [])
-  
- 
 
   return (
     <div className='game-container'>
