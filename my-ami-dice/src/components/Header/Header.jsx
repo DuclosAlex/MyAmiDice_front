@@ -22,9 +22,7 @@ userData ? console.log("userData début", userData) : console.log("userData unde
 
   let isGameInvite = null
   if(userData){
-    isGameInvite = userData.games_invite
-    console.log("userData.games_invite[0].pseudo", userData.games_invite[0].pseudo);
-    console.log("userData.games[0].name", userData.games_invite[0].name);
+    isGameInvite = userData.games_invite   
   }
 
   return (
