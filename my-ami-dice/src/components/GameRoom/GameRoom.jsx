@@ -8,7 +8,9 @@ import ChatRoom from "../ChatRoom/Chatroom";
 
 import { useState } from "react";
 import { socket, SocketContext } from "../../Context/SocketContext";
+import CharacterSheet from "../CharacterSheet/CharacterSheet";
 import { useEffect } from "react";
+
 
 
 function GameRoom() {
@@ -46,6 +48,7 @@ function GameRoom() {
           <div className="containerMapNote">
             <Notes />
             <Map />
+            <CharacterSheet /* TODO: conditions si c'est le joueur ça s'affiche en dur sinon hidden pour garder la place occuper*/ /> 
           </div>
           
           <div className="containerDiceChat">

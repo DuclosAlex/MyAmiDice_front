@@ -12,7 +12,6 @@ function AvatarContainer() {
     const [namePlayer, setNamePlayer] = useState('')
     
     const handleClick = (event) =>{
-        console.log ("fdngskdfhg", event)
         const namePlayer = event.target.name
         setNamePlayer(namePlayer)
         
