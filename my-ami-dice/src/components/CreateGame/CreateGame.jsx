@@ -26,6 +26,7 @@ function CreateGame() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    
     setError("");
     
     const formData = {
@@ -39,7 +40,7 @@ function CreateGame() {
     }
     // Envoi en BDD de la demande de création de partie
     try {      
-      console.log("response", formData)
+      console.log("formData", formData)
       const data = await api.post("/games/create", formData);
       console.log("response", data)
       
