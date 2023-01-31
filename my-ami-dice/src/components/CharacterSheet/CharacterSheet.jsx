@@ -1,12 +1,17 @@
-import api from "../../api";
+import { Form } from 'semantic-ui-react';
 import './style.scss';
 
 function CharacterSheet() {   
 
   return (
     <div className='characterSheet'>
+      <Form>
+        <div className='headContainer'>
+          <img className="character-avatar" src="" alt="character-avatar"  {/* au clic sur l'image une modale s'ouvre et donne l'input file*/} /> 
+
+        </div>
+      </Form>
       <div className="headContainer">
-        <img className="character-avatar" src="" alt="character-avatar" />
         <div className="info-character">
           <div className="presentation-character">
             <div>nom</div>
