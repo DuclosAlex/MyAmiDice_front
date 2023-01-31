@@ -1,17 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import ContextGameRoom from "../../Context/GameRoomContext"
+import { SocketContext } from '../../Context/SocketContext';
 import { Button } from "semantic-ui-react"
 import './style.scss';
-import {io} from "socket.io-client"
 
 
-const socket = io("http://178.18.253.7:4000");
-
-socket.on("connect", () => {
-    console.log("je me connecte depuis le dice generator")
-})
 
 function DiceGenerator() {
+    
+    // Connexion à socket.io côté serveur
+    const socket = useContext(SocketContext);
+    
+    socket.on("connect", () => {
+        console.log("Connexion dicegenerator id : ", socket.id);
+    })
     
     const [dataDice, setDataDice] = useState({
         diceName: "",
@@ -23,7 +25,7 @@ function DiceGenerator() {
     const userData = JSON.parse(dataStorage) 
     const pseudo = userData.pseudo
 
-    const [roomId, setMasterId] = useContext(ContextGameRoom)
+    const [masterSocketId, setMasterSocketId] = useContext(ContextGameRoom)
 
 
     const [toggleButtonPublic, setToggleButtonPublic] = useState(true)
@@ -51,18 +53,18 @@ function DiceGenerator() {
             dicePrivate: toggleButtonPrivate
         }))
 
-        
     }
     
     useEffect(() => {
         if(dataDice.diceValue !== ""){
-            let room = ""
+            let room = "";
             if(dataDice.dicePrivate === true){
-                room = roomId
-                console.log("room", room)
+                room = masterSocketId;
+                console.log("room", room);
             }
             const diceMessage = `Résultat du ${dataDice.diceName}: ${dataDice.diceValue}`
-            socket.emit("send-message",{pseudo: pseudo, message: diceMessage}, room)
+console.log("socket.emit : pseudo : ", pseudo, " message : ", diceMessage);
+            socket.emit("send-message",{pseudo: pseudo, message: diceMessage}, room) //TODO: Remplacer 5 par room
         }
    
     }, [dataDice.diceValue])   

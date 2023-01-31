@@ -10,7 +10,7 @@ function CharacterCreationModal() {
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
     const [confirmOpen, setConfirmOpen] = useState(false);
-    const [characterId, setCharacterId] = useState("");
+    const [characterCreated, setCharacterCreated] = useState("");
     const [error, setError] = useState("");
 
     const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
@@ -23,41 +23,41 @@ function CharacterCreationModal() {
         description: "",
         race: "",
         class: "",
-        strength: "",
-        dexterity: "",
-        constitution: "",
-        intelligence: "",
-        wisdom: "",
-        charisma: "",
-        hp: "",
-        mana: "",
-        level: "",
+        strength: 0,
+        dexterity: 0,
+        constitution: 0,
+        intelligence: 0,
+        wisdom: 0,
+        charisma: 0,
+        hp: 0,
+        mana: 0,
+        level: 0,
     }
 
     const initialSecondState = {
         firstItem: {
                 name: "",
-                quantity: "",
+                quantity: 0,
                 description: ""
             },
         secondItem:{
                 name: "",
-                quantity: "",
+                quantity: 0,
                 description: ""
             },
         thirdItem:{
                 name: "",
-                quantity: "",
+                quantity: 0,
                 description: ""
             },
         fourthItem:{
                 name: "",
-                quantity: "",
+                quantity: 0,
                 description: ""
             },
         fifthItem:{
                 name: "",
-                quantity: "",
+                quantity: 0,
                 description: ""
             },        
     }
@@ -283,20 +283,22 @@ function CharacterCreationModal() {
         setSecondOpen(true);
 
         try {
-            //TODO: IL FAUT QUE LES BACKEUX CHANGENT LEUR RECEPTION DE FORMDATA
+
+        console.log("strength", typeof state.strength);
             const formData = [
                 {
-                  fakeId: 0, // Pour que le CreateOrUpdate fasse un Create
-                  firstName: state.firstName.trim(),
-                  lastName: state.lastName.trim(),
-                  description: state.description.trim(),
-                  race: state.race.trim(),
-                  class: state.race.trim(),
-                  user_id: userData.id, 
-                  game_id: userData.games_invite[0].game_id, 
-                  avatar: state.avatarFile,
+                    fakeId: 0, // Pour que le CreateOrUpdate fasse un Create
+                    firstName: state.firstName.trim(),
+                    lastName: state.lastName.trim(),
+                    description: state.description.trim(),
+                    race: state.race.trim(),
+                    class: state.race.trim(),
+                    userId: userData.id, 
+                    gameId: userData.games_invite[0].game_id, 
+                    avatar: "/stateavatarFile"
                 },
                 {
+                    fakeId: 0,
                     strength: state.strength,
                     dexterity: state.dexterity,
                     constitution: state.constitution,
@@ -304,17 +306,21 @@ function CharacterCreationModal() {
                     charisma: state.charisma,
                     intelligence: state.intelligence,
                     level: state.level,
-                    max_hp: state.hp,
-                    max_mana: state.mana,
+                    maxHp: state.hp,
+                    maxMana: state.mana,
+                    currentHP: state.hp,
+                    currentMana: state.mana
                 }
             ]
 
-console.log("handleSubmitcharacter formData : ", formData);
-            const characterId = await api.post(`/characters`, formData);
-console.log("characterId : ", characterId);
-            setCharacterId(characterId)
+console.log("AVANT LA REQUETE formData : ", formData);
+            const characterCreated = await api.post(`/characters/create`, formData);
+console.log("APRES LA REQUETE characterCreated : ", characterCreated);
+            setCharacterCreated(characterCreated)
             // On supprime l'invitation correspondante
-            await api.delete(`/invites/:${userData.games_invite[0].id}`)
+            console.log("AVANT suppression de l'invit : ", userData.games_invite[0].id);
+            await api.delete(`/invites/${userData.games_invite[0].id}`);
+            console.log("APRES suppression de l'invit");
 
         } catch (error) {
             throw new Error (error);
@@ -329,17 +335,18 @@ console.log("characterId : ", characterId);
             setSecondOpen(false);
             setThirdOpen(true);
             
-            const formData = {
+            const formDataItems = {
                 fake_id: 0,
                 name: secondState.firstItem.name.trim(),
                 quantity: secondState.firstItem.quantity,
                 description: secondState.firstItem.description.trim(),
-                character_id: characterId 
+                character_id: characterCreated.data[0].id 
             }
 
             try {
-                console.log("requête axios création de 'Item'. formData : ", formData);            
-                await api.post(`/items`, formData)
+console.log("AVANT requête axios création de 'Item'. formData : ", formDataItems);            
+                await api.post(`/items/create`, formDataItems)
+console.log("APRES REQUETE");
                 
             } catch (error) {
                 throw new Error (error);
@@ -361,16 +368,17 @@ console.log("characterId : ", characterId);
             setConfirmOpen(true);
             setThirdOpen(false);
 
-            const formData = {
+            const formDataSkills = {
                 fake_id: 0,
                 name: thirdState.firstSkill.name.trim(),
                 description: thirdState.firstSkill.description.trim(),
-                character_id: characterId
+                character_id: characterCreated.data[0].id
             }
             
-console.log("requête axios création de 'Skill'. formData : ", formData);            
             try {
-                await api.post(`/skills`, formData)
+console.log("requête axios création de 'Skill'. formData : ", formDataSkills);            
+                await api.post(`/skills/create`, formDataSkills)
+console.log("APRES REQUETE")
                 
             } catch (error) {
                 throw new Error (error);
