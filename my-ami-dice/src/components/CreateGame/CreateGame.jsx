@@ -30,7 +30,7 @@ function CreateGame() {
     setError("");
     
     const formData = {
-      fake_id: 0,
+      fake_id: 1,
       name: game.name.trim(),
       description: game.description.trim(),
       max_player: Number(game.max_player),
@@ -38,16 +38,19 @@ function CreateGame() {
       notes: "unenote", //TODO: lié la note
       status: "En cours"
     }
+    
     // Envoi en BDD de la demande de création de partie
     try {      
-      console.log("formData", formData)
-      const data = await api.post("/games/create", formData);
-      console.log("response", data)
+
+      console.log("formData avant la requête", formData);
+      const data = await api.post("/games/create", formData); //FIXME: Arrête tout sans création et sans retour d'erreur. Pourquoi ?
+      console.log("data après la requête", data);
+
       
     } catch (error) {
+      console.log("error", error);
       throw new Error (error);
     }
-
   }
 
   return (

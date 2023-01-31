@@ -18,11 +18,14 @@ function Header() {
   const onDemo = location.pathname.includes("demo");
   const onCreateGame = location.pathname.includes("creategame");
   
+userData ? console.log("userData début", userData) : console.log("userData undefined")
+
   let isGameInvite = null
   if(userData){
     isGameInvite = userData.games_invite
+    console.log("userData.games_invite[0].pseudo", userData.games_invite[0].pseudo);
+    console.log("userData.games[0].name", userData.games_invite[0].name);
   }
-
 
   return (
     <header className='header'>
