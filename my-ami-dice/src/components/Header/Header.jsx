@@ -18,11 +18,14 @@ function Header() {
   const onDemo = location.pathname.includes("demo");
   const onCreateGame = location.pathname.includes("creategame");
   
+userData ? console.log("userData début", userData) : console.log("userData undefined")
+
   let isGameInvite = null
   if(userData){
     isGameInvite = userData.games_invite
+    console.log("userData.games_invite[0].pseudo", userData.games_invite[0].pseudo);
+    console.log("userData.games[0].name", userData.games_invite[0].name);
   }
-
 
   return (
     <header className='header'>
@@ -33,7 +36,7 @@ function Header() {
           { onCreateGame? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Création de partie */}
           { isGameInvite? <InviteModal
                         masterName={userData.games_invite[0].pseudo}
-                        gameName={userData.games[0].name} />
+                        gameName={userData.games_invite[0].name} />
                         :
                         null }
 
