@@ -8,7 +8,6 @@ import {UserContext} from '../../Context/UserContext';
 import './style.scss';
 
 import validator from "email-validator";
-import { toFormData } from 'axios';
 
 function LoginSigninModal() {
 
