@@ -2,11 +2,12 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import './style.scss'
 import ModifyProfileModal from '../ModifyProfileModal/ModifyProfileModal';
+import { useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
 
 function Profile() {
 
-  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
+  const [user, setUser] = useContext(UserContext);
 
   return (
         <>
@@ -15,16 +16,16 @@ function Profile() {
           <div className='profile'>
             <h1>Mon Profil</h1>
             <div className='profile-pseudo'>
-              <p>Pseudo: {userData.pseudo}</p>
+              <p>Pseudo: {user.pseudo}</p>
             </div>
             <div className='profile-firstName'>
-              <p>Prénom: {userData.firstname}</p>
+              <p>Prénom: {user.firstname}</p>
             </div>
             <div className='profile-lastName'>
-              <p>Nom: {userData.lastname}</p>
+              <p>Nom: {user.lastname}</p>
             </div>
             <div className='profile-email'>
-              <p>Email: {userData.email} </p>
+              <p>Email: {user.email} </p>
             </div>
             <ModifyProfileModal data={"Modifier votre Profil"} />
             <div className='profile-password'>

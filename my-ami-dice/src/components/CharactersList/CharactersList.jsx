@@ -1,18 +1,17 @@
 import CharacterModal from '../CharacterModal/CharacterModal';
+import {UserContext} from '../../Context/UserContext';
 
 import './style.scss';
-
-
-
+import { useContext } from 'react';
 
 
 function CharactersList() { 
   
-  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
+  const [user, setUser] = useContext(UserContext);
+  
   let allCharacters = []
-  if (userData){
-     allCharacters = userData.characters
+  if (user){
+     allCharacters = user.characters
   }
       
   

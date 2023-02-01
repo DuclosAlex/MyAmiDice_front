@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import { useContext } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Button } from 'semantic-ui-react';
 import InviteModal from '../InviteModal/InviteModal'
 import LoginSigninModal from '../LoginSigninModal/LoginSigninModal';
+import {UserContext} from '../../Context/UserContext';
+
 import './style.scss';
 
 
 function Header() {
 
-  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
+  const [user, setUser] = useContext(UserContext);
 
   const location = useLocation();
   
@@ -18,30 +19,31 @@ function Header() {
   const onDemo = location.pathname.includes("demo");
   const onCreateGame = location.pathname.includes("creategame");
   
-userData ? console.log("userData début", userData) : console.log("userData undefined")
+user ? console.log("user du HEADER : ", user) : console.log("user HEADER non existant");
+//console.log("user.pseudo", user.pseudo);
 
   let isGameInvite = null
-  if(userData){
-    isGameInvite = userData.games_invite
+  if(user){
+    isGameInvite = user.games_invite
   }
 
   return (
     <header className='header'>
         <div className='header-container'>
-
+ 
           { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil */}
           { onDemo? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Demo */}
           { onCreateGame? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Création de partie */}
           { isGameInvite? <InviteModal
-                        masterName={userData.games_invite[0].pseudo}
-                        gameName={userData.games_invite[0].name} />
+                        masterName={user.games_invite[0].pseudo}
+                        gameName={user.games_invite[0].name} />
                         :
                         null }
 
           <h1 className='header-container-title'>
               MyAmiDice
           </h1>
-          { userData? <Button as={NavLink} to="/home/profile">Mon Profil</Button> : null}          
+          { user? <Button as={NavLink} to="/home/profile">Mon Profil</Button> : null}          
           <LoginSigninModal className='header-container-buttonconnect' negative>Connexion</LoginSigninModal>
 
         </div>

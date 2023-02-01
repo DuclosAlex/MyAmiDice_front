@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import { Form, Button } from 'semantic-ui-react';
 import api from '../../api';
+import { UserContext } from '../../Context/UserContext';
+
 import './style.scss';
 
 function CreateGame() {
 
-  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
+  const [user, setUser] = useContext(UserContext);
 
   const [game, setGame] = useState({
     name: "",
@@ -34,7 +36,7 @@ function CreateGame() {
       name: game.name.trim(),
       description: game.description.trim(),
       max_player: Number(game.max_player),
-      user_id: userData.id,
+      user_id: user.id,
       notes: "unenote", //TODO: lié la note
       status: "En cours"
     }
@@ -45,8 +47,6 @@ function CreateGame() {
       console.log("formData avant la requête", formData);
       const data = await api.post("/games/create", formData); //FIXME: Arrête tout sans création et sans retour d'erreur. Pourquoi ?
       console.log("data après la requête", data);
-
-      
     } catch (error) {
       console.log("error", error);
       throw new Error (error);

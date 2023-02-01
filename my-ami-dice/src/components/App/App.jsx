@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import GlobalContext from '../../Context/GlobalContext';
+import { UserProvider } from '../../Context/UserContext';
 import CreateGame from '../CreateGame/CreateGame';
 import Demo from '../Demo/Demo';
 import GameRoom from '../GameRoom/GameRoom';
@@ -12,22 +12,20 @@ import Profile from '../Profile/Profile'
 import './style.scss'
 
 function App() { 
-  
-  const [globalContextValue, setGlobalContextValue] = useState(null);
 
   return (
-    <GlobalContext.Provider value={[globalContextValue, setGlobalContextValue]}>
+    <UserProvider>
       <Routes>
+        <Route path="/home/gameroom/" element={<GameRoom />} /> 
         <Route path="/" element={<Home />} />
         <Route path="/home/user/" element={<HomeMember />} />
         <Route path="/home/profile/" element={<Profile />} />
         <Route path="/demo/" element={<Demo />} />
         <Route path="/home/creategame/" element={<CreateGame />} />
-        <Route path="/home/gameroom/" element={<GameRoom />} /> 
         <Route path="/home/admin/" element={<HomeAdmin />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
-    </GlobalContext.Provider>
+    </UserProvider>
   )
 }
 

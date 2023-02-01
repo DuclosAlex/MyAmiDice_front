@@ -5,6 +5,8 @@ import './style.scss';
 
 import api from '../../api'
 import validator from "email-validator";
+import { useContext } from 'react';
+import { UserContext } from '../../Context/UserContext';
 
 const initialState = {
 	pseudo: '',
@@ -58,8 +60,7 @@ function isValidPassword (password){
 
 function ModifyProfileModal({data, toDelete, isPassword}) {
 
-	const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-	const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 	
+	const [user, setUser] = useContext(UserContext);
 
 	const [open, setOpen] = useState(false)
 	const [state, dispatch] = useReducer(reducer, initialState)
@@ -84,7 +85,7 @@ const handleSubmit = async (event) => {
 
 
 	const formData = {
-		id: userData.id, 
+		id: user.id, 
 		pseudo: state.pseudo.trim(),
 		email: state.email.trim(),
 		firstname: state.firstName.trim(),
@@ -92,7 +93,7 @@ const handleSubmit = async (event) => {
 	}
 
 	const formDataPassword = {
-		id: userData.id,
+		id: user.id,
 		newPassword: state.password
 	}
 	
@@ -100,7 +101,10 @@ const handleSubmit = async (event) => {
 		if(state.email === state.confirmEmail){  {/* vérifie que les deux champs email sont identique*/}
 			if(validator.validate(state.email)){  {/* verifie via emailValidator que le format de l'email soit bon */}
 				try {
-					await api.post(`/users/update`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
+console.log("AVANT REQUETE : ", formData);
+					const dataTest = await api.post(`/users/update`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
+console.log("APRES REQUETE : ", dataTest);
+//TODO: setUser pour mettre à jour les infos
 				} catch (error) {
 					throw new Error (error)
 				}
@@ -149,7 +153,7 @@ const handleChange = (event) => {
 }
 
 const handleClick = async () => {
-	await api.delete(`/users/:${userData.id}`); {/* Envoi au serveur la demande de suppression de compte*/} 
+	await api.delete(`/users/:${user.id}`); {/* Envoi au serveur la demande de suppression de compte*/} 
 }
 
 

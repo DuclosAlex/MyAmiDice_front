@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { Button, Header, Label, Modal } from 'semantic-ui-react'
 import './style.scss';
 import { useContext } from 'react';
-import GlobalContext from '../../Context/GlobalContext';
+import {UserContext} from '../../Context/UserContext';
 
 function GameModal({name, id, masterName, status, description, nbPlayer }) {
 
     const [open, setOpen] = useState(false)
-    const [gameId, setGameId] = useContext(GlobalContext);
+    //const [gameId, setGameId] = useContext(UserContext);
 
-    function handleClick() {
-        console.log("handleClick");
+/*     function handleClick() {
+        console.log("handleClick"); //TODO: Utiliser l'id pour savoir quelle game rejoindre quand on clic dessus
         setGameId(id);
-    };
+    }; */
 
   return (
        <>  

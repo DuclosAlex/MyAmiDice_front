@@ -4,6 +4,7 @@ import { Button } from 'semantic-ui-react';
 import './style.scss';
 
 function Concept() {
+  
   return (
     <div className='concept'>
       <div className='concept-container'>
