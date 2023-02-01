@@ -10,10 +10,10 @@ function GameModal({name, id, masterName, status, description, nbPlayer }) {
     const [open, setOpen] = useState(false)
     //const [gameId, setGameId] = useContext(UserContext);
 
-/*     function handleClick() {
+    function handleClick() {
         console.log("handleClick"); //TODO: Utiliser l'id pour savoir quelle game rejoindre quand on clic dessus
-        setGameId(id);
-    }; */
+        //setGameId(id);
+    };
 
   return (
        <>  

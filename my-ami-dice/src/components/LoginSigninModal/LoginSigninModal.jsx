@@ -47,13 +47,8 @@ function LoginSigninModal() {
     const SAVE_FORM = "SAVE_FORM";
     const actionSaveForm = (name, value) => ({type: SAVE_FORM, payload: {name, value}});
 
-    const LOGIN = "LOGIN";
-    // const actionLogin = (email, password) => ({ type: LOGIN, payload: {email, password}});
-
-    const LOGOUT = "LOGOUT";
-    // const actionLogout = () => ({ type: LOGOUT });
-
     const ERROR = "ERROR";
+    //const actionError = (error) => ({type: ERROR, payload: {error}}); //TODO: A supprimer si inutile
 
     const RESET_ERROR = "RESET_ERROR";
 
@@ -61,17 +56,6 @@ function LoginSigninModal() {
 
     function userReducer(state, action) {
         switch (action.type) {
-            case LOGIN: 
-                return {
-                    ...state,
-                    token: action.payload.token
-                };
-            
-            case LOGOUT:
-                return {
-                    ...state,
-                    // token: ''
-                }
             case SAVE_FORM:
                 return {
                     ...state,
@@ -124,9 +108,6 @@ function LoginSigninModal() {
         event.preventDefault();
 
         try {           
-            
-/*             const salt = await bcrypt.genSalt();
-            const hash = await bcrypt.hash(state.password, salt); */
 
             const formData = {
                 email: state.email,
@@ -135,22 +116,17 @@ function LoginSigninModal() {
 console.log(`api.post("/users/login", formData);`, formData);
             const response = await api.post("/users/login", formData); 
 console.log("response : ", response);
-            const userInfos= response.data.user;
-            setUser(userInfos);
 
-console.log("user dans le context / localstorage", user);
+            if (response.status === 200) {
+                
+                const userInfos= response.data.user;
+                setUser(userInfos);
 
-            if (response.status === 200) { //TODO: voir avec le back la gestion token
                 // On stocke le token dans le localStorage
-                //localStorage.setItem("token", response.data.token);
-                //api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-console.log("dispatch LOGIN response.data.user.email", response.data.user.email);
-                dispatch({
-                    type: LOGIN,
-                    payload: {
-                        token: response.data.user.token
-                    }
-                });
+                localStorage.setItem("token", response.data.token);
+                console.log("token : ", response.data.token);
+                api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+
             } else {
                 dispatch({
                     type: ERROR,
@@ -166,10 +142,10 @@ console.log("dispatch LOGIN response.data.user.email", response.data.user.email)
   
     function handleLogout() {
         console.log("dispatch LOGOUT");
-        localStorage.removeItem("token"); //TODO: A CORRIGER AVEC LE STATE/CONTEXT MIS A JOUR
-        dispatch({
-            type: "LOGOUT",
-          });
+        localStorage.removeItem("token");
+        localStorage.removeItem("User");
+        console.log("context", user)
+        navigate("/");
     }
 
     async function handleSignin(event) {
