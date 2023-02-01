@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
 import api from '../../api';
 import { UserContext } from '../../Context/UserContext';
@@ -42,14 +43,14 @@ function CreateGame() {
     }
     
     // Envoi en BDD de la demande de création de partie
-    try {      
-
-console.log("formData avant la requête", formData);
-      const data = await api.post("/games/create", formData); //FIXME: Arrête tout sans création et sans retour d'erreur. Pourquoi ?
-console.log("data après la requête", data);
+    try {
+      const responseCreateGame = await api.post("/games/create", formData); //FIXME: Arrête tout sans création et sans retour d'erreur. Pourquoi ?
+      const dataGame = responseCreateGame.data
+      console.log("datagame", dataGame)
+      setUser({...user, games: [...(user.games || []), {...dataGame}]});
     } catch (error) {
-console.log("error", error);
-      throw new Error (error);
+        console.log("error", error);
+        throw new Error (error);
     }
   }
 

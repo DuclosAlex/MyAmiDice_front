@@ -105,8 +105,8 @@ console.log("AVANT REQUETE : ", formData);
 					const modifiedUser = await api.post(`/users/update`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
 console.log("APRES REQUETE : ", modifiedUser);
 //TODO: setUser pour mettre à jour les infos
-const dataTest = modifiedUser.data;
-setUser({...user, ...dataTest});
+					const dataTest = modifiedUser.data;
+					setUser({...user, ...dataTest});
 				} catch (error) {
 					throw new Error (error)
 				}
