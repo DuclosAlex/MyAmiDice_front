@@ -17,6 +17,7 @@ function LoginSigninModal() {
     const [secondOpen, setSecondOpen] = useState(false);
     
     const [user, setUser] = useContext(UserContext);
+    
 
     const initialState = {
         email: "",
@@ -144,7 +145,7 @@ console.log("response : ", response);
         console.log("dispatch LOGOUT");
         localStorage.removeItem("token");
         localStorage.removeItem("User");
-        console.log("context", user)
+        console.log("context", user);        
         navigate("/");
     }
 
@@ -219,7 +220,7 @@ console.log("response : ", response);
     return (
         <>
             {/* Si l'utilisateur est connecté, on affiche le bouton "Déconnexion", sinon "Connexion */} 
-            {user ? (
+            {(localStorage.getItem("User"))? ( // pas touche c'est normal je t'explique demain :P
                 <Button onClick={handleLogout} negative>Déconnexion</Button>
             ) : ( 
                 <>

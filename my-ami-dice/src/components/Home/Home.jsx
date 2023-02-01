@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Concept from '../Concept/Concept';
 import Header from '../Header/Header';
@@ -9,6 +9,7 @@ import './style.scss';
 
 function Home() {
 
+  
   return (
     <div className='home'>
         <Header />
