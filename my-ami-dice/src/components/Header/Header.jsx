@@ -11,6 +11,7 @@ import './style.scss';
 function Header() {
 
   const [user, setUser] = useContext(UserContext);
+  const areUser = localStorage.getItem("User")
 
   const location = useLocation();
   
@@ -44,7 +45,7 @@ user ? console.log("user du HEADER : ", user) : console.log("user HEADER non exi
               MyAmiDice
           </h1>
           { user? <Button as={NavLink} to="/home/profile">Mon Profil</Button> : null}          
-          <LoginSigninModal className='header-container-buttonconnect' negative>Connexion</LoginSigninModal>
+          <LoginSigninModal className='header-container-buttonconnect' negative />
 
         </div>
         

@@ -67,7 +67,7 @@ function CharacterSheet() {
     <div className='characterSheet'>
       <div className="headContainer">
       <img className="character-avatar" src={J4} alt="character-avatar" onClick={handleClickAvatar} /* au clic sur l'image une modale s'ouvre et donne l'input file*/ />
-      {openModal? <CharacterModifyPrésentation toClose={handleCloseModal} /> : null }       
+      {openModal? <CharacterModifyAvatarModal toClose={handleCloseModal} /> : null }       
         <div className="info-character">
           <div className="presentation-character">
             <div className="presentation-name" onClick={handleClick}>
