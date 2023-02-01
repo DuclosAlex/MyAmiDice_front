@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import { Button, Modal, Header } from 'semantic-ui-react';
+import { UserContext } from '../../Context/UserContext';
 import CharacterCreationModal from "../CharacterCreationModal/CharacterCreationModal"
 import './style.scss';
 
@@ -7,9 +9,8 @@ import './style.scss';
 
 function InviteModal({masterName, gameName}) {
 
-  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-  const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
-  
+  const [user, setUser] = useContext(UserContext);
+
   const [open, setOpen] = useState(false)
   const [CharacterCreationModalOpen , setCharacterCreationModalOpen] = useState(false)
 
@@ -22,7 +23,7 @@ function InviteModal({masterName, gameName}) {
     setOpen(false)
 
     try {
-      await api.delete(`/invite/:${userData.game_invite[0].id}`) 
+      await api.delete(`/invite/:${user.game_invite[0].id}`) 
     } catch (error) {
         throw new Error(error)
     }

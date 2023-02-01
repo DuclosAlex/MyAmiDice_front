@@ -1,12 +1,14 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useContext } from 'react';
 import api from "../../api";
 import { Button, Form, Icon, Modal } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import {UserContext} from '../../Context/UserContext';
+
 import './style.scss';
-//import bcrypt from "bcryptjs"
 
 import validator from "email-validator";
+import { toFormData } from 'axios';
 
 function LoginSigninModal() {
 
@@ -14,14 +16,9 @@ function LoginSigninModal() {
 
     const [firstOpen, setFirstOpen] = useState(false);
     const [secondOpen, setSecondOpen] = useState(false);
-
-/*     const [pseudo, setPseudo] = useState("");
-    const [emailSignin, setEmailSignin] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [passwordSignin, setPasswordSignin] = useState("");
-    const [confirmPasswordSignin, setConfirmPasswordSignin] = useState(""); */
     
+    const [user, setUser] = useContext(UserContext);
+
     const initialState = {
         isLogged: false,
         email: "",
@@ -80,7 +77,6 @@ function LoginSigninModal() {
                     // token: ''
                 }
             case SAVE_FORM:
-                console.log("n ", action.payload.name, " v ", action.payload.value);
                 return {
                     ...state,
                     [action.payload.name]: action.payload.value,
@@ -142,12 +138,11 @@ function LoginSigninModal() {
             }
 console.log(`api.post("/users/login", formData);`, formData);
             const response = await api.post("/users/login", formData); 
+console.log("response : ", response);
+            const userInfos= response.data.user;
+            setUser(userInfos);
 
-            const userInfos= response.data.user
-            localStorage.setItem('User', JSON.stringify(userInfos));
-
-
-console.log("data.user", response.data.user);
+console.log("user dans le context / localstorage", user);
 
             if (response.status === 200) { //TODO: voir avec le back la gestion token
                 // On stocke le token dans le localStorage

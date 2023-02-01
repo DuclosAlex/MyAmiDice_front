@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Button, Form } from "semantic-ui-react";
-import ContextGameRoom from '../../Context/GameRoomContext';
-import GlobalContext from '../../Context/GlobalContext';
+import {UserContext} from '../../Context/UserContext';
 import { SocketContext } from '../../Context/SocketContext';
 
 import "./style.scss";
@@ -10,12 +9,8 @@ import "./style.scss";
 function ChatRoom() {
     
     console.log("gameId dans le context" )
-
-    // On lie le state de ContextGameRoom au state roomId
-    const [masterSocketId, setMasterSocketId] = useContext(ContextGameRoom);
-    const [gameId, setGameId] = useContext(GlobalContext);
-
-    const masterId = 33; //FIXME: A remplacer par la game.user_id (du mj)
+    
+    const [user, setUser] = useContext(UserContext);
     
     // Connexion à socket.io côté serveur
     const socket = useContext(SocketContext);
@@ -28,7 +23,7 @@ console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand o
         socket.emit("join-room", 5);// TODO: Remplacer 5 par gameId quand on a l'info
         
         // Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
-        /* if (masterId === userData.id) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
+        /* if (masterId === user.id) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
             setMasterSocketId(socket.id);
         } */
     });
@@ -36,17 +31,8 @@ console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand o
     const [message, setMessage] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
     const [recipientId, setRecipientId] = useState("");
-    const [strength, setStrength] = useState(10);
-
 
     const refMessage = useRef();
-
-    // On récupère "Users" du localStorage
-    const dataStorage = localStorage.getItem("User");
-    const userData = JSON.parse(dataStorage);
-
-
-
 
     // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io, et on déconnecte
     useEffect(() => {        
@@ -73,9 +59,8 @@ console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand o
         
     }, [chatHistory]);
     
-    const myPseudo = userData.pseudo;
-
-/*     //TODO: Un user valide un changement de carac
+    
+    /*     //TODO: Un user valide un changement de carac
     function handleModification(event) {
         const data = event.target.name;
         const newValue = event.target.value;
@@ -91,13 +76,14 @@ console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand o
         // case: "dexterity"
         // ...
     }) */
-
+    
     function handleSubmit(event) {
         event.preventDefault();
-
+        
         // Si "message" est vide, on ne fait rien
         if(message === "") return;
-
+        
+        const myPseudo = user.pseudo;
         const room = recipientId;
 
         setChatHistory([...chatHistory, {pseudo: myPseudo, message: message}]);

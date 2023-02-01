@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-
+import {UserContext} from '../../Context/UserContext';
 import { Button } from 'semantic-ui-react';
 import api from '../../api';
 import GameModal from '../GameModal/GameModal';
@@ -14,14 +14,13 @@ function GameList() {
 
   const [allGamesAdmin, setAllGamesAdmin] = useState(null);
 
-  const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-  const userData = JSON.parse(dataStorage)   // reconstruit les données du user en JSON
+  const [user, setUser] = useContext(UserContext);
 
   let isAdmin = ""
   let allGamesPlayer=[]
-  if (userData){
-    allGamesPlayer = userData.games
-    isAdmin = userData.is_admin
+  if (user){
+    allGamesPlayer = user.games
+    isAdmin = user.is_admin
   }
 
   useEffect(() => {

@@ -1,11 +1,15 @@
 import React, { useReducer, useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
+import {UserContext} from '../../Context/UserContext';
+
 import './style.scss';
 
 import api from "../../api";
+import { useContext } from "react";
 
 
 function CharacterCreationModal() {
+
     const [firstOpen, setFirstOpen] = useState(true);
     const [secondOpen, setSecondOpen] = useState(false);
     const [thirdOpen, setThirdOpen] = useState(false);
@@ -13,8 +17,7 @@ function CharacterCreationModal() {
     const [characterCreated, setCharacterCreated] = useState("");
     const [error, setError] = useState("");
 
-    const dataStorage = localStorage.getItem('User'); // recupère la donnée lié a la key "User" dans le localStorage en STRING
-    const userData = JSON.parse(dataStorage) // reconstruit les données du user en JSON 
+    const [user, setUser] = useContext(UserContext);
 
     const initialState = {
         avatarFile: null,
@@ -293,8 +296,8 @@ function CharacterCreationModal() {
                     description: state.description.trim(),
                     race: state.race.trim(),
                     class: state.race.trim(),
-                    userId: userData.id, 
-                    gameId: userData.games_invite[0].game_id, 
+                    userId: user.id, 
+                    gameId: user.games_invite[0].game_id, 
                     avatar: "/stateavatarFile"
                 },
                 {
@@ -318,8 +321,8 @@ console.log("AVANT LA REQUETE formData : ", formData);
 console.log("APRES LA REQUETE characterCreated : ", characterCreated);
             setCharacterCreated(characterCreated)
             // On supprime l'invitation correspondante
-            console.log("AVANT suppression de l'invit : ", userData.games_invite[0].id);
-            await api.delete(`/invites/${userData.games_invite[0].id}`);
+            console.log("AVANT suppression de l'invit : ", user.games_invite[0].id);
+            await api.delete(`/invites/${user.games_invite[0].id}`);
             console.log("APRES suppression de l'invit");
 
         } catch (error) {

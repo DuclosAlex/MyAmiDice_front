@@ -5,11 +5,12 @@ import Notes from "../Notes/Notes";
 import Map from "../Map/Map"
 import AvatarContainer from "../AvatarContainer/AvatarContainer";
 import ChatRoom from "../ChatRoom/Chatroom";
+import { UserContext } from "../../Context/UserContext";
 
-import { useState } from "react";
 import { socket, SocketContext } from "../../Context/SocketContext";
 import CharacterSheet from "../CharacterSheet/CharacterSheet";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { Header } from "semantic-ui-react";
 
 
 
@@ -29,18 +30,15 @@ function GameRoom() {
       }
     };
     gameData();
-  }, []);
+  }, []);  
 
+  const [user, setUser] = useContext(UserContext);
 
-  
+console.log("user GAMEROOM", user);
 
-  const [dataGameRoomContext, setGameRoomDataContext] = useState(null);
-  console.log(dataGameRoomContext)
   return (
-    <ContextGameRoom.Provider value = {[dataGameRoomContext, setGameRoomDataContext]}>
-      <SocketContext.Provider value={socket}>
+    <SocketContext.Provider value={socket}>
         <div className='GameRoom'>
-          
           <div className="avatar">
             <AvatarContainer />
           </div>
@@ -58,7 +56,6 @@ function GameRoom() {
 
         </div>
       </SocketContext.Provider>
-    </ContextGameRoom.Provider>
   )
 }
 
