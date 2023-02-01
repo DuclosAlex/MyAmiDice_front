@@ -102,9 +102,11 @@ const handleSubmit = async (event) => {
 			if(validator.validate(state.email)){  {/* verifie via emailValidator que le format de l'email soit bon */}
 				try {
 console.log("AVANT REQUETE : ", formData);
-					const dataTest = await api.post(`/users/update`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
-console.log("APRES REQUETE : ", dataTest);
+					const modifiedUser = await api.post(`/users/update`, formData); {/* Envoi au serveur du formulaire de modification profil*/}
+console.log("APRES REQUETE : ", modifiedUser);
 //TODO: setUser pour mettre à jour les infos
+const dataTest = modifiedUser.data;
+setUser({...user, ...dataTest});
 				} catch (error) {
 					throw new Error (error)
 				}
