@@ -19,7 +19,6 @@ function LoginSigninModal() {
     const [user, setUser] = useContext(UserContext);
 
     const initialState = {
-        isLogged: false,
         email: "",
         password: "",
         // token: "",
@@ -65,14 +64,12 @@ function LoginSigninModal() {
             case LOGIN: 
                 return {
                     ...state,
-                    isLogged: true,
-                    // token: action.payload.token
+                    token: action.payload.token
                 };
             
             case LOGOUT:
                 return {
                     ...state,
-                    isLogged: false,
                     // token: ''
                 }
             case SAVE_FORM:
@@ -147,12 +144,11 @@ console.log("user dans le context / localstorage", user);
                 // On stocke le token dans le localStorage
                 //localStorage.setItem("token", response.data.token);
                 //api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`
-
+console.log("dispatch LOGIN response.data.user.email", response.data.user.email);
                 dispatch({
                     type: LOGIN,
                     payload: {
-                        email: response.data.user.email
-                        // token: res.data.token
+                        token: response.data.user.token
                     }
                 });
             } else {
@@ -169,7 +165,8 @@ console.log("user dans le context / localstorage", user);
     }
   
     function handleLogout() {
-        localStorage.removeItem("token");
+        console.log("dispatch LOGOUT");
+        localStorage.removeItem("token"); //TODO: A CORRIGER AVEC LE STATE/CONTEXT MIS A JOUR
         dispatch({
             type: "LOGOUT",
           });
@@ -246,7 +243,7 @@ console.log("user dans le context / localstorage", user);
     return (
         <>
             {/* Si l'utilisateur est connecté, on affiche le bouton "Déconnexion", sinon "Connexion */} 
-            {state.isLogged ? (
+            {user ? (
                 <Button onClick={handleLogout} negative>Déconnexion</Button>
             ) : ( 
                 <>
