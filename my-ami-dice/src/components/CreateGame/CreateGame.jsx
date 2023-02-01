@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
 import api from '../../api';
 import { UserContext } from '../../Context/UserContext';
@@ -10,14 +10,14 @@ import './style.scss';
 function CreateGame() {
 
   const [user, setUser] = useContext(UserContext);
-
   const [game, setGame] = useState({
     name: "",
     description: "",
     max_player: ""
-  });
-  
+  });  
   const [error, setError] = useState("");
+   
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -48,6 +48,7 @@ function CreateGame() {
       const dataGame = responseCreateGame.data
       console.log("datagame", dataGame)
       setUser({...user, games: [...(user.games || []), {...dataGame}]});
+      navigate("/home/gameroom")
     } catch (error) {
         console.log("error", error);
         throw new Error (error);
@@ -89,13 +90,13 @@ function CreateGame() {
               inline
               required
           />
-
-          <Button
-              type="submit"
-              negative
-          >
-              Créer la partie
-          </Button>
+            <Button
+                type="submit"
+                negative
+                
+            >
+                Créer la partie
+            </Button>
           {error && <p>{error}</p>}
         </Form>
       </div>
