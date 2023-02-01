@@ -1,6 +1,5 @@
 import "./style.scss";
 import DiceGenerator from "../DiceGenerator/DiceGenerator";
-import ContextGameRoom from "../../Context/GameRoomContext";
 import Notes from "../Notes/Notes";
 import Map from "../Map/Map"
 import AvatarContainer from "../AvatarContainer/AvatarContainer";
@@ -10,8 +9,6 @@ import { UserContext } from "../../Context/UserContext";
 import { socket, SocketContext } from "../../Context/SocketContext";
 import CharacterSheet from "../CharacterSheet/CharacterSheet";
 import { useContext, useEffect } from "react";
-import { Header } from "semantic-ui-react";
-
 
 
 function GameRoom() {

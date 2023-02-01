@@ -20,7 +20,7 @@ function ChatRoom() {
 console.log("Connexion chatroom id : ", socket.id);
 console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand on a l'info
         // On rejoint la salle qui correspond à notre partie
-        socket.emit("join-room", 5);// TODO: Remplacer 5 par gameId quand on a l'info
+        socket.emit("join-room", 4);// TODO: Remplacer 5 par gameId quand on a l'info
         
         // Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
         /* if (masterId === user.id) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
