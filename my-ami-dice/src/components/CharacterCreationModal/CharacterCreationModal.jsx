@@ -295,7 +295,7 @@ function CharacterCreationModal() {
                     lastName: state.lastName.trim(),
                     description: state.description.trim(),
                     race: state.race.trim(),
-                    class: state.race.trim(),
+                    class: state.class.trim(),
                     userId: user.id, 
                     gameId: user.games_invite[0].game_id, 
                     avatar: "/stateavatarFile"
