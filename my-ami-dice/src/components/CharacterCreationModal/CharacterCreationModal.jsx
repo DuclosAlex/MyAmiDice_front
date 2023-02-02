@@ -319,7 +319,7 @@ function CharacterCreationModal() {
 console.log("AVANT LA REQUETE formData : ", formData);
             const characterCreated = await api.post(`/characters/create`, formData);
 console.log("APRES LA REQUETE characterCreated : ", characterCreated);
-            setCharacterCreated(characterCreated)
+            setCharacterCreated(characterCreated);
             // On supprime l'invitation correspondante
             console.log("AVANT suppression de l'invit : ", user.games_invite[0].id);
             await api.delete(`/invites/${user.games_invite[0].id}`);

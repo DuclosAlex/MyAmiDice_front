@@ -12,7 +12,7 @@ function GameModal({name, id, masterName, status, description, nbPlayer }) {
 
     function handleClick() {
         console.log("handleClick"); //TODO: Utiliser l'id pour savoir quelle game rejoindre quand on clic dessus
-        //setGameId(id);
+        //setUser(...id);
     };
 
   return (
