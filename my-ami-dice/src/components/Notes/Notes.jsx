@@ -3,12 +3,12 @@ import { Form } from 'semantic-ui-react';
 import "./style.scss";
 
 function Notes() {
-
+/* 
   const [notes, setNotes] = useState("");
 
   function handleChange(event) {
     setNotes(event.target.value);
-  }
+  } */
 
   return (
     <div className='notes'>
@@ -17,6 +17,7 @@ function Notes() {
       C’est quand même magnifique une armée bien coordonnée, hein! Alors vous allez peut-être me dire que maintenant ils croient qu'on est là-bas? Ah il faut la tenter celle-là! Passer la tête? Pour me prendre une flêche dedans? Non merci!
 
       Mais oui mon p’tit père il faudra bien vous y coller! À moins que vous préfériez vous taper les tartes! Sans vouloir la ramener la seule différence concrète avec les briques c’est que vous appelez ça des tartes. Mais arrêtez bon sang!
+
       {/* <Form>
         <Form.TextArea
           className="textarea-notes"
@@ -31,4 +32,4 @@ function Notes() {
   )
 }
 
-export default Notes
+export default Notes 

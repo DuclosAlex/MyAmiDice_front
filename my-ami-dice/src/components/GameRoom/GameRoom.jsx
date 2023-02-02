@@ -20,8 +20,8 @@ function GameRoom() {
     async function gameData() {
       try {
         console.log("dans le mount de la GameRoom");
-        // const data = await api.get(`/games/${user_id}/${gameId}`);
-        // console.log("APRES LA REQUETE data : ", data);
+        const data = await api.get(`/games/${user_id}/${gameId}`);
+        console.log("APRES LA REQUETE data : ", data);
       } catch (error) {
         throw new Error(error);
       }

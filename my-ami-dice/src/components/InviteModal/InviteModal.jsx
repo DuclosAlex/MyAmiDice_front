@@ -24,6 +24,7 @@ function InviteModal({masterName, gameName}) {
 
     try {
       await api.delete(`/invite/:${user.game_invite[0].id}`) 
+      console.log("suppression de l'invitation")
     } catch (error) {
         throw new Error(error)
     }
