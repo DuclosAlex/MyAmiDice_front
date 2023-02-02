@@ -7,23 +7,26 @@ import "./style.scss";
 
 
 function ChatRoom() {
-    
-    console.log("gameId dans le context" )
-    
+
     const [user, setUser] = useContext(UserContext);
     
     // Connexion à socket.io côté serveur
     const socket = useContext(SocketContext);
     
+    // On récupère l'id de la game que je rejoins
+    const currentGameId = user.currentGame;
+    const myId = user.id;
+
     // On écoute l'évènement "connect"
     socket.on("connect", () => {
 console.log("Connexion chatroom id : ", socket.id);
-console.log("Je rejoins la salle : ", user.currentGame);
+console.log("Je rejoins la salle : ", currentGameId);
+
         // On rejoint la salle qui correspond à notre partie
-        socket.emit("join-room", user.currentGame);
+        //socket.emit("join-room", currentGameId);
         
         // Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
-        /* if (masterId === user.id) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
+        /* if (masterId === myId) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
             setMasterSocketId(socket.id);
         } */
     });
@@ -50,7 +53,7 @@ console.log("Je rejoins la salle : ", user.currentGame);
             socket.removeAllListeners("new-message");
         });
         
-        console.log("chatHistory", chatHistory);
+console.log("chatHistory", chatHistory);
         /* return () => {
             console.log("deconnexion")
             socket.disconnect(); //FIXME:
@@ -65,12 +68,11 @@ console.log("Je rejoins la salle : ", user.currentGame);
         if(message === "") return;
         
         const myPseudo = user.pseudo;
-        const room = recipientId;
 
         setChatHistory([...chatHistory, {pseudo: myPseudo, message: message}]);
-        console.log("on envoie un message: ", myPseudo, message);
+console.log("on envoie un message : ", myPseudo, message);
         // On envoie une requête "send-message" au serveur socket.io
-        socket.emit("send-message", {pseudo: myPseudo, message}, room);
+        socket.emit("send-message", {pseudo: myPseudo, message}, recipientId);
         setMessage("");
     }
     
