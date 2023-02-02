@@ -18,9 +18,9 @@ function ChatRoom() {
     // On écoute l'évènement "connect"
     socket.on("connect", () => {
 console.log("Connexion chatroom id : ", socket.id);
-console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand on a l'info
+console.log("Je rejoins la salle : ", user.currentGame);
         // On rejoint la salle qui correspond à notre partie
-        socket.emit("join-room", 4);// TODO: Remplacer 5 par gameId quand on a l'info
+        socket.emit("join-room", user.currentGame);
         
         // Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
         /* if (masterId === user.id) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
@@ -34,7 +34,7 @@ console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand o
 
     const refMessage = useRef();
 
-    // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io, et on déconnecte
+    // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io (et on déconnecte => NON)
     useEffect(() => {        
         
         // Quand chatHistory change, on scroll la fenêtre de chat tout en bas
@@ -42,7 +42,6 @@ console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand o
             const { scrollHeight } = refMessage.current;
             refMessage.current.scrollTo(0, scrollHeight);
         }
-
 
         // On écoute l'évènement de réception de message "new-message"
         socket.on("new-message", ({pseudo, message}) => {
@@ -58,25 +57,7 @@ console.log("Je rejoins la salle : ", 5); //TODO: Remplacer 5 par gameId quand o
         } */
         
     }, [chatHistory]);
-    
-    
-    /*     //TODO: Un user valide un changement de carac
-    function handleModification(event) {
-        const data = event.target.name;
-        const newValue = event.target.value;
-        socket.emit("data-change", {data, newValue}, room); // room = socketId du MJ
-    }
 
-    //TODO: On écoute un changement de carac
-    socket.on("data-return", ({data, newValue}) => {
-        // Impacter le changement sur la fiche perso du mj
-        // switchcase data :
-        //  case: "strength"
-        //  setStrength(value);
-        // case: "dexterity"
-        // ...
-    }) */
-    
     function handleSubmit(event) {
         event.preventDefault();
         
