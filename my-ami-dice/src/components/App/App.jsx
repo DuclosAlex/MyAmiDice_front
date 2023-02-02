@@ -16,12 +16,12 @@ function App() {
   return (
     <UserProvider>
       <Routes>
-        <Route path="/home/gameroom/" element={<GameRoom />} /> 
         <Route path="/" element={<Home />} />
         <Route path="/home/user/" element={<HomeMember />} />
         <Route path="/home/profile/" element={<Profile />} />
         <Route path="/demo/" element={<Demo />} />
         <Route path="/home/creategame/" element={<CreateGame />} />
+        <Route path="/home/gameroom/" element={<GameRoom />} /> 
         <Route path="/home/admin/" element={<HomeAdmin />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
