@@ -322,7 +322,7 @@ console.log("AVANT LA REQUETE formData : ", formData);
 console.log("APRES LA REQUETE characterCreated : ", characterCreated);
             setCharacterCreated(characterCreated);
             // On supprime l'invitation correspondante
-            setUser({...user, currentGame: (user.games_invite[0].game_id)});
+            setUser({...user, currentGameID: (user.games[0].id), currentMasterID: (user.games[0].user_id)});
 
             console.log("AVANT suppression de l'invit : ", user.games_invite[0].id);
             await api.delete(`/invites/${user.games_invite[0].id}`);
