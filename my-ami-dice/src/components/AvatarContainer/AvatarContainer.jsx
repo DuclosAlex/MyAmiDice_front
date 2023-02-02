@@ -28,7 +28,7 @@ function AvatarContainer() {
             }
         };
         gameData();
-    },[masterId])
+    },[])
     
     const handleClick = (event) =>{
         const namePlayer = event.target.name
