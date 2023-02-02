@@ -11,7 +11,6 @@ import './style.scss';
 
 function UsersList() { 
   
-  const test = 1 // test pour push
   const [allUsers, setAllUsers] = useState(null);
 
   
