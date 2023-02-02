@@ -3,16 +3,16 @@ import { Form } from 'semantic-ui-react';
 import "./style.scss";
 
 function Notes() {
-
+/* 
   const [notes, setNotes] = useState("");
 
   function handleChange(event) {
     setNotes(event.target.value);
-  }
+  } */
 
   return (
     <div className='notes'>
-      <Form>
+      {/* <Form>
         <Form.TextArea
           label="Notes"
           name="notes"
@@ -20,9 +20,9 @@ function Notes() {
           onChange={handleChange}
           inline
         />
-      </Form>
+      </Form> */}
     </div>
   )
 }
 
-export default Notes
+export default Notes 
