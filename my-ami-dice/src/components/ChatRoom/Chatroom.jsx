@@ -9,7 +9,7 @@ import "./style.scss";
 function ChatRoom() {
 
     const [user, setUser] = useContext(UserContext);
-    
+    const chiffre = 3;
     // Connexion à socket.io côté serveur
     const socket = useContext(SocketContext);
     
