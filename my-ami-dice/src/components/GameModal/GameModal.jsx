@@ -13,7 +13,7 @@ function GameModal({name, id, masterName, status, description, nbPlayer }) {
     //const [gameId, setGameId] = useContext(UserContext);
 
     function handleClick() {
-        setUser({...user, currentGame: (user.games[0].id)});
+        setUser({...user, currentGameID: (user.games[0].id), currentMasterID: (user.games[0].user_id)});
         navigate("/home/gameroom")
     };
 
