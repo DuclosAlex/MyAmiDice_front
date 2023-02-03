@@ -54,10 +54,10 @@ function ChatRoom() {
             });
 
         });
-        
-        // Evènement "disconnect"
+
+        // Quand un utilisateur se déconnecte
         socket.on("disconnect", () => {
-            console.log("Déconnexion");
+            console.log("Déconnexion de la salle : ");
         })
         return () => {
             socket.off("connect");
