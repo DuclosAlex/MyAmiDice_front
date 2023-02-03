@@ -10,40 +10,19 @@ import { UserContext } from '../../Context/UserContext';
 
 
 function AvatarContainer() {
-    const [user, setUser] = useContext(UserContext)
-    //const characters = user.allCharactersGame
-    const masterId = user.currentMasterID
-    //const playerId = user.id
-    useEffect(()=>{
-        
-        async function gameData() {
-            try {
-                //console.log("dans le mount de la AvatarContainer");
-                const response = await api.get(`/games/${user.currentGameID}/${masterId}`);
-                setUser({...user, allCharacters: (response.data.Gameroom.personnages)});
-                //console.log("APRES LA REQUETE Avatar : ", response.data.Gameroom.personnages);
-                
-            } catch (error) {
-                throw new Error(error);
-            }
-        };
-        gameData();
-    },[masterId])
-    
-    const handleClick = (event) =>{
-        const namePlayer = event.target.name
-        setNamePlayer(namePlayer)
-        
-    }
 
+
+ const [user, setUser] = useContext(UserContext);
+
+   
   return (
     <div className='avatars-container'>
         <div className='container'>
-          {/*   {characters.map((character)=>{
-                <div className='avatar-player'>
-                    <img onClick={handleClick} src={player1IMG} name={character.firstname} id={character.id} alt="Avatar" />
-                </div>
-            })} */}  
+            {user.allCharacters?.map((character)=>
+                (<div className='avatar-player' key={character.id}>
+                    <img src={player1IMG} name={character.firstname} id={character.id} alt="Avatar" />
+                </div>)
+            )}
         </div>  
     </div>
   )
