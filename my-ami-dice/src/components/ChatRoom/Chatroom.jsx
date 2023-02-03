@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Form } from "semantic-ui-react";
+import { Button, Dropdown, Form, Select } from "semantic-ui-react";
 import {UserContext} from '../../Context/UserContext';
 import { SocketContext } from '../../Context/SocketContext';
 
@@ -12,7 +12,8 @@ function ChatRoom() {
     
     const [message, setMessage] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
-    const [recipientId, setRecipientId] = useState("");
+    const [recipientId, setRecipientId] = useState("Général");
+    const [recipientName, setRecipientName] = useState("");
     const [connectedUsers, setConnectedUsers] = useState([]);
     
     const refMessage = useRef();
@@ -20,11 +21,18 @@ function ChatRoom() {
     // Connexion à socket.io côté serveur
     const socket = useContext(SocketContext);
     
-    // On récupère l'id de la game que je rejoins et mon id
+    // On récupère les infos nécessaires
     const currentGameId = user.currentGameID;
     const myId = user.id;
-    const myPseudo = user.pseudo;
-    
+    const masterId = user.currentMasterID;
+    let myCharacterName = "";
+
+    if (myId === user.currentMasterID) {
+        myCharacterName = user.pseudo;
+    } else {
+        myCharacterName = `(MJ) ${user.pseudo}`;
+    }
+
     // Au mount initial
     useEffect(()=>{
 
@@ -34,18 +42,22 @@ function ChatRoom() {
             console.log("Je rejoins la salle : ", currentGameId);
             
             // On rejoint la salle qui correspond à notre partie
-            socket.emit("join-room", currentGameId);
+            socket.emit("join-room", currentGameId, myCharacterName);
 
-            // 
+            // Ecouteur pour récupérer les utilisateurs connectés en temps réel
             socket.on('connected-users', (users) => {
+                // Je supprime mon id du tableau des utilisateurs connectés
+                console.log("users avant suppression : ", users);
+                users = users.filter(user => user.value !== socket.id);
+                console.log("users après suppression : ", users);
                 setConnectedUsers(users);
             });
 
         });
-        
-        // Evènement "disconnect"
+
+        // Quand un utilisateur se déconnecte
         socket.on("disconnect", () => {
-            console.log("Déconnexion");
+            console.log("Déconnexion de la salle : ");
         })
         return () => {
             socket.off("connect");
@@ -78,17 +90,23 @@ function ChatRoom() {
         console.log("chatHistory", chatHistory);
     }, [chatHistory]);
 
+    function handleChangeDropdown(event, data) {
+        console.log("handleChangeDropdown : ", event.target.textContent);
+        setRecipientId(data.value);
+        setRecipientName(event.target.textContent);
+    }
+
     function handleSubmit(event) {
         event.preventDefault();
         
         // Si "message" est vide, on ne fait rien
         if(message === "") return;
-        
 
-        setChatHistory([...chatHistory, {pseudo: myPseudo, message: message}]);
-        console.log("on envoie un message : ", myPseudo, message);
+        setChatHistory([...chatHistory, {pseudo: myCharacterName, message: message, recipient: recipientName}]);
+        console.log(myCharacterName, " envoie un message : ", message, " à : ", recipientName, " qui a l'id : ",recipientId);
+        
         // On envoie une requête "send-message" au serveur socket.io
-        socket.emit("send-message", {pseudo: myPseudo, message}, recipientId);
+        socket.emit("send-message", {pseudo: myCharacterName, message}, recipientId);
         setMessage("");
     }
     
@@ -97,21 +115,11 @@ function ChatRoom() {
         <div className="chatroom">
             <ul className="message-container" ref={refMessage}>
                 {chatHistory.map((data, index) => (
-                    <li key={index}>{data.pseudo}: {data.message}</li>
+                    <li key={index}>{data.pseudo} {data.recipient ? ` à ${data.recipient}` : ""}: {data.message}</li>
                 ))}
             </ul>
             <Form id="form" onSubmit={handleSubmit} >
                 <Form.Group>
-                    {/* <Form.Input
-                        id='force'
-                        placeholder="Force"
-                        type="number"
-                        name="strength"
-                        value={strength}
-                        onChange={event => setStrength(event.target.value)}
-                        onClick={handleModification}
-                        inline
-                    /> */}
                     <Form.Input
                         placeholder="Message"
                         type="text"
@@ -120,19 +128,21 @@ function ChatRoom() {
                         onChange={event => setMessage(event.target.value)}
                         inline
                     />
-                    <ul>
-                        {connectedUsers.map(user => (
-                            <li key={user}>{user}</li>
-                        ))}
-                    </ul>
-                    <Form.Input
+                    <Dropdown
+                        fluid
+                        selection
+                        value={recipientId}
+                        onChange={handleChangeDropdown}
+                        options={connectedUsers}
+                    />
+                    {/* <Form.Input
                         placeholder="Destinataire"
                         type="text"
                         name="id-input"
                         value={recipientId}
                         onChange={event => setRecipientId(event.target.value)}
                         inline
-                    />
+                    /> */}
                     <Button
                         type="submit"
                         id="send-button"

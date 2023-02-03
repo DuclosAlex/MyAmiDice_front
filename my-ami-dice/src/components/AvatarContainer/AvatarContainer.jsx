@@ -11,6 +11,7 @@ import { UserContext } from '../../Context/UserContext';
 
 function AvatarContainer() {
 
+
  const [user, setUser] = useContext(UserContext);
 
    

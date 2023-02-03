@@ -19,7 +19,6 @@ function GameRoom() {
 
   // Au mount initial, on lance la requête pour récupérer toutes les informations
   useEffect(() => {
-    console.log("Rendu initial de la GameRoom")
     
     async function gameData() {
       try {
@@ -35,6 +34,7 @@ function GameRoom() {
           allCharacters: characters.Gameroom.personnages,
           currentGameData: game
         }));
+
       } catch (error) {
           throw new Error(error);
       }
@@ -43,7 +43,7 @@ function GameRoom() {
   }, []);  
 
 
-console.log("user GAMEROOM", user);
+//console.log("user GAMEROOM", user);
 
   return (
     <SocketContext.Provider value={socket}>

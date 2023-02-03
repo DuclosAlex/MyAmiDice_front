@@ -47,7 +47,7 @@ function CharacterSheet() {
   
   const [openModal, setOpenModal] = useState(false)
   const [doClick, setDoClick] = useState(false)
-  console.log("click:",openModal)
+  //console.log("click:",openModal)
 
   const handleClickAvatar = () => {
     // TODO: comparer l'id du mj de la game avec celui du joueurs pour que le mj ne puiss pas realiser le handleclick
