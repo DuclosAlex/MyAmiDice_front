@@ -18,10 +18,10 @@ function AvatarContainer() {
         
         async function gameData() {
             try {
-                console.log("dans le mount de la AvatarContainer");
+                //console.log("dans le mount de la AvatarContainer");
                 const response = await api.get(`/games/${user.currentGameID}/${masterId}`);
                 setUser({...user, allCharacters: (response.data.Gameroom.personnages)});
-                console.log("APRES LA REQUETE Avatar : ", response.data.Gameroom.personnages);
+                //console.log("APRES LA REQUETE Avatar : ", response.data.Gameroom.personnages);
                 
             } catch (error) {
                 throw new Error(error);
