@@ -15,6 +15,8 @@ import api from '../../api'
 function GameRoom() {
 
   const [user, setUser] = useContext(UserContext);
+  const masterId = user.currentMasterID
+
   // Au mount initial, on lance la requête pour récupérer toutes les informations
   useEffect(() => {
     console.log("Rendu initial de la GameRoom")
@@ -22,9 +24,17 @@ function GameRoom() {
     async function gameData() {
       try {
         console.log("dans le mount de la GameRoom");
-        const game = await api.get(`/games/${user.currentGameID}/${user.id}`);
-        setUser({...user, currentGameData: (game.data)});
-        console.log("APRES LA REQUETE data : ", game);
+
+        const [{data: game}, {data: characters}] = await Promise.all([
+          api.get(`/games/${user.currentGameID}/${user.id}`),
+          api.get(`/games/${user.currentGameID}/${masterId}`)
+        ])
+        
+        setUser((user) => ({
+          ...user, 
+          allCharacters: characters.Gameroom.personnages,
+          currentGameData: game
+        }));
       } catch (error) {
           throw new Error(error);
       }
