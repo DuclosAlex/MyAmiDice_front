@@ -8,30 +8,31 @@ import { UserContext } from "../../Context/UserContext";
 
 import { socket, SocketContext } from "../../Context/SocketContext";
 import CharacterSheet from "../CharacterSheet/CharacterSheet";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import api from '../../api'
 
 
 function GameRoom() {
 
+  const [user, setUser] = useContext(UserContext);
   // Au mount initial, on lance la requête pour récupérer toutes les informations
   useEffect(() => {
-    console.log("Rendu initial de la GameRoom")
     
     async function gameData() {
       try {
-        console.log("dans le mount de la GameRoom");
-        // const data = await api.get(`/games/${user_id}/${gameId}`);
-        // console.log("APRES LA REQUETE data : ", data);
+        //console.log("AVANT LA REQUETE Gameroom");
+        const game = await api.get(`/games/${user.currentGameID}/${user.id}`);
+        setUser({...user, currentGameData: (game.data)});
+        //console.log("APRES LA REQUETE data : ", game);
       } catch (error) {
-        throw new Error(error);
+          throw new Error(error);
       }
     };
     gameData();
   }, []);  
 
-  const [user, setUser] = useContext(UserContext);
 
-console.log("user GAMEROOM", user);
+//console.log("user GAMEROOM", user);
 
   return (
     <SocketContext.Provider value={socket}>
@@ -43,6 +44,7 @@ console.log("user GAMEROOM", user);
           <div className="containerMapNote">
             <Notes />
             <Map />
+            {user.id}
             <CharacterSheet /* TODO: conditions si c'est le joueur ça s'affiche en dur sinon hidden pour garder la place occuper*/ /> 
           </div>
           

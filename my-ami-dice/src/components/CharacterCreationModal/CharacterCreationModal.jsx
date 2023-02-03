@@ -6,6 +6,7 @@ import './style.scss';
 
 import api from "../../api";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 
 
 function CharacterCreationModal() {
@@ -16,7 +17,7 @@ function CharacterCreationModal() {
     const [confirmOpen, setConfirmOpen] = useState(false);
     const [characterCreated, setCharacterCreated] = useState("");
     const [error, setError] = useState("");
-
+    const navigate = useNavigate()
     const [user, setUser] = useContext(UserContext);
 
     const initialState = {
@@ -319,8 +320,10 @@ function CharacterCreationModal() {
 console.log("AVANT LA REQUETE formData : ", formData);
             const characterCreated = await api.post(`/characters/create`, formData);
 console.log("APRES LA REQUETE characterCreated : ", characterCreated);
-            setCharacterCreated(characterCreated)
+            setCharacterCreated(characterCreated);
             // On supprime l'invitation correspondante
+            setUser({...user, currentGameID: (user.games[0].id), currentMasterID: (user.games[0].user_id)});
+
             console.log("AVANT suppression de l'invit : ", user.games_invite[0].id);
             await api.delete(`/invites/${user.games_invite[0].id}`);
             console.log("APRES suppression de l'invit");
@@ -393,6 +396,14 @@ console.log("APRES REQUETE")
             setError("Merci de compléter les champs requis.")
             return;
         }
+    }
+
+
+    const handleClickFinish = () =>{
+
+        setConfirmOpen(false)
+        navigate('/home/gameroom')
+
     }
 
   return (
@@ -801,7 +812,7 @@ console.log("APRES REQUETE")
                 <p>Félicitations, vous êtes prêt pour partir à l'aventure !</p>
                 </Modal.Content>
                 <Modal.Actions>
-                <Button negative onClick={() => setConfirmOpen(false)}>
+                <Button negative onClick={handleClickFinish} >
                     C"est parti !
                 </Button>
                 </Modal.Actions>

@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
+import { useState, useContext} from 'react'
 import PropTypes from 'prop-types';
 import { Button, Header, Label, Modal } from 'semantic-ui-react'
 import './style.scss';
-import { useContext } from 'react';
 import {UserContext} from '../../Context/UserContext';
+import { useNavigate } from 'react-router';
 
 function GameModal({name, id, masterName, status, description, nbPlayer }) {
 
     const [open, setOpen] = useState(false)
+    const [user, setUser] = useContext(UserContext)
+    const navigate = useNavigate()
     //const [gameId, setGameId] = useContext(UserContext);
 
     function handleClick() {
-        console.log("handleClick"); //TODO: Utiliser l'id pour savoir quelle game rejoindre quand on clic dessus
-        //setGameId(id);
+        setUser({...user, currentGameID: (user.games[0].id), currentMasterID: (user.games[0].user_id)});
+        navigate("/home/gameroom")
     };
 
   return (

@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "routes": [
+      {
+        "src": "/.*",
+        "headers": {
+          "response": {
+            "Location": "$scheme://$host$url"
+          }
+        }
+      }
+    ]
+  }

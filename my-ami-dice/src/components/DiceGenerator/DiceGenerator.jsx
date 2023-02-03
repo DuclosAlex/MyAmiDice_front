@@ -8,10 +8,14 @@ import { UserContext } from "../../Context/UserContext";
 
 function DiceGenerator() {
     
+    const [user, setUser] = useContext(UserContext);
+    
     // Connexion à socket.io côté serveur
     const socket = useContext(SocketContext);
     
-    const [user, setUser] = useContext(UserContext);
+    // On récupère l'id de la game que je rejoins
+    const currentGameId = user.currentGame;
+    const myId = user.id;
     
     socket.on("connect", () => {
         console.log("Connexion dicegenerator id : ", socket.id);
@@ -50,15 +54,15 @@ const [toggleButtonPublic, setToggleButtonPublic] = useState(true)
     
     useEffect(() => {
         if(dataDice.diceValue !== ""){
-            let room = "";
+            let recipientId = "";
             if(dataDice.dicePrivate === true){
-                room = masterSocketId;
-                console.log("room", room);
+                recipientId = masterSocketId;
             }
+console.log("recipientId", recipientId);
             const pseudo = user.pseudo
             const diceMessage = `Résultat du ${dataDice.diceName}: ${dataDice.diceValue}`
-console.log("socket.emit : pseudo : ", pseudo, " message : ", diceMessage);
-            socket.emit("send-message",{pseudo: pseudo, message: diceMessage}, room) //TODO: Remplacer 5 par room
+console.log("Jet de dés envoyé : pseudo : ", pseudo, " message : ", diceMessage);
+            socket.emit("send-message",{pseudo: pseudo, message: diceMessage}, recipientId)
         }
    
     }, [dataDice.diceValue])   

@@ -144,8 +144,8 @@ console.log("response : ", response);
     function handleLogout() {
         console.log("dispatch LOGOUT");
         localStorage.removeItem("token");
-        localStorage.removeItem("User");
-        console.log("context", user);        
+        console.log("context", user);
+        setUser(null); //TODO: user null
         navigate("/");
     }
 
@@ -220,7 +220,7 @@ console.log("response : ", response);
     return (
         <>
             {/* Si l'utilisateur est connecté, on affiche le bouton "Déconnexion", sinon "Connexion */} 
-            {(localStorage.getItem("User"))? ( // pas touche c'est normal je t'explique demain :P
+            {(user !== null) ? ( // pas touche c'est normal je t'explique demain :P
                 <Button onClick={handleLogout} negative>Déconnexion</Button>
             ) : ( 
                 <>
