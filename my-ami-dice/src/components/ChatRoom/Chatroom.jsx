@@ -9,35 +9,57 @@ import "./style.scss";
 function ChatRoom() {
 
     const [user, setUser] = useContext(UserContext);
-    const chiffre = 3;
-    // Connexion à socket.io côté serveur
-    const socket = useContext(SocketContext);
-    
-    // On récupère l'id de la game que je rejoins
-    const currentGameId = user.currentGame;
-    const myId = user.id;
-
-    // On écoute l'évènement "connect"
-    socket.on("connect", () => {
-console.log("Connexion chatroom id : ", socket.id);
-console.log("Je rejoins la salle : ", currentGameId);
-
-        // On rejoint la salle qui correspond à notre partie
-        //socket.emit("join-room", currentGameId);
-        
-        // Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
-        /* if (masterId === myId) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
-            setMasterSocketId(socket.id);
-        } */
-    });
     
     const [message, setMessage] = useState("");
     const [chatHistory, setChatHistory] = useState([]);
     const [recipientId, setRecipientId] = useState("");
-
+    const [connectedUsers, setConnectedUsers] = useState([]);
+    
     const refMessage = useRef();
+    
+    // Connexion à socket.io côté serveur
+    const socket = useContext(SocketContext);
+    
+    // On récupère l'id de la game que je rejoins et mon id
+    const currentGameId = user.currentGameID;
+    const myId = user.id;
+    const myPseudo = user.pseudo;
+    
+    // Au mount initial
+    useEffect(()=>{
 
-    // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io (et on déconnecte => NON)
+        // On écoute l'évènement "connect"
+        socket.on("connect", () => {
+            console.log("Connexion chatroom id : ", socket.id);
+            console.log("Je rejoins la salle : ", currentGameId);
+            
+            // On rejoint la salle qui correspond à notre partie
+            socket.emit("join-room", currentGameId);
+
+            // 
+            socket.on('connected-users', (users) => {
+                setConnectedUsers(users);
+            });
+
+        });
+        
+        // Evènement "disconnect"
+        socket.on("disconnect", () => {
+            console.log("Déconnexion");
+        })
+        return () => {
+            socket.off("connect");
+            socket.off("disconnect");
+        }
+    },[]);
+
+// Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
+/* if (masterId === myId) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
+        setMasterSocketId(socket.id);
+    } */
+    
+    
+    // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io
     useEffect(() => {        
         
         // Quand chatHistory change, on scroll la fenêtre de chat tout en bas
@@ -45,20 +67,15 @@ console.log("Je rejoins la salle : ", currentGameId);
             const { scrollHeight } = refMessage.current;
             refMessage.current.scrollTo(0, scrollHeight);
         }
-
+        
         // On écoute l'évènement de réception de message "new-message"
         socket.on("new-message", ({pseudo, message}) => {
             console.log("on a reçu un message new-message");
             setChatHistory([...chatHistory, {pseudo, message}]) //TODO: Se rafraîchit quand chatHistory change, du coup on reçoit 1, puis 2, puis 3.... Normal ?
             socket.removeAllListeners("new-message");
         });
-        
-console.log("chatHistory", chatHistory);
-        /* return () => {
-            console.log("deconnexion")
-            socket.disconnect(); //FIXME:
-        } */
-        
+
+        console.log("chatHistory", chatHistory);
     }, [chatHistory]);
 
     function handleSubmit(event) {
@@ -67,10 +84,9 @@ console.log("chatHistory", chatHistory);
         // Si "message" est vide, on ne fait rien
         if(message === "") return;
         
-        const myPseudo = user.pseudo;
 
         setChatHistory([...chatHistory, {pseudo: myPseudo, message: message}]);
-console.log("on envoie un message : ", myPseudo, message);
+        console.log("on envoie un message : ", myPseudo, message);
         // On envoie une requête "send-message" au serveur socket.io
         socket.emit("send-message", {pseudo: myPseudo, message}, recipientId);
         setMessage("");
@@ -104,6 +120,11 @@ console.log("on envoie un message : ", myPseudo, message);
                         onChange={event => setMessage(event.target.value)}
                         inline
                     />
+                    <ul>
+                        {connectedUsers.map(user => (
+                            <li key={user}>{user}</li>
+                        ))}
+                    </ul>
                     <Form.Input
                         placeholder="Destinataire"
                         type="text"
