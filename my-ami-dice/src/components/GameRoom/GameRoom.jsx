@@ -17,14 +17,13 @@ function GameRoom() {
   const [user, setUser] = useContext(UserContext);
   // Au mount initial, on lance la requête pour récupérer toutes les informations
   useEffect(() => {
-    console.log("Rendu initial de la GameRoom")
     
     async function gameData() {
       try {
-        console.log("dans le mount de la GameRoom");
+        //console.log("AVANT LA REQUETE Gameroom");
         const game = await api.get(`/games/${user.currentGameID}/${user.id}`);
         setUser({...user, currentGameData: (game.data)});
-        console.log("APRES LA REQUETE data : ", game);
+        //console.log("APRES LA REQUETE data : ", game);
       } catch (error) {
           throw new Error(error);
       }
@@ -33,7 +32,7 @@ function GameRoom() {
   }, []);  
 
 
-console.log("user GAMEROOM", user);
+//console.log("user GAMEROOM", user);
 
   return (
     <SocketContext.Provider value={socket}>
