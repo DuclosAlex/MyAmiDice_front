@@ -1,19 +1,22 @@
-.news {
+.news-container {
     background-color: black;
     color: white;
     margin: 10px;
     padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    &-content {
+    /* &-content {
         height: 265px;
         width: 60%;
         margin: auto;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-    }
+    } */
 
-    .article{
+    /* .article{
         display: flex;
         flex-direction: column;
         
@@ -23,7 +26,7 @@
             border: 1px solid rgb(211, 211, 211);
             
         }
-    }
+    } */
 }
 
 .news-modal{

@@ -15,7 +15,7 @@ function ChatRoom() {
     const [recipientId, setRecipientId] = useState("Général");
     const [recipientName, setRecipientName] = useState("");
     const [connectedUsers, setConnectedUsers] = useState([]);
-    
+
     const refMessage = useRef();
     
     // Connexion à socket.io côté serveur
@@ -24,13 +24,12 @@ function ChatRoom() {
     // On récupère les infos nécessaires
     const currentGameId = user.currentGameID;
     const myId = user.id;
-    const masterId = user.currentMasterID;
     let myCharacterName = "";
 
     if (myId === user.currentMasterID) {
-        myCharacterName = user.pseudo;
-    } else {
         myCharacterName = `(MJ) ${user.pseudo}`;
+    } else {
+        myCharacterName = user.pseudo;
     }
 
     // Au mount initial
@@ -47,7 +46,6 @@ function ChatRoom() {
             // Ecouteur pour récupérer les utilisateurs connectés en temps réel
             socket.on('connected-users', (users) => {
                 // Je supprime mon id du tableau des utilisateurs connectés
-                console.log("users avant suppression : ", users);
                 users = users.filter(user => user.value !== socket.id);
                 console.log("users après suppression : ", users);
                 setConnectedUsers(users);
@@ -55,11 +53,14 @@ function ChatRoom() {
 
         });
 
-        // Quand un utilisateur se déconnecte
+        // Gestion de déconnexion
         socket.on("disconnect", () => {
-            console.log("Déconnexion de la salle : ");
+            console.log("Déconnexion de la salle : ", currentGameId);
+            //socket.emit("leave-room", currentGameId);
         })
+
         return () => {
+            console.log("on vire tout");
             socket.off("connect");
             socket.off("disconnect");
         }
@@ -92,6 +93,7 @@ function ChatRoom() {
 
     function handleChangeDropdown(event, data) {
         console.log("handleChangeDropdown : ", event.target.textContent);
+        console.log("handleChangeDropdown data : ", data);
         setRecipientId(data.value);
         setRecipientName(event.target.textContent);
     }

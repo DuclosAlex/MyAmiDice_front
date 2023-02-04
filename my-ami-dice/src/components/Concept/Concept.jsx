@@ -8,10 +8,10 @@ function Concept() {
   return (
     <div className='concept'>
       <div className='concept-container'>
-        <h2>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam eos assumenda molestiae aliquam aliquid, iusto repudiandae voluptatem consectetur incidunt rem et perspiciatis omnis deleniti sed cum placeat fugiat harum sequi?
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Obcaecati nihil voluptates sit totam facere incidunt odit cum odio. Amet ullam id aliquam, totam sapiente veniam deleniti perferendis at mollitia libero!
-        </h2>
+        <p>
+          Droit devant, en plein dans leurs tronches. Mais parce qu’on a des frais! Vous pouvez pas vous rentrer ça dans le crâne?
+          Alors par contre, si vous sentez qu’il s’énerve un peu, hein, vous lui sortez un morceau de viande. Sire, mon père était peut-être unijambiste mais, moi, ma femme a pas de moustache! Ouais… Ouais je me suis gouré… Droit devant, en plein dans leurs tronches. Un chef de guerre qui commande plus c’est pas bon. Il va déprimer, il va s’mettre à bouffer, il va prendre quarante livres! Mais ils ont pas le droit de décider de la retraite eux-mêmes! On l’a dit et redit ça! Sinon on fait un tunnel jusqu'à notre campement. Léodagan et moi on creuse, pendant vous balancez de la caillasse dans l'autre sens pour les éloigner du chantier.
+        </p>
         <Link to='/demo'>
           <Button className='concept-container-buttondemo' negative>Démo</Button>
         </Link>
