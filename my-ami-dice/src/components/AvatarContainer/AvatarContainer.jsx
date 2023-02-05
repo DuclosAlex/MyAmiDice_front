@@ -35,7 +35,6 @@ const handleClick = (event) => {
             )}
         </div>
         {isMaster? <CharacterSheet characterId={characterIdClick} /> : <CharacterSheet />} 
-         
     </div>
   )
 }

@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
 import api from '../../api';
 import { UserContext } from '../../Context/UserContext';
+import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
 
 import './style.scss';
 
@@ -56,13 +58,11 @@ function CreateGame() {
     navigate("/home/gameroom")
   }
 
- 
-
-
   return (
     <>
-      <div className="create">
-        <h1>Création de partie</h1>
+      <Header />
+      <div className="create-div">
+        <h1 className="create-div-title">Création de partie</h1>
         <Form
           onSubmit={handleSubmit}
           unstackable
@@ -104,6 +104,7 @@ function CreateGame() {
           {error && <p>{error}</p>}
         </Form>
       </div>
+      <Footer />
     </>
   )
 }

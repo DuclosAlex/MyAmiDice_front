@@ -1,3 +1,11 @@
-.footer img{
-    width: 100px;
+.footer {
+    margin: 100px auto;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    & img {
+        width: 100px;
+    }
 }

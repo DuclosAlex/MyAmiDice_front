@@ -11,6 +11,13 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        border-top: 3px solid grey;
+        border-bottom: 3px solid grey;
+        padding: 20px 0;
+
+        & p {
+            margin: 50px auto;
+        }
         
     }
 }
