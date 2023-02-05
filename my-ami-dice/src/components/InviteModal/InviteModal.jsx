@@ -49,7 +49,7 @@ function InviteModal({masterName, gameName}) {
         <Header content='Invitation en cours' />
         <Modal.Content >
           <p >
-            Vous avez été invité par {masterName} pour participé a la partie {gameName}
+            Vous avez été invité par {masterName} pour participer à la partie {gameName}
           </p>
         </Modal.Content>
         <Modal.Actions>
