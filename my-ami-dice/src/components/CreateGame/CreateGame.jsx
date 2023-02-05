@@ -48,13 +48,14 @@ function CreateGame() {
     try {
       const responseCreateGame = await api.post("/games/create", formData); //FIXME: Arrête tout sans création et sans retour d'erreur. Pourquoi ?
       const dataGame = responseCreateGame.data
+      dataGame.pseudo = user.pseudo
       console.log("datagame", dataGame)
       setUser({...user, games: [...(user.games || []), {...dataGame}]});
-      navigate("/home/gameroom")
     } catch (error) {
-        console.log("error", error);
-        throw new Error (error);
+      console.log("error", error);
+      throw new Error (error);
     }
+    navigate("/home/gameroom")
   }
 
   return (

@@ -7,8 +7,7 @@ import ChatRoom from "../ChatRoom/Chatroom";
 import { UserContext } from "../../Context/UserContext";
 
 import { socket, SocketContext } from "../../Context/SocketContext";
-import CharacterSheet from "../CharacterSheet/CharacterSheet";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import api from '../../api'
 
 
@@ -54,8 +53,6 @@ function GameRoom() {
           <div className="containerMapNote">
             <Notes />
             <Map />
-            {user.id}
-            <CharacterSheet /* TODO: conditions si c'est le joueur ça s'affiche en dur sinon hidden pour garder la place occuper*/ /> 
           </div>
           
           <div className="containerDiceChat">
