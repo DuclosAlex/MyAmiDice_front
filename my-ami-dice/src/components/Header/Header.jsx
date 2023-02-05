@@ -19,9 +19,6 @@ function Header() {
   const onProfil = location.pathname.includes("profile");
   const onDemo = location.pathname.includes("demo");
   const onCreateGame = location.pathname.includes("creategame");
-  
-user ? console.log("user du HEADER : ", user) : console.log("user HEADER non existant");
-//console.log("user.pseudo", user.pseudo);
 
   let isGameInvite = null
   if(user){
@@ -31,10 +28,9 @@ user ? console.log("user du HEADER : ", user) : console.log("user HEADER non exi
   return (
     <header className='header'>
         <div className='header-container'>
- 
-          { onProfil? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil */}
-          { onDemo? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Demo */}
-          { onCreateGame? <Button as={NavLink} to="/" >Accueil</Button> : null } {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Création de partie */}
+           {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil, Démo ou CreateGame */}
+          { onProfil || onDemo || onCreateGame ? <Button as={NavLink} to="/" className="home-button">Accueil</Button> : null }
+          
           { isGameInvite? <InviteModal
                         masterName={user.games_invite[0].pseudo}
                         gameName={user.games_invite[0].name} />

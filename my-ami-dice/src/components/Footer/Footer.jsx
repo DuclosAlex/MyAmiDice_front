@@ -6,6 +6,7 @@ function Footer() {
   return (
     <div className='footer'>
         <img src={logo} alt="logo-MyAmiDice" />
+        <span>© 2023 - MyAmiDice </span>
     </div>
   )
 }

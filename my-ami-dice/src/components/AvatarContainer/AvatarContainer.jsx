@@ -23,6 +23,7 @@ function AvatarContainer() {
                     <img src={player1IMG} name={character.firstname} id={character.id} alt="Avatar" />
                 </div>)
             )}
+            <div>FICHE PERSO</div>
         </div>  
     </div>
   )

@@ -19,7 +19,7 @@ function GameRoom() {
 
   // Au mount initial, on lance la requête pour récupérer toutes les informations
   useEffect(() => {
-    
+
     async function gameData() {
       try {
         console.log("dans le mount de la GameRoom");
@@ -41,7 +41,6 @@ function GameRoom() {
     };
     gameData();
   }, []);  
-
 
 //console.log("user GAMEROOM", user);
 
