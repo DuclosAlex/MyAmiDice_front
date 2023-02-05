@@ -1,57 +1,26 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import J4 from "../../assets/images/joueur4.jpg"
+import { UserContext } from "../../Context/UserContext";
+import PropTypes from 'prop-types';
 import CharacterModifyAvatarModal from '../CharacterModifyAvatarModal/CharacterModifyAvatarModal';
 import CharacterModifyPrésentation from '../CharacterModifyPrésentation/CharacterModifyPrésentation';
 import './style.scss';
 
-function CharacterSheet() { 
-  
-  const character= {
-    id : 5, // character id
-    firstname : "Tom",
-    lastname : "Cruse",
-    race :"humain",
-    is_alive : true,
-    class : "Dernier Samouraï",
-    description : "une description de personnage",
-    avatar : "url de l'avatar",
-    skills : [
-      {
-        id : 1,
-        name : "coup de katana",
-        description : "pas de besoin d'un dessin"
-      }
-    ],
-    items : [
-      {
-        id : 1, // items id
-        name : "Boule de feu",
-        description : " Attaque bouilllante !",
-      }
-    ],
-  characteristics : {
-    id : 7, // id characteristics,
-    strength : 17,
-    dexterity : 17,
-    constitution : 17,
-    wisdom : 17,
-    charisma : 17,
-    intelligence : 17,
-    level : 17,
-    max_hp : 17,
-    current_hp : 17,
-    max_mana : 17,
-    current_mana : 17
-    }
-  }
-  
+function CharacterSheet(characterId) { 
+  const [user, setUser] = useContext(UserContext) 
   const [openModal, setOpenModal] = useState(false)
   const [doClick, setDoClick] = useState(false)
-  //console.log("click:",openModal)
-
+  
+/*   if(characterId){
+    const character = user.allCharacters.filter((character) => (character.id === characterId))
+    console.log("characterFind", character)
+  }  */
+  
   const handleClickAvatar = () => {
     // TODO: comparer l'id du mj de la game avec celui du joueurs pour que le mj ne puiss pas realiser le handleclick
-    setOpenModal(!openModal);
+    if(user.id !== user.currentMasterID){
+      setOpenModal(!openModal);
+    }
       
     }
 
@@ -64,6 +33,7 @@ function CharacterSheet() {
     }
     
   return (
+    
     <div className='characterSheet'>
       <div className="headContainer">
       <img className="character-avatar" src={J4} alt="character-avatar" onClick={handleClickAvatar} /* au clic sur l'image une modale s'ouvre et donne l'input file*/ />
@@ -72,9 +42,9 @@ function CharacterSheet() {
           <div className="presentation-character">
             <div className="presentation-name" onClick={handleClick}>
               {doClick? 
-              <CharacterModifyPrésentation data={"nom"} type={"text"} characterValue={character.lastname} />
+              <CharacterModifyPrésentation data={"nom"} type={"text"} characterValue={"test"} />
               :
-              `${character.lastname}`} 
+              `${'test'}`} 
             </div>
             <div>prenom</div>
             <div>race</div>
@@ -137,4 +107,8 @@ function CharacterSheet() {
   )
 }
 
+
+CharacterSheet.propTypes = {
+  characterId: PropTypes.number,
+};
 export default CharacterSheet
