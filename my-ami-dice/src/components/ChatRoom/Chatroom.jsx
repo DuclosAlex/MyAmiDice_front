@@ -24,16 +24,23 @@ function ChatRoom() {
     // On récupère les infos nécessaires
     const currentGameId = user.currentGameID;
     const myId = user.id;
+    const masterId = user.currentMasterID;
     let myCharacterName = "";
 
-    if (myId === user.currentMasterID) {
+    // Si je suis MJ, j'ajoute (MJ) à mon pseudo
+    if (myId === masterId) {
         myCharacterName = `(MJ) ${user.pseudo}`;
     } else {
         myCharacterName = user.pseudo;
     }
-
+    
     // Au mount initial
     useEffect(()=>{
+
+        // Si je suis MJ, je stocke mon socket.id dans le localStorage pour le diceRoller (dans le useEffect pour éviter infinite loop)
+        if (myId === masterId) {
+            setUser({...user, currentMasterSocketID: `${socket.id}`});
+        }
 
         // On écoute l'évènement "connect"
         socket.on("connect", () => {
@@ -107,9 +114,15 @@ function ChatRoom() {
         setChatHistory([...chatHistory, {pseudo: myCharacterName, message: message, recipient: recipientName}]);
         console.log(myCharacterName, " envoie un message : ", message, " à : ", recipientName, " qui a l'id : ",recipientId);
         
+        // Si on envoie en Général, on change le recipientId avec l'id de la game
+        if (recipientId === "Général") {
+    console.log("CONSOLE.LOG DANS LE IF")
+            socket.emit("send-message", {pseudo: myCharacterName, message}, currentGameId);
+        } else {        
         // On envoie une requête "send-message" au serveur socket.io
         socket.emit("send-message", {pseudo: myCharacterName, message}, recipientId);
         setMessage("");
+        }
     }
     
   return (

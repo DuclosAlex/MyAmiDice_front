@@ -13,14 +13,16 @@ function DiceGenerator() {
     // Connexion à socket.io côté serveur
     const socket = useContext(SocketContext);
     
-    // On récupère l'id de la game que je rejoins
-    const currentGameId = user.currentGame;
+    // On récupère les infos nécessaires
+    const currentGameId = user.currentGameID;
     const myId = user.id;
     
     socket.on("connect", () => {
         console.log("Connexion dicegenerator id : ", socket.id);
     })
-    
+
+    const masterSocketId = socket.id;
+
     const [dataDice, setDataDice] = useState({
         diceName: "",
         diceValue: "",
@@ -54,15 +56,16 @@ const [toggleButtonPublic, setToggleButtonPublic] = useState(true)
     
     useEffect(() => {
         if(dataDice.diceValue !== ""){
-            let recipientId = "";
+            let recipientId = currentGameId;
             if(dataDice.dicePrivate === true){
                 recipientId = masterSocketId;
+                console.log('masterSocketId dans le IF : ', masterSocketId);
             }
 console.log("recipientId", recipientId);
             const pseudo = user.pseudo
             const diceMessage = `Résultat du ${dataDice.diceName}: ${dataDice.diceValue}`
-console.log("Jet de dés envoyé : pseudo : ", pseudo, " message : ", diceMessage);
-            socket.emit("send-message",{pseudo: pseudo, message: diceMessage}, recipientId)
+console.log("Jet de dés envoyé : pseudo : ", pseudo, " message : ", diceMessage, "envoyé à : ", recipientId);
+            socket.emit("send-message", {pseudo: pseudo, message: diceMessage}, recipientId);
         }
    
     }, [dataDice.diceValue])   

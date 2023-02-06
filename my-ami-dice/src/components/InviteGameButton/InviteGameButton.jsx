@@ -14,13 +14,6 @@ function InviteGameButton() {
 
     const isMaster = (user.currentMasterID === user.id);
 
-console.log("typeof user.currentMasterID : ", typeof user.currentMasterID);
-console.log("valeur de user.currentMasterID : ",  user.currentMasterID);
-console.log("typeof user.id : ", typeof user.id);
-console.log("valeur user.id : ", user.id);
-
-console.log("user.currrentMasterID === user.id : ", user.currentMasterID === user.id);
-
     function handleClick() {
         setOpen(true);
     }
@@ -41,17 +34,13 @@ console.log("user.currrentMasterID === user.id : ", user.currentMasterID === use
             pseudo: pseudo
         }
         try {
-console.log("formData CREATION D'INVIT : ", formData);
             const response = await api.post("/invites/create", formData);
-console.log("data après création de l'invit : ", response);
             if(response.status === 200) {
                 setMessage(`${pseudo} a bien été invité à votre partie n° ${currentGameId} (id de l'invitation : ${response.data.id})`);
-                console.log("tout s'est bien passé", response.data.id);
             }
         } catch (error) {
             throw new Error (error);
         }
-
     }
 
   return (
