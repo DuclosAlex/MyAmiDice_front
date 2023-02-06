@@ -15,7 +15,7 @@ function Header() {
 
   const location = useLocation();
   
-  // On vérifie l'url pour savoir sur quelle page l'utilisteur est
+  // On vérifie l'url pour savoir sur quelle page l'utilisateur est
   const onProfil = location.pathname.includes("profile");
   const onDemo = location.pathname.includes("demo");
   const onCreateGame = location.pathname.includes("creategame");

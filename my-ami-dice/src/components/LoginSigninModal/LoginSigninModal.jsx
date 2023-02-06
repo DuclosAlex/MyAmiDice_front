@@ -49,7 +49,7 @@ function LoginSigninModal() {
     const actionSaveForm = (name, value) => ({type: SAVE_FORM, payload: {name, value}});
 
     const ERROR = "ERROR";
-    //const actionError = (error) => ({type: ERROR, payload: {error}}); //TODO: A supprimer si inutile
+    const actionError = (error) => ({type: ERROR, payload: {error}}); //TODO: A supprimer si inutile
 
     const RESET_ERROR = "RESET_ERROR";
 
@@ -127,12 +127,10 @@ console.log("response : ", response);
                 localStorage.setItem("token", response.data.token);
                 console.log("token : ", response.data.token);
                 api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
-
+                setFirstOpen(false);
             } else {
-                dispatch({
-                    type: ERROR,
-                    payload: { error: "Email ou mot de passe incorrect." },
-                  });
+                console.log("dispatch error");
+                dispatch(actionError("Email ou mot de passe incorrect."));
             }
 
             navigate("home/user");
@@ -227,7 +225,8 @@ console.log("response : ", response);
                     <Button onClick={() => setFirstOpen(true)} negative>Connexion</Button>
 
                     {/* 1ère modale (connexion) */}
-                    <Modal 
+                    <Modal
+                        className='login-modal'
                         size='tiny'
                         onClose={() => setFirstOpen(false)}
                         onOpen={() => setFirstOpen(true)}
@@ -287,7 +286,7 @@ console.log("response : ", response);
                         </Modal.Actions>
 
                         {/* 2e modale (création de compte) */}
-                        <Modal className='creation-account-modal'
+                        <Modal className='signin-modal'
                             onClose={() => setSecondOpen(false)}
                             open={secondOpen}
                             size='small'

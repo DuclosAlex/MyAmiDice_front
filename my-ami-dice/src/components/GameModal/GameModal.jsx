@@ -5,7 +5,7 @@ import './style.scss';
 import {UserContext} from '../../Context/UserContext';
 import { useNavigate } from 'react-router';
 
-function GameModal({name, id, masterName, status, description, nbPlayer }) {
+function GameModal({name, id, masterName, masterId, status, description, nbPlayer }) {
 
     const [open, setOpen] = useState(false)
     const [user, setUser] = useContext(UserContext)
@@ -13,7 +13,7 @@ function GameModal({name, id, masterName, status, description, nbPlayer }) {
     //const [gameId, setGameId] = useContext(UserContext);
 
     function handleClick() {
-        setUser({...user, currentGameID: (user.games[0].id), currentMasterID: (user.games[0].user_id)});
+        setUser({...user, currentGameID: id, currentMasterID: masterId});
         navigate("/home/gameroom")
     };
 
@@ -52,6 +52,7 @@ GameModal.propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.number,
     masterName: PropTypes.string.isRequired,
+    masterId: PropTypes.number,
     status: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     nbPlayer: PropTypes.number.isRequired

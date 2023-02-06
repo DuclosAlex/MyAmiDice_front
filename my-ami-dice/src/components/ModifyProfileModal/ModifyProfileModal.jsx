@@ -155,7 +155,7 @@ const handleChange = (event) => {
 }
 
 const handleClick = async () => {
-	await api.delete(`/users/:${user.id}`); {/* Envoi au serveur la demande de suppression de compte*/} 
+	await api.delete(`/users/${user.id}`); {/* Envoi au serveur la demande de suppression de compte*/} 
 }
 
 
