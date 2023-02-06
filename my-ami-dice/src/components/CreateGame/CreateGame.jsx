@@ -48,8 +48,7 @@ function CreateGame() {
     try {
       const responseCreateGame = await api.post("/games/create", formData);
       const dataGame = responseCreateGame.data
-      dataGame.pseudo = user.pseudo
-      console.log("datagame", dataGame)
+      dataGame.pseudo = user.pseudo //TODO: A voir si on garde ou pas
       setUser({...user, games: [...(user.games || []), {...dataGame}]});
     } catch (error) {
       console.log("error", error);

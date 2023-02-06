@@ -321,9 +321,10 @@ console.log("AVANT LA REQUETE formData : ", formData);
             const characterCreated = await api.post(`/characters/create`, formData);
 console.log("APRES LA REQUETE characterCreated : ", characterCreated);
             setCharacterCreated(characterCreated);
-console.log("DEBUG AVANT SETUSER 05/02/23 : ", user.games);
+console.log("currentGameID: (user.games_invite[0].game_id : ", user.games_invite[0].game_id);
+
             setUser({...user, currentGameID: (user.games_invite[0].game_id), currentMasterPseudo: (user.games_invite[0].pseudo)});
-console.log("TEST POUR DEBUG 05/02/23");
+
             // On supprime l'invitation correspondante
             console.log("AVANT suppression de l'invit : ", user.games_invite[0].id);
             await api.delete(`/invites/${user.games_invite[0].id}`);

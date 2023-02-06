@@ -22,13 +22,13 @@ function GameRoom() {
 
     async function gameData() {
       try {
-        console.log("dans le mount de la GameRoom");
+        console.log("dans le mount de la GameRoom masterId : ", user.currentMasterID, user.id, user.currentGameID);
 
         const [{data: game}, {data: characters}] = await Promise.all([
-          api.get(`/games/${user.currentGameID}/${user.id}`),
+          api.get(`/games/${user.currentGameID}/${user.id}`), //TODO: masterId => undefined , currentGameID => undefined ?
           api.get(`/games/${user.currentGameID}/${masterId}`)
         ])
-        
+console.log("apres requete promiseall");
         setUser((user) => ({
           ...user, 
           allCharacters: characters.Gameroom.personnages,
@@ -42,7 +42,7 @@ function GameRoom() {
     gameData();
   }, []);  
 
-//console.log("user GAMEROOM", user);
+console.log("user GAMEROOM", user);
 
   return (
     <SocketContext.Provider value={socket}>
