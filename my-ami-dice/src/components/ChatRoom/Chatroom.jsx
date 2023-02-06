@@ -85,7 +85,7 @@ function ChatRoom() {
         socket.on("new-message", ({pseudo, message}) => {
             console.log("on a reçu un message new-message");
             setChatHistory([...chatHistory, {pseudo, message}]) //TODO: Se rafraîchit quand chatHistory change, du coup on reçoit 1, puis 2, puis 3.... Normal ?
-            socket.removeAllListeners("new-message");
+            /* socket.removeAllListeners("new-message"); */
         });
 
         console.log("chatHistory", chatHistory);

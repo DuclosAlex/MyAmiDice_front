@@ -62,6 +62,7 @@ function GameList() {
                 name = {game.name}
                 id = {game.id}
                 masterName = {game.pseudo}
+                masterId = {game.user_id}
                 status = {game.status}
                 description = {game.description}
                 nbPlayer = {game.max_players}

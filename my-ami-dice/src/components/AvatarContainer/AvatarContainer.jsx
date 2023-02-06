@@ -15,7 +15,7 @@ function AvatarContainer() {
 
 const [user, setUser] = useContext(UserContext);
 const [characterIdClick, setCharacterIdClick] = useState(null)
-const isMaster = (user.currrentMasterID === user.id);
+const isMaster = (user.currentMasterID === user.id);
 
 
 const handleClick = (event) => {

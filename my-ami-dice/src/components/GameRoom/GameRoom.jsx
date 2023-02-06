@@ -8,7 +8,8 @@ import { UserContext } from "../../Context/UserContext";
 
 import { socket, SocketContext } from "../../Context/SocketContext";
 import { useContext, useEffect } from "react";
-import api from '../../api'
+import api from '../../api';
+import InviteGameButton from "../InviteGameButton/InviteGameButton";
 
 
 function GameRoom() {
@@ -50,6 +51,7 @@ function GameRoom() {
             <AvatarContainer />
           </div>
           
+            <InviteGameButton />
           <div className="containerMapNote">
             <Notes />
             <Map />

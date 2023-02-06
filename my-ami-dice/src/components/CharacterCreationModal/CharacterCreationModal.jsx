@@ -41,27 +41,27 @@ function CharacterCreationModal() {
     const initialSecondState = {
         firstItem: {
                 name: "",
-                quantity: 0,
+                quantity: "",
                 description: ""
             },
         secondItem:{
                 name: "",
-                quantity: 0,
+                quantity: "",
                 description: ""
             },
         thirdItem:{
                 name: "",
-                quantity: 0,
+                quantity: "",
                 description: ""
             },
         fourthItem:{
                 name: "",
-                quantity: 0,
+                quantity: "",
                 description: ""
             },
         fifthItem:{
                 name: "",
-                quantity: 0,
+                quantity: "",
                 description: ""
             },        
     }
@@ -321,9 +321,10 @@ console.log("AVANT LA REQUETE formData : ", formData);
             const characterCreated = await api.post(`/characters/create`, formData);
 console.log("APRES LA REQUETE characterCreated : ", characterCreated);
             setCharacterCreated(characterCreated);
+console.log("DEBUG AVANT SETUSER 05/02/23 : ", user.games);
+            setUser({...user, currentGameID: (user.games_invite[0].game_id), currentMasterPseudo: (user.games_invite[0].pseudo)});
+console.log("TEST POUR DEBUG 05/02/23");
             // On supprime l'invitation correspondante
-            setUser({...user, currentGameID: (user.games[0].id), currentMasterID: (user.games[0].user_id)});
-
             console.log("AVANT suppression de l'invit : ", user.games_invite[0].id);
             await api.delete(`/invites/${user.games_invite[0].id}`);
             console.log("APRES suppression de l'invit");
@@ -344,14 +345,14 @@ console.log("APRES LA REQUETE characterCreated : ", characterCreated);
             const formDataItems = {
                 fake_id: 0,
                 name: secondState.firstItem.name.trim(),
-                quantity: secondState.firstItem.quantity,
+                quantity: Number(secondState.firstItem.quantity),
                 description: secondState.firstItem.description.trim(),
                 character_id: characterCreated.data[0].id 
             }
 
             try {
 console.log("AVANT requête axios création de 'Item'. formData : ", formDataItems);            
-                await api.post(`/items/create`, formDataItems)
+                await api.post(`/items/create`, formDataItems);
 console.log("APRES REQUETE");
                 
             } catch (error) {
