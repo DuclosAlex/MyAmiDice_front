@@ -51,6 +51,7 @@ function CreateGame() {
       dataGame.pseudo = user.pseudo
       console.log("datagame", dataGame)
       setUser({...user, currentMasterID: dataGame.user_id,  currentGameID: dataGame.id, games: [...(user.games || []), {...dataGame}]});
+
     } catch (error) {
       console.log("error", error);
       throw new Error (error);

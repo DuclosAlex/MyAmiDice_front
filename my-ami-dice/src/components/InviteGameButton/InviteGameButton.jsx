@@ -45,8 +45,8 @@ console.log("formData CREATION D'INVIT : ", formData);
             const response = await api.post("/invites/create", formData);
 console.log("data après création de l'invit : ", response);
             if(response.status === 200) {
-                setMessage(`${pseudo} a bien été invité à votre partie (id de l'invitation : ${response.data.id})`);
-                console.log("tout s'est bien passé", response.data.id)
+                setMessage(`${pseudo} a bien été invité à votre partie n° ${currentGameId} (id de l'invitation : ${response.data.id})`);
+                console.log("tout s'est bien passé", response.data.id);
             }
         } catch (error) {
             throw new Error (error);
