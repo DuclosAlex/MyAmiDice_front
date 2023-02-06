@@ -10,6 +10,7 @@ import { socket, SocketContext } from "../../Context/SocketContext";
 import { useContext, useEffect } from "react";
 import api from '../../api';
 import InviteGameButton from "../InviteGameButton/InviteGameButton";
+import MapUploadButton from "../MapUploadButton/MapUploadButton";
 
 
 function GameRoom() {
@@ -50,7 +51,7 @@ console.log("user GAMEROOM", user);
           <div className="avatar">
             <AvatarContainer />
           </div>
-          
+            <MapUploadButton />
             <InviteGameButton />
           <div className="containerMapNote">
             <Notes />
