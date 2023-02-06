@@ -28,8 +28,8 @@ function Header() {
   return (
     <header className='header'>
         <div className='header-container'>
-           {/* Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil, Démo ou CreateGame */}
-          { onProfil || onDemo || onCreateGame ? <Button as={NavLink} to="/" className="home-button">Accueil</Button> : null }
+           {/*  Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil, Démo ou CreateGame */ }
+          { onProfil || onDemo || onCreateGame ? <Button as={NavLink} to="/" className="home-button">Accueil</Button> : null } 
           
           { isGameInvite? <InviteModal
                         masterName={user.games_invite[0].pseudo}

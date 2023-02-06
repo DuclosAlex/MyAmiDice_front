@@ -44,7 +44,7 @@ function CharacterSheet(characterId) {
               {doClick? 
               <CharacterModifyPrésentation data={"nom"} type={"text"} characterValue={"test"} />
               :
-              `${'test'}`} 
+              `${"test"}`} 
             </div>
             <div>prenom</div>
             <div>race</div>
