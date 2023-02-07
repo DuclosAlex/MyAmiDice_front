@@ -118,7 +118,7 @@ console.log("Jet de dés envoyé : pseudo : ", pseudo, " message : ", diceMessag
             Public
         </Button>
         <Button name="private" toggle active={toggleButtonPrivate} onClick={handleClickToggle}>
-            Privé
+            Privée
         </Button>
         <div className="diceResult">
            <p>Resultat du {dataDice.diceName}: {dataDice.diceValue}</p> 
