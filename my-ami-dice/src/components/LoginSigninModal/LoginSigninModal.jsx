@@ -126,7 +126,7 @@ console.log("response : ", response);
                 // On stocke le token dans le localStorage
                 localStorage.setItem("token", response.data.token);
                 console.log("token : ", response.data.token);
-                api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+                api.defaults.headers.token = `${response.data.token}`; //TODO: Voir pour remettre le Bearer
                 setFirstOpen(false);
             } else {
                 console.log("dispatch error");
