@@ -1,4 +1,4 @@
-import { useState, useContext} from 'react'
+import { useState, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types';
 import { Button, Header, Label, Modal } from 'semantic-ui-react'
 import './style.scss';
@@ -9,13 +9,19 @@ import api from '../../api';
 function GameModal({name, id, masterName, masterId, status, description, nbPlayer }) {
     console.log("gamemodal: ", name, id, masterName, masterId, status, description, nbPlayer);
     const [open, setOpen] = useState(false)
+
     const [user, setUser] = useContext(UserContext);
     const navigate = useNavigate();
     const isAdmin = user.is_admin;
-
-    function handleClick() {
+    
+    useEffect(()=>{
         setUser({...user, currentGameID: id, currentMasterID: masterId});
+    },[])
+
+
+    function handleClick() {        
         navigate("/home/gameroom");
+
     };
 
     async function handleClickDelete() {
