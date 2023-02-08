@@ -16,10 +16,13 @@ function Header() {
   const location = useLocation();
   
   // On vérifie l'url pour savoir sur quelle page l'utilisateur est
-  const onProfil = location.pathname.includes("profile");
+  const onProfile = location.pathname.includes("profile");
   const onDemo = location.pathname.includes("demo");
   const onCreateGame = location.pathname.includes("creategame");
+  const onCreateNews = location.pathname.includes("createnews");
 
+  // Est ce que l'utilisateur est admin
+  const isAdmin = user?.is_admin;
   let isGameInvite = null
   if(user){
     isGameInvite = user.games_invite
@@ -28,9 +31,13 @@ function Header() {
   return (
     <header className='header'>
         <div className='header-container'>
-           {/*  Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil, Démo ou CreateGame */ }
-          { onProfil || onDemo || onCreateGame ? <Button as={NavLink} to="/" className="home-button">Accueil</Button> : null } 
-          
+
+          {/*  Affiche le bouton Accueil lorsque l'utilisateur est sur la page Profil, Démo ou CreateGame, avec la redirection appropriée */ }
+          { onDemo ? <Button as={NavLink} to="/" className="home-button">Accueil</Button> : null }
+          { onCreateGame ? <Button as={NavLink} to="/home/user" className="home-button">Accueil</Button> : null } 
+          { (onProfile && isAdmin) || onCreateNews ? <Button as={NavLink} to="/home/admin" className="home-button">Accueil</Button> : null } 
+          { (onProfile && !isAdmin) ? <Button as={NavLink} to="/home/user" className="home-button">Accueil</Button> : null } 
+
           { isGameInvite? <InviteModal
                         masterName={user.games_invite[0].pseudo}
                         gameName={user.games_invite[0].name} />

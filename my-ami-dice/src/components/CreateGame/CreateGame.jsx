@@ -40,7 +40,7 @@ function CreateGame() {
       description: game.description.trim(),
       max_player: Number(game.max_player),
       user_id: user.id,
-      notes: "unenote", //TODO: lié la note
+      notes: "Début de la partie", //TODO: lié la note
       status: "En cours"
     }
     

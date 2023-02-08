@@ -295,8 +295,6 @@ function CharacterCreationModal() {
         
         
         try {
-
-        console.log("strength", typeof state.strength);
             const formData = [
                 {
                     fakeId: 0, // Pour que le CreateOrUpdate fasse un Create
@@ -328,20 +326,23 @@ function CharacterCreationModal() {
 
 console.log("AVANT LA REQUETE formData : ", formData);
 
+
             const[{data: characterCreated}, {data: responseDelete}] = await Promise.all([
                 api.post(`/characters/create`, formData),
                 api.delete(`/invites/${user.games_invite[0].id}`)
             ])
 
-console.log("APRES LA REQUETE characterCreated : ", characterCreated);
+
             setCharacterCreated(characterCreated);
             setUser((user) => ({
                 ...user,
                 currentMasterID: (user.games_invite[0].user_id),
                 currentGameID: (user.games_invite[0].game_id),
-                currentMasterPseudo: (user.games_invite[0].pseudo)
-            }));           
-           
+                currentMasterPseudo: (user.games_invite[0].pseudo),
+                games_invite: null
+            }));   
+        
+
         } catch (error) {
             throw new Error (error);
         }

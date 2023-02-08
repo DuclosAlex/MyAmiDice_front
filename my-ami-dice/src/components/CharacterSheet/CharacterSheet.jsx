@@ -54,6 +54,7 @@ function CharacterSheet({characterId}) {
     }
     
   return (
+
     <div className='characterSheet'>
     {userFull?
         <div className="headContainer">

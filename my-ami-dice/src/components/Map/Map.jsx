@@ -3,8 +3,6 @@ import "./style.scss";
 
 function Map() {
 
-
-
   return (
     <div className="map">
         <img src={map} alt="map" />

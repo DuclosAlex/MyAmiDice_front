@@ -1,4 +1,15 @@
 .diceResult{
     padding: 0.5em;
     padding-bottom: 2em;
+    align-self: center;
+}
+
+.diceGenerator {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.ui .red .button .dice-button {
+    margin: 10px;
 }

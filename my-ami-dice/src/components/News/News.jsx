@@ -1,11 +1,29 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Header, Label, Modal } from 'semantic-ui-react';
+import { Button, Header, Label, Modal } from 'semantic-ui-react';
 import './style.scss';
+import { UserContext } from '../../Context/UserContext';
+import api from '../../api';
 
-function News({title, content, author, date}) {
+function News({ title, content, author, date, id }) {
 
+    console.log("DANS NEWS: ", title, content, author, date, id)
     const [open, setOpen] = useState(false)
+    const [user, setUser] = useContext(UserContext);
+    let isAdmin = false;
+  
+    if(user) {
+      isAdmin = user.is_admin;
+    }
+    async function handleClick() {
+        try {
+            const response = await api.delete(`/news/${id}`);    
+            console.log("response DELETE NEWS: ", response);
+            setOpen(false);
+          } catch (error) {
+            throw new Error (error);
+          }
+    }
 
   return (
     <>
@@ -24,6 +42,10 @@ function News({title, content, author, date}) {
                 <Label>{author}</Label>
                 <p>{content}</p>
             </div>
+            {isAdmin ?
+                <Button className="news-modal-button" onClick={handleClick} negative>Supprimer la news</Button>
+                :
+                null}
         </Modal.Content>      
         </Modal>
         <time>{date}</time>
@@ -39,6 +61,7 @@ News.propTypes = {
     content: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
 };
 
 export default News

@@ -4,20 +4,35 @@ import { Button, Header, Label, Modal } from 'semantic-ui-react'
 import './style.scss';
 import {UserContext} from '../../Context/UserContext';
 import { useNavigate } from 'react-router';
+import api from '../../api';
 
 function GameModal({name, id, masterName, masterId, status, description, nbPlayer }) {
-
+    console.log("gamemodal: ", name, id, masterName, masterId, status, description, nbPlayer);
     const [open, setOpen] = useState(false)
-    const [user, setUser] = useContext(UserContext)
-    const navigate = useNavigate()
+
+    const [user, setUser] = useContext(UserContext);
+    const navigate = useNavigate();
+    const isAdmin = user.is_admin;
     
     useEffect(()=>{
         setUser({...user, currentGameID: id, currentMasterID: masterId});
     },[])
 
-    function handleClick() {      
-        navigate("/home/gameroom")
+
+    function handleClick() {        
+        navigate("/home/gameroom");
+
     };
+
+    async function handleClickDelete() {
+        try {
+            const response = await api.delete(`/games/${id}`);    
+            setOpen(false);
+      
+          } catch (error) {
+            throw new Error (error);
+          }
+    }
 
   return (
        <>  
@@ -39,11 +54,19 @@ function GameModal({name, id, masterName, masterId, status, description, nbPlaye
                         <p className='game-description'>{description}</p>
                     </div>
                 </div>
+            {isAdmin ?
+                <Button className="game-modal-button" onClick={handleClickDelete} negative>Supprimer la partie</Button>
+                :
+                null
+            }
             </Modal.Content>      
             </Modal>
             <Label color="green" key={"green"}>{status}</Label>
-            <Button onClick={handleClick}>Rejoindre</Button>
-
+            {isAdmin ?
+                null
+                :
+                <Button className="game-modal-button" onClick={handleClick}>Rejoindre</Button>
+            }
         </div>
 
         </>
