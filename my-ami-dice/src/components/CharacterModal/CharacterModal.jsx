@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { Button, Header, Modal } from 'semantic-ui-react'
 import './style.scss';
+import CharacterSheet from '../CharacterSheet/CharacterSheet';
 
 function CharacterModal({firstname, lastname}) {
   const [open, setOpen] = useState(false)
@@ -17,7 +18,7 @@ function CharacterModal({firstname, lastname}) {
     >
       <Header content = {`${firstname} ${lastname}`} />
       <Modal.Content>
-       <div>fiche perso</div> {/*TODO: mettre la vrai fiche perso */}
+       <CharacterSheet />
       </Modal.Content>      
     </Modal>
   )
