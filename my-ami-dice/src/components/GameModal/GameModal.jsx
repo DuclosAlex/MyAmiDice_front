@@ -9,20 +9,22 @@ import api from '../../api';
 function GameModal({name, id, masterName, masterId, status, description, nbPlayer }) {
     console.log("gamemodal: ", name, id, masterName, masterId, status, description, nbPlayer);
     const [open, setOpen] = useState(false)
-
     const [user, setUser] = useContext(UserContext);
+    const [confirmOpen, setConfirmOpen] = useState(false);
+
     const navigate = useNavigate();
     const isAdmin = user.is_admin;
-    
-    useEffect(()=>{
+
+    function handleClick(id, masterId) {
         setUser({...user, currentGameID: id, currentMasterID: masterId});
-    },[])
+        setConfirmOpen(true);   
+        setOpen(false);
+    }
 
-
-    function handleClick() {        
+    function handleClickConfirm() {
+        setConfirmOpen(false);
         navigate("/home/gameroom");
-
-    };
+    }
 
     async function handleClickDelete() {
         try {
@@ -65,8 +67,28 @@ function GameModal({name, id, masterName, masterId, status, description, nbPlaye
             {isAdmin ?
                 null
                 :
-                <Button className="game-modal-button" onClick={handleClick}>Rejoindre</Button>
+                <Button className="game-modal-button" onClick={() => handleClick(id, masterId)}>Rejoindre</Button>
             }
+            <Modal
+                closeIcon
+                open={confirmOpen}
+                onClose={() => setConfirmOpen(false)}
+                onOpen={() => setConfirmOpen(true)}
+            >
+                <Header content = "Etes-vous sûr de vouloir rejoindre cette partie?" />
+                <Modal.Content>
+                <div className="div-game">
+                    <p>{`Rejoindre la partie de ${masterName} ?`}</p>
+                </div>
+                <Button
+                    onClick={handleClickConfirm}
+                    negative
+                >
+                    Rejoindre
+                </Button>
+                </Modal.Content>      
+            </Modal>
+            
         </div>
 
         </>

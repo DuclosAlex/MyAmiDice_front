@@ -7,7 +7,6 @@ import api from '../../api';
 
 function News({ title, content, author, date, id }) {
 
-    console.log("DANS NEWS: ", title, content, author, date, id)
     const [open, setOpen] = useState(false)
     const [user, setUser] = useContext(UserContext);
     let isAdmin = false;

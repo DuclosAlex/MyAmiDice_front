@@ -42,7 +42,7 @@ function NewMemberList () {
       };
       getAllNews();
     }, []);  
-console.log("news AVANT RETURN DANS NEWMEMBERLIST: ", news);
+
   return (
     <div className='news-container'>
       {isAdmin ?
