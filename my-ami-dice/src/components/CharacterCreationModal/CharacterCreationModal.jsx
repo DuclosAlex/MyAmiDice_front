@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Button, Form, Modal } from "semantic-ui-react";
 import {UserContext} from '../../Context/UserContext';
 
@@ -19,6 +19,10 @@ function CharacterCreationModal() {
     const [error, setError] = useState("");
     const navigate = useNavigate()
     const [user, setUser] = useContext(UserContext);
+
+
+    
+ 
 
     const initialState = {
         avatarFile: null,
@@ -280,12 +284,16 @@ function CharacterCreationModal() {
     function handleChangeFifthSkill(event) {
         thirdDispatch(actionSaveFifthSkill(event.target.name, event.target.value));
     };
-            
+    
+   
+
     async function handleSubmitCharacter(event) {
         event.preventDefault();
         setFirstOpen(false);
         setSecondOpen(true);
-
+        
+        
+        
         try {
 
         console.log("strength", typeof state.strength);
@@ -316,20 +324,24 @@ function CharacterCreationModal() {
                     currentMana: state.mana
                 }
             ]
+            
 
 console.log("AVANT LA REQUETE formData : ", formData);
-            const characterCreated = await api.post(`/characters/create`, formData);
+
+            const[{data: characterCreated}, {data: responseDelete}] = await Promise.all([
+                api.post(`/characters/create`, formData),
+                api.delete(`/invites/${user.games_invite[0].id}`)
+            ])
+
 console.log("APRES LA REQUETE characterCreated : ", characterCreated);
             setCharacterCreated(characterCreated);
-console.log("currentGameID: (user.games_invite[0].game_id : ", user.games_invite[0].game_id);
-
-            setUser({...user, currentGameID: (user.games_invite[0].game_id), currentMasterPseudo: (user.games_invite[0].pseudo)});
-
-            // On supprime l'invitation correspondante
-            console.log("AVANT suppression de l'invit : ", user.games_invite[0].id);
-            await api.delete(`/invites/${user.games_invite[0].id}`);
-            console.log("APRES suppression de l'invit");
-
+            setUser((user) => ({
+                ...user,
+                currentMasterID: (user.games_invite[0].user_id),
+                currentGameID: (user.games_invite[0].game_id),
+                currentMasterPseudo: (user.games_invite[0].pseudo)
+            }));           
+           
         } catch (error) {
             throw new Error (error);
         }
@@ -402,9 +414,9 @@ console.log("APRES REQUETE")
 
 
     const handleClickFinish = () =>{
-
-        setConfirmOpen(false)
-        navigate('/home/gameroom')
+        
+        setConfirmOpen(false);
+        navigate('/home/gameroom');
 
     }
 

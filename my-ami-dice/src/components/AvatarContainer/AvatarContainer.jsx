@@ -16,7 +16,7 @@ function AvatarContainer() {
 const [user, setUser] = useContext(UserContext);
 const [characterIdClick, setCharacterIdClick] = useState(null)
 const [isClick, setIsClick] = useState(false)
-const isMaster = (user.games.pseudo === user.pseudo);
+const isMaster = (user.currentMasterID === user.id);
 
 
 const handleClick = (event) => {
@@ -36,11 +36,20 @@ const handleClick = (event) => {
                 </div>)
             )}
         </div>
-        {isClick? 
-        <div className='characterSheet'>
-        {isMaster? <CharacterSheet characterId={characterIdClick} /> : <CharacterSheet />} 
-        </div>
-        : null}
+
+        {isMaster ?           
+            <div className='characterSheet'>
+                {isClick? 
+                <CharacterSheet characterId={characterIdClick} />                 
+                :
+                 null}
+            </div>
+         :    
+            <div className='characterSheet'>
+                  <CharacterSheet />
+            </div>
+             }
+        
                 
     </div>
   )

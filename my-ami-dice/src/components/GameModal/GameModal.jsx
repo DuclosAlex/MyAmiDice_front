@@ -1,4 +1,4 @@
-import { useState, useContext} from 'react'
+import { useState, useContext, useEffect} from 'react'
 import PropTypes from 'prop-types';
 import { Button, Header, Label, Modal } from 'semantic-ui-react'
 import './style.scss';
@@ -10,10 +10,12 @@ function GameModal({name, id, masterName, masterId, status, description, nbPlaye
     const [open, setOpen] = useState(false)
     const [user, setUser] = useContext(UserContext)
     const navigate = useNavigate()
-    //const [gameId, setGameId] = useContext(UserContext);
-
-    function handleClick() {
+    
+    useEffect(()=>{
         setUser({...user, currentGameID: id, currentMasterID: masterId});
+    },[])
+
+    function handleClick() {      
         navigate("/home/gameroom")
     };
 
