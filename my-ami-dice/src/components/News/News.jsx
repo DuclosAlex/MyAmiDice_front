@@ -10,8 +10,11 @@ function News({ title, content, author, date, id }) {
     console.log("DANS NEWS: ", title, content, author, date, id)
     const [open, setOpen] = useState(false)
     const [user, setUser] = useContext(UserContext);
-    const isAdmin = user.is_admin;
-
+    let isAdmin = false;
+  
+    if(user) {
+      isAdmin = user.is_admin;
+    }
     async function handleClick() {
         try {
             const response = await api.delete(`/news/${id}`);    

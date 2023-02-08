@@ -130,7 +130,6 @@ console.log("response : ", response);
                 api.defaults.headers.token = `${response.data.token}`; //TODO: Voir pour remettre le Bearer
                 setFirstOpen(false);
             } else {
-                console.log("dispatch error");
                 dispatch(actionError("Email ou mot de passe incorrect."));
             }
 console.log("USER : ", user);
@@ -146,10 +145,8 @@ console.log("USER : ", user);
     }
   
     function handleLogout() {
-        console.log("dispatch LOGOUT");
         localStorage.removeItem("token");
-        console.log("context", user);
-        setUser(null); //TODO: user null
+        setUser(null);
         navigate("/");
     }
 

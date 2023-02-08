@@ -23,7 +23,6 @@ function Header() {
 
   // Est ce que l'utilisateur est admin
   const isAdmin = user?.is_admin;
-console.log("isAdmin : ", isAdmin);
   let isGameInvite = null
   if(user){
     isGameInvite = user.games_invite

@@ -11,8 +11,12 @@ function NewMemberList () {
 
   const [user, setUser] = useContext(UserContext);
   const [news, setNews] = useState([]);
-
-  const isAdmin = user.is_admin
+  let isAdmin = false;
+  
+  if(user) {
+    isAdmin = user.is_admin;
+  }
+  
   useEffect(() => {
 
     async function getAllNews() {
