@@ -8,11 +8,17 @@ import './style.scss';
 function HomeAdmin() {
 
   return (
-    <div className='home'>
+    <div className='home-admin'>
         <Header />
-        <GameList />
-        {/*<UsersList />*/}
-        <NewMemberList />
+        <div className="lists-container">
+          <div className="games-users-list">
+            <GameList />
+            <UsersList />
+          </div>
+          <div className="admin-news-list">
+            <NewMemberList />
+          </div>
+        </div>
         <Footer />
     </div>
   )

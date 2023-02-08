@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { UserProvider } from '../../Context/UserContext';
 import CreateGame from '../CreateGame/CreateGame';
+import CreateNews from '../CreateNews.jsx/CreateNews';
 import Demo from '../Demo/Demo';
 import GameRoom from '../GameRoom/GameRoom';
 import Home from '../Home/Home';
@@ -22,6 +23,7 @@ function App() {
         <Route path="/home/profile/" element={<Profile />} />
         <Route path="/demo/" element={<Demo />} />
         <Route path="/home/creategame/" element={<CreateGame />} />
+        <Route path="/home/createnews/" element={<CreateNews />} />
         <Route path="/home/gameroom/" element={<GameRoom />} /> 
         <Route path="/home/admin/" element={<HomeAdmin />} />
         <Route path="*" element={<Page404 />} />

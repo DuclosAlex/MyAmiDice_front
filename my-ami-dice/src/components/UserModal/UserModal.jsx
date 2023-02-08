@@ -1,34 +1,55 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { Button, Header, Modal } from 'semantic-ui-react'
+import api from '../../api';
 import './style.scss';
 
 function UserModal({id, pseudo, email, firstname, lastname }) {
-  const [open, setOpen] = useState(false)
+
+  const [open, setOpen] = useState(false);
+  
+  async function handleClick() {
+    try {
+      const response = await api.delete(`/users/${id}`);
+        
+      setOpen(false);
+
+    } catch (error) {
+      throw new Error (error);
+    }
+  }
 
   return (   
-
-    <Modal className='user-modal'
-      closeIcon
-      open={open}
-      trigger={<Button>{`${firstname} ${lastname}`}</Button>}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
-    >
-      <Header content = {`${firstname} ${lastname}`} />
-      <Modal.Content>
-       <div>
-            <ul>
-                <li>id: {id}</li>
-                <li>pseudo: {pseudo}</li>
-                <li>email: {email}</li>
-                <li>firstname {firstname}</li>
-                <li>lastname {lastname}</li>
-            </ul>
-        </div> {/*TODO: stylisé l'affichage des information */}
-      </Modal.Content>      
-    </Modal>
-  ) //TODO: faire un bouton delete 
+    <div className="user-modal">
+      <Modal
+        closeIcon
+        open={open}
+        trigger={<Button className="user-modal-button">{`${firstname} ${lastname}`}</Button>}
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+      >
+        <Header content = {`${firstname} ${lastname}`} />
+        <Modal.Content>
+        <div className="div-user-modal">
+              <ul>
+                  <li>Identifiant: {id}</li>
+                  <li>Pseudo: {pseudo}</li>
+                  <li>Email: {email}</li>
+                  <li>Prénom: {firstname}</li>
+                  <li>Nom: {lastname}</li>
+              </ul>
+          </div> {/*TODO: styliser l'affichage des information */}
+          <Button
+              onClick={handleClick}
+              negative
+          >
+              Supprimer l'utilisateur 
+          </Button>
+        </Modal.Content>      
+      </Modal>
+      
+    </div>
+  ) //TODO: RAJOUTER UNE MODALE DE CONFIRMATION DE SUPPRESSION
 }
 
 UserModal.propTypes = {

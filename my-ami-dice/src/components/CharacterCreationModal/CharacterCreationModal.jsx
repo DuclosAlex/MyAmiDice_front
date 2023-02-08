@@ -287,8 +287,6 @@ function CharacterCreationModal() {
         setSecondOpen(true);
 
         try {
-
-        console.log("strength", typeof state.strength);
             const formData = [
                 {
                     fakeId: 0, // Pour que le CreateOrUpdate fasse un Create

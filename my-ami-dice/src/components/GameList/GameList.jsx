@@ -6,14 +6,8 @@ import api from '../../api';
 import GameModal from '../GameModal/GameModal';
 import './style.scss';
 
-
-
-//TODO: recup du users.games dans le localStorage/context
-
 function GameList() {
-
-  const [allGamesAdmin, setAllGamesAdmin] = useState(null);
-
+  const [allGamesAdmin, setAllGamesAdmin] = useState([]);
   const [user, setUser] = useContext(UserContext);
 
   let isAdmin = ""
@@ -28,26 +22,30 @@ function GameList() {
       try {
         const response = await api.get("/games/getall");
         setAllGamesAdmin(response.data);
+console.log("response.data allgames : ", response.data);
       } catch (error) {
         throw new Error (error)
       }
-    }
+    };
     getAllGame()
-  }, [])
+  }, []);  
 
   return (
     <div className='game-container'>
 
       {isAdmin? 
           //TODO: checker ce que l'on donne a l'admin pour la liste des partie qu'est ce qui lui est necessaire (voir avec guillaume)
-        <div className='gameList'>        
+        <div className='games-list'>        
             {allGamesAdmin.map((game) => (
               <GameModal
                 key = {game.id}
                 name = {game.name}
                 id = {game.id}
+                masterName = {game.id} //TODO: pseudo du MJ Inconnu
                 masterId = {game.user_id}
                 status = {game.status}
+                description = {game.description}
+                nbPlayer = {game.max_players}
               />
             ))}
         </div>
