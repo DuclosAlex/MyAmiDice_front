@@ -11,6 +11,7 @@ import { useContext, useEffect } from "react";
 import api from '../../api';
 import InviteGameButton from "../InviteGameButton/InviteGameButton";
 import MapUploadButton from "../MapUploadButton/MapUploadButton";
+import masterIMG from "../../assets/images/masterIMG.png";
 
 
 function GameRoom() {
@@ -47,19 +48,23 @@ console.log("user GAMEROOM", user);
 
   return (
     <SocketContext.Provider value={socket}>
-        <div className='GameRoom'>
-          <div className="avatar">
-            <AvatarContainer />
-          </div>
+        <div className='gameroom'>
+          
+          <div className="left-container">
+              <img className="master-img" src={masterIMG} alt="Image du Maitre de jeu" />
+            
             <MapUploadButton />
             <InviteGameButton />
-          <div className="containerMapNote">
             <Notes />
+            <DiceGenerator />        
+          </div>
+
+          <div className="center-container">
             <Map />
           </div>
           
-          <div className="containerDiceChat">
-            <DiceGenerator />        
+          <div className="right-container">
+            <AvatarContainer />
             <ChatRoom />
           </div>
 

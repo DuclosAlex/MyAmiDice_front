@@ -107,33 +107,39 @@ function LoginSigninModal() {
     
     async function handleLogin(event) {
         event.preventDefault();
-
+        let isAdmin = false;
         try {           
 
             const formData = {
                 email: state.email,
                 password: state.password
             }
-console.log(`api.post("/users/login", formData);`, formData);
+//console.log(`api.post("/users/login", formData);`, formData);
             const response = await api.post("/users/login", formData); 
 console.log("response : ", response);
 
             if (response.status === 200) {
-                
+                isAdmin = response.data.user.is_admin;
+
                 const userInfos= response.data.user;
                 setUser(userInfos);
 
                 // On stocke le token dans le localStorage
                 localStorage.setItem("token", response.data.token);
                 console.log("token : ", response.data.token);
-                api.defaults.headers.common.Authorization = `Bearer ${response.data.token}`;
+                api.defaults.headers.token = `${response.data.token}`; //TODO: Voir pour remettre le Bearer
                 setFirstOpen(false);
             } else {
                 console.log("dispatch error");
                 dispatch(actionError("Email ou mot de passe incorrect."));
             }
-
-            navigate("home/user");
+console.log("USER : ", user);
+            if(isAdmin) {
+                navigate("home/admin");
+            } else {
+                navigate("home/user");
+            }
+            
         } catch (error) {
             throw new Error (error);
         }

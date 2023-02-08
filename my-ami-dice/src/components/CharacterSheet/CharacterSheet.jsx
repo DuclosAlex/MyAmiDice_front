@@ -34,7 +34,7 @@ function CharacterSheet(characterId) {
     
   return (
     
-    <div className='characterSheet'>
+    <div className='div-character-sheet'>
       <div className="headContainer">
       <img className="character-avatar" src={J4} alt="character-avatar" onClick={handleClickAvatar} /* au clic sur l'image une modale s'ouvre et donne l'input file*/ />
       {openModal? <CharacterModifyAvatarModal toClose={handleCloseModal} /> : null }       

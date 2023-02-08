@@ -287,8 +287,6 @@ function CharacterCreationModal() {
         setSecondOpen(true);
 
         try {
-
-        console.log("strength", typeof state.strength);
             const formData = [
                 {
                     fakeId: 0, // Pour que le CreateOrUpdate fasse un Create
@@ -325,10 +323,13 @@ console.log("currentGameID: (user.games_invite[0].game_id : ", user.games_invite
 
             setUser({...user, currentGameID: (user.games_invite[0].game_id), currentMasterPseudo: (user.games_invite[0].pseudo)});
 
-            // On supprime l'invitation correspondante
+            // On supprime l'invitation correspondante de la BDD
             console.log("AVANT suppression de l'invit : ", user.games_invite[0].id);
             await api.delete(`/invites/${user.games_invite[0].id}`);
             console.log("APRES suppression de l'invit");
+
+            // On supprime l'invitation correspondante du localStorage
+            setUser({...user, games_invite: null});
 
         } catch (error) {
             throw new Error (error);

@@ -1,37 +1,29 @@
 import { useEffect, useState } from 'react';
 import api from '../../api';
 import UserModal from '../UserModal/UserModal'
-
 import './style.scss';
-
-
-
-
 
 
 function UsersList() { 
   
-  const [allUsers, setAllUsers] = useState(null);
+  const [allUsers, setAllUsers] = useState([]);
 
-  
-    //TODO: voir pourquoi ça marche pas 
-  
     useEffect(() => {
-        console.log("alluser", response.data)
-       /*  async function getAllUsers(){
-            try {
-            const response = await api.get("/users/getall")
-            setAllUsers(response.data)        
+      async function getAllUsers(){
+        try {
+          const response = await api.get("/users/getall")
+          setAllUsers(response.data)        
+          console.log("alluser", response.data)
             } catch (error) {
             throw new Error (error)
             }
         }
-        getAllUsers() */
+        getAllUsers()
     }, [])
   
   return (
     <div className='usersList-container'>
-        <div className='usersList'>
+        <div className='users-list'>
             {allUsers.map((user) => (
               <UserModal 
                 key = {user.id}

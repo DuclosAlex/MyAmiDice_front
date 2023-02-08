@@ -52,18 +52,19 @@ function ChatRoom() {
 
             // Ecouteur pour récupérer les utilisateurs connectés en temps réel
             socket.on('connected-users', (users) => {
-                // Je supprime mon id du tableau des utilisateurs connectés
-                users = users.filter(user => user.value !== socket.id);
-                console.log("users après suppression : ", users);
-                setConnectedUsers(users);
+                // Solution temporaire pour vérifier si le tableau est bien celui de la room où je me trouve
+                const isMyRoom = users.find(user => user.value === socket.id);
+                if(isMyRoom) {
+                    // Je supprime mon id du tableau des utilisateurs connectés
+                    users = users.filter(user => user.value !== socket.id);
+                    console.log("users après suppression : ", users);
+                    setConnectedUsers(users);
+                }
             });
-
         });
 
         // Gestion de déconnexion
         socket.on("disconnect", () => {
-            console.log("Déconnexion de la salle : ", currentGameId);
-            //socket.emit("leave-room", currentGameId);
         })
 
         return () => {
@@ -73,12 +74,6 @@ function ChatRoom() {
         }
     },[]);
 
-// Si je suis le MJ, je stocke mon id socket.io dans le ContextGameRoom
-/* if (masterId === myId) { //TODO: Remplacer masterId par game.user_id (retour de la fonction de 105 lignes)
-        setMasterSocketId(socket.id);
-    } */
-    
-    
     // Quand un message est ajouté à chatHistory, on l'envoie au serveur socket.io
     useEffect(() => {        
         
@@ -92,17 +87,22 @@ function ChatRoom() {
         socket.on("new-message", ({pseudo, message}) => {
             console.log("on a reçu un message new-message");
             setChatHistory([...chatHistory, {pseudo, message}]) //TODO: Se rafraîchit quand chatHistory change, du coup on reçoit 1, puis 2, puis 3.... Normal ?
-            /* socket.removeAllListeners("new-message"); */
+            socket.removeAllListeners("new-message");
         });
 
         console.log("chatHistory", chatHistory);
     }, [chatHistory]);
 
     function handleChangeDropdown(event, data) {
-        console.log("handleChangeDropdown : ", event.target.textContent);
-        console.log("handleChangeDropdown data : ", data);
+        // console.log("handleChangeDropdown : ", event.target.textContent);
+        // console.log("handleChangeDropdown data : ", data);
         setRecipientId(data.value);
-        setRecipientName(event.target.textContent);
+        // On ne veut pas afficher "Général" quand on envoie un message "user à Général : message"
+        if (event.target.textContent !== "Général") {
+            setRecipientName(event.target.textContent);
+        } else {
+            setRecipientName("");
+        }
     }
 
     function handleSubmit(event) {
@@ -112,17 +112,17 @@ function ChatRoom() {
         if(message === "") return;
 
         setChatHistory([...chatHistory, {pseudo: myCharacterName, message: message, recipient: recipientName}]);
-        console.log(myCharacterName, " envoie un message : ", message, " à : ", recipientName, " qui a l'id : ",recipientId);
+        console.log(myCharacterName, " envoie un message : ", message, " à : ", typeof recipientName, " qui a l'id : ",recipientId);
         
         // Si on envoie en Général, on change le recipientId avec l'id de la game
         if (recipientId === "Général") {
-    console.log("CONSOLE.LOG DANS LE IF")
+            console.log("CONSOLE.LOG DANS LE IF");
             socket.emit("send-message", {pseudo: myCharacterName, message}, currentGameId);
         } else {        
-        // On envoie une requête "send-message" au serveur socket.io
-        socket.emit("send-message", {pseudo: myCharacterName, message}, recipientId);
-        setMessage("");
+            // On envoie une requête "send-message" au serveur socket.io
+            socket.emit("send-message", {pseudo: myCharacterName, message}, recipientId);
         }
+    setMessage("");
     }
     
   return (
