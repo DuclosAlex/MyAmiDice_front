@@ -5,7 +5,7 @@ import { UserContext } from '../../Context/UserContext';
 
 import './style.scss';
 
-function BarreStatPvPM({maxData, currentData, HPorMP, hisCharacter}) {
+function BarreStatPvPM({maxData, currentData, HPorMP, hisCharacter, isMj}) {
 
     const [user, setUser] = useContext(UserContext);
     const ratioHp = 100/maxData
@@ -119,30 +119,36 @@ function BarreStatPvPM({maxData, currentData, HPorMP, hisCharacter}) {
 
   return (
     <div className='barreStat'>
-        {(HPorMP === "hp") ?  
+        {(HPorMP === "hp")? 
             <div className='barreStatContainer'>
                 <div className='progressBarreStat'>
                     <Progress id="pv" percent={percent} total={max_hp} value={current_hp} progress='ratio' color="red"/>
                 </div>
-                <div className='buttonBarreStat'>
-                    <Button onClick={decrement}>-</Button>
-                    <Button onClick={increment}>+</Button>
-                    <Button name='maxHp' onClick={handleClickMaxHp} toggle active={toggleHP}>Max Hp</Button>
-                    <Button name='pv' onClick={handleClick} >Valider</Button>                    
-                </div>
+                {!isMj?
+                    <div className='buttonBarreStat'>
+                        <Button onClick={decrement}>-</Button>
+                        <Button onClick={increment}>+</Button>
+                        <Button name='maxHp' onClick={handleClickMaxHp} toggle active={toggleHP}>Max Hp</Button>
+                        <Button name='pv' onClick={handleClick} >Valider</Button>                    
+                    </div>            
+                : null
+                }
+               
             </div>       
         :
             <div className='barreStatContainer'>
                 <div className='progressBarreStat'>
                     <Progress id="mp" percent={percent} total={max_mana} value={current_mana}  progress='ratio' color="blue"/>
                 </div>
-                <div className='buttonBarreStat'>
-                    <Button onClick={decrement}>-</Button>
-                    <Button onClick={increment}>+</Button>
-                    <Button name='maxMp' onClick={handleClickMaxHp} toggle  active={toggleMP} >Max Hp</Button>
-                    <Button name='mp' onClick={handleClick}>Valider</Button>                    
-                </div>
-
+                {!isMj?
+                    <div className='buttonBarreStat'>
+                        <Button onClick={decrement}>-</Button>
+                        <Button onClick={increment}>+</Button>
+                        <Button name='maxMp' onClick={handleClickMaxHp} toggle  active={toggleMP} >Max Hp</Button>
+                        <Button name='mp' onClick={handleClick}>Valider</Button>                    
+                    </div>
+                : null
+                }
             </div>
         }
     </div>

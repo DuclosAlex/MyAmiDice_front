@@ -18,7 +18,7 @@ function CharacterModifyAvatarModal({toClose}) {
     setFile(event.target.files[0])
   }
 
-  const handlesubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
     try {
       await api.post("/", file) //TODO: mettre la bonne route 
@@ -39,7 +39,7 @@ function CharacterModifyAvatarModal({toClose}) {
       >
         <Header content= "Modifiez l'avatar de votre personnage" />
         <Modal.Content >
-            <Form on onSubmit={handlesubmit}>
+            <Form onSubmit={handleSubmit}>
                 <Form.Input
                     label="Avatar de votre personnage"
                     type="file"
