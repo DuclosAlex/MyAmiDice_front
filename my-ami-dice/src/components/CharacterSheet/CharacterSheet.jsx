@@ -119,22 +119,22 @@ function CharacterSheet({characterId}) {
           <div>
             <div className="characteristic-character">
               <div>
-                <div>FOR:</div>
+                <div>FOR: 15 </div>
               </div>
               <div>
-                <div>DEX:</div>
+                <div>DEX: 12 </div>
               </div>
               <div>
-                <div>WIS:</div>
+                <div>WIS: 13</div>
               </div>
               <div>
-                <div>CHA:</div>
+                <div>CHA: 16</div>
               </div>
               <div>
-                <div>INT:</div>
+                <div>INT: 16</div>
               </div>
               <div>
-                <div>CONST:</div>
+                <div>CONST: 15</div>
               </div>            
             </div>
             <div>
@@ -143,9 +143,9 @@ function CharacterSheet({characterId}) {
             </div>
           </div>
           <div className="item-character">
-            <div>nom de l'item</div>
-            <div>quatité d'item</div>
-            <div>description de l'item</div>
+            <div>Epee de chevalier</div>
+            <div>1</div>
+            <div>Une épee de chevalier de bonne facture</div>
           </div>
         </div>
         :

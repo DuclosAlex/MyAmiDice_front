@@ -127,47 +127,8 @@ function ChatRoom() {
     
   return (
     <>
-    <div className="chatroom">
-            <ul className="message-container" ref={refMessage}>
-                {chatHistory.map((data, index) => (
-                    <li key={index} className="message">
-                        <div className="message-header">
-                            <span className="username">{data.pseudo}</span>
-                            {data.recipient ? ` à ${data.recipient}` : ""}
-                        </div>
-                        <p className="message-content">{data.message}</p>
-                    </li>
-                ))}
-            </ul>
-            <Form id="form" onSubmit={handleSubmit} className="chatroom-form">
-                <Form.Group>
-                    <Form.Input
-                        placeholder="Message"
-                        type="text"
-                        name="message-input"
-                        value={message}
-                        onChange={event => setMessage(event.target.value)}
-                        inline
-                        className="message-input"
-                    />
-                    <Dropdown
-                        fluid
-                        selection
-                        value={recipientId}
-                        onChange={handleChangeDropdown}
-                        options={connectedUsers}
-                        className="recipient-dropdown"
-                    />
-                    <Button
-                        type="submit"
-                        id="send-button"
-                        className="send-button"
-                    >Envoyer
-                    </Button>
-                </Form.Group>
-            </Form>
-        </div>
-     {/*    <div className="chatroom">
+    
+         <div className="chatroom">
             <ul className="message-container" ref={refMessage}>
                 {chatHistory.map((data, index) => (
                     <li key={index}>{data.pseudo} {data.recipient ? ` à ${data.recipient}` : ""}: {data.message}</li>
@@ -197,7 +158,7 @@ function ChatRoom() {
                     </Button>
                 </Form.Group>
             </Form>
-        </div> */}
+        </div> 
     </>
   )
 }

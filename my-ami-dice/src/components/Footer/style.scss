@@ -1,10 +1,16 @@
 .footer {
-    margin: 100px auto;
-    width: 60%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 1rem;
+    padding: 1rem;
+    bottom: 0;
     
+    @media (max-width: 767px) {
+        width: 100%;
+        margin-bottom: 10px;
+    }
     & img {
         width: 100px;
     }
