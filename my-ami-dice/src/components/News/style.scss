@@ -1,6 +1,5 @@
 .news-container {
-    background-color: black;
-    color: white;
+    color: rgb(75, 67, 67);
     margin: 10px;
     padding: 10px;
     display: flex;
@@ -27,6 +26,39 @@
             
         }
     } */
+}
+
+.news-container article {
+    // background : linear-gradient(75deg, rgb(7, 6, 5), rgb(247, 4, 4) 22.71%, rgb(7,6,5) 52.70%, rgb(247, 4, 4) 85%),
+    // linear-gradient(175deg,rgb(7, 6, 5), rgb(247, 4, 4) 22.71%, rgb(7,6,5) 52.70%, rgb(247, 4, 4) 85%),
+    // linear-gradient(336deg, rgb(7, 6, 5), rgb(247, 4, 4) 22.71%, rgb(7,6,5) 52.70%, rgb(247, 4, 4) 85%);
+    background-image: url("../../assets/images/parchemin.jpg");
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.news-container article h1 {
+    font-size : 2rem;
+    margin-bottom : 8px;
+    letter-spacing: 0.5rem;
+    text-align: center;
+}
+
+.news-container article time {
+    font-size : 1.4rem;
+    text-decoration: underline red;
+    margin-bottom : 10px;
+}
+
+.news-container article .homeLabel {
+    margin-bottom : 10px;
+}
+
+.news-container article p {
+    text-align: center;
+    width : 90%;
 }
 
 .news-modal{

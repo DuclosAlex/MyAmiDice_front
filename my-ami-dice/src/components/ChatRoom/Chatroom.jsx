@@ -127,7 +127,9 @@ function ChatRoom() {
     
   return (
     <>
-        <div className="chatroom">
+  
+         <div className="chatroom">
+
             <ul className="message-container" ref={refMessage}>
                 {chatHistory.map((data, index) => (
                     <li key={index}>{data.pseudo} {data.recipient ? ` à ${data.recipient}` : ""}: {data.message}</li>
@@ -157,7 +159,9 @@ function ChatRoom() {
                     </Button>
                 </Form.Group>
             </Form>
-        </div>
+
+        </div> 
+
     </>
   )
 }
