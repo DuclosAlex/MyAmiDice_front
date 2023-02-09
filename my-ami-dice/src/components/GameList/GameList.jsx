@@ -17,6 +17,10 @@ function GameList() {
     isAdmin = user.is_admin
   }
 
+  /* function handleOnDelete(gameId) {
+    setUser({...users, allUsers.filter(u => u.id !== userId)) //TODO: refaire ce que Quentin a modifié dans UsersList
+  } */
+
   useEffect(() => {
     async function getAllGame(){
       try {
