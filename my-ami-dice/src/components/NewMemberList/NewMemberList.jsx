@@ -17,6 +17,10 @@ function NewMemberList () {
     isAdmin = user.is_admin;
   }
   
+  function handleOnDelete(newsId) {
+    setNews(news.filter(u => u.id !== newsId));
+  }
+
   useEffect(() => {
 
     async function getAllNews() {
@@ -58,7 +62,8 @@ function NewMemberList () {
                     content = {article.content}
                     author = "Admin"
                     date = {article.created_at}
-                    id = {article.id}            
+                    id = {article.id}
+                    onDelete={handleOnDelete}        
                 />
             ))}
         </div>

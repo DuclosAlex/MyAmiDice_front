@@ -5,7 +5,7 @@ import './style.scss';
 import { UserContext } from '../../Context/UserContext';
 import api from '../../api';
 
-function News({ title, content, author, date, id }) {
+function News({ title, content, author, date, id, onDelete }) {
 
     const [open, setOpen] = useState(false)
     const [user, setUser] = useContext(UserContext);
@@ -19,6 +19,7 @@ function News({ title, content, author, date, id }) {
             const response = await api.delete(`/news/${id}`);    
             console.log("response DELETE NEWS: ", response);
             setOpen(false);
+            onDelete(id);
           } catch (error) {
             throw new Error (error);
           }
@@ -61,6 +62,7 @@ News.propTypes = {
     author: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
+    onDelete: PropTypes.func.isRequired,
 };
 
 export default News

@@ -20,10 +20,6 @@ function CharacterCreationModal() {
     const navigate = useNavigate()
     const [user, setUser] = useContext(UserContext);
 
-
-    
- 
-
     const initialState = {
         avatarFile: null,
         firstName: "",
@@ -341,7 +337,6 @@ console.log("AVANT LA REQUETE formData : ", formData);
                 currentMasterPseudo: (user.games_invite[0].pseudo),
                 games_invite: null
             }));   
-        
 
         } catch (error) {
             throw new Error (error);
