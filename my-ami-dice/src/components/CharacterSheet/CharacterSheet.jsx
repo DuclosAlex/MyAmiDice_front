@@ -61,6 +61,8 @@ function CharacterSheet({characterId}) {
         <img className="character-avatar" src={J4} alt="character-avatar" onClick={handleClickAvatar} /* au clic sur l'image une modale s'ouvre et donne l'input file*/ />
         {openModal? <CharacterModifyAvatarModal toClose={handleCloseModal} /> : null }       
           <div className="info-character">
+            
+            
             <div className="presentation-character">
               <div className="presentation-lastname" name="lastname" onClick={handleClick}>
                 {(isClick === "lastname")? 
@@ -93,6 +95,8 @@ function CharacterSheet({characterId}) {
                 `${character[0].Characteristics[0].level}`}   
               </div>
             </div>
+
+
             <div className="lifepoint-mana">
               <div className="lifePoint" name={"pv"}>
                 <BarreStatPvPM maxData={character[0].Characteristics[0].max_hp} currentData={character[0].Characteristics[0].current_hp} HPorMP={"hp"} hisCharacter={character[0]}  />

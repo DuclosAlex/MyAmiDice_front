@@ -18,7 +18,6 @@ function BarreStatPvPM({maxData, currentData, HPorMP, hisCharacter}) {
     const [isClick, setIsClick] = useState(false)
     const [toggleHP, setTogglesHP] = useState(false)
     const [toggleMP, setTogglesMP] = useState(false)
-  
 
     const increment = () => {
         if(toggleHP){

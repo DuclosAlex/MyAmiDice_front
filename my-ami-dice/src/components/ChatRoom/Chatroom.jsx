@@ -43,7 +43,7 @@ function ChatRoom() {
         }
 
         // On écoute l'évènement "connect"
-        socket.on("connect", () => {
+        //socket.on("connect", () => {
             console.log("Connexion chatroom id : ", socket.id);
             console.log("Je rejoins la salle : ", currentGameId);
             
@@ -61,7 +61,7 @@ function ChatRoom() {
                     setConnectedUsers(users);
                 }
             });
-        });
+        //});
 
         // Gestion de déconnexion
         socket.on("disconnect", () => {
@@ -127,7 +127,47 @@ function ChatRoom() {
     
   return (
     <>
-        <div className="chatroom">
+    <div className="chatroom">
+            <ul className="message-container" ref={refMessage}>
+                {chatHistory.map((data, index) => (
+                    <li key={index} className="message">
+                        <div className="message-header">
+                            <span className="username">{data.pseudo}</span>
+                            {data.recipient ? ` à ${data.recipient}` : ""}
+                        </div>
+                        <p className="message-content">{data.message}</p>
+                    </li>
+                ))}
+            </ul>
+            <Form id="form" onSubmit={handleSubmit} className="chatroom-form">
+                <Form.Group>
+                    <Form.Input
+                        placeholder="Message"
+                        type="text"
+                        name="message-input"
+                        value={message}
+                        onChange={event => setMessage(event.target.value)}
+                        inline
+                        className="message-input"
+                    />
+                    <Dropdown
+                        fluid
+                        selection
+                        value={recipientId}
+                        onChange={handleChangeDropdown}
+                        options={connectedUsers}
+                        className="recipient-dropdown"
+                    />
+                    <Button
+                        type="submit"
+                        id="send-button"
+                        className="send-button"
+                    >Envoyer
+                    </Button>
+                </Form.Group>
+            </Form>
+        </div>
+     {/*    <div className="chatroom">
             <ul className="message-container" ref={refMessage}>
                 {chatHistory.map((data, index) => (
                     <li key={index}>{data.pseudo} {data.recipient ? ` à ${data.recipient}` : ""}: {data.message}</li>
@@ -150,14 +190,6 @@ function ChatRoom() {
                         onChange={handleChangeDropdown}
                         options={connectedUsers}
                     />
-                    {/* <Form.Input
-                        placeholder="Destinataire"
-                        type="text"
-                        name="id-input"
-                        value={recipientId}
-                        onChange={event => setRecipientId(event.target.value)}
-                        inline
-                    /> */}
                     <Button
                         type="submit"
                         id="send-button"
@@ -165,7 +197,7 @@ function ChatRoom() {
                     </Button>
                 </Form.Group>
             </Form>
-        </div>
+        </div> */}
     </>
   )
 }

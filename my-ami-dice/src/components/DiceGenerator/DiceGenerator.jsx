@@ -84,60 +84,40 @@ console.log("Jet de dés envoyé : myCharacterName : ", myCharacterName, " messa
     return (
       <div className='diceGenerator'>     
 
-        <Button.Group>
-            <Button name="public" toggle active={toggleButtonPublic} onClick={handleClickToggle} inverted>
+        <Button.Group widths={3}>
+            <Button className="dice-button" name="public" toggle active={toggleButtonPublic} onClick={handleClickToggle} inverted>
                 Public
             </Button>
-            
-            <Button as='div' labelPosition='right'>
-                <Button type="submit" value={4} color='red' onClick={rollDice} inverted> 
+                <Button compact className="dice-button" type="submit" value={4} color='red' onClick={rollDice} inverted> 
                     D4
                 </Button>
-            </Button>
-
-            <Button name="private" toggle active={toggleButtonPrivate} onClick={handleClickToggle} inverted>
+            <Button compact className="dice-button" name="private" toggle active={toggleButtonPrivate} onClick={handleClickToggle} inverted>
                 Privé
             </Button>
         </Button.Group>
 
-        <Button.Group>
-            <Button as='div' labelPosition='right'>
-                <Button type="submit" value={6} color='red' onClick={rollDice} inverted> 
+        <Button.Group widths={3}>
+                <Button className="dice-button" type="submit" value={6} color='red' onClick={rollDice} inverted> 
                     D6
-                </Button>
-            </Button>
-
-            <Button as='div' labelPosition='right'>
-                <Button type="submit" value={8} color='red' onClick={rollDice} inverted> 
+                </Button>            
+                <Button className="dice-button" type="submit" value={8} color='red' onClick={rollDice} inverted> 
                     D8
                 </Button>
-            </Button>
-
-            <Button as='div' labelPosition='right'>
-                <Button type="submit" value={10} color='red' onClick={rollDice} inverted> 
+                <Button className="dice-button" type="submit" value={10} color='red' onClick={rollDice} inverted> 
                     D10
                 </Button>
-            </Button>
         </Button.Group>
         
-        <Button.Group>
-            <Button as='div' labelPosition='right'>
-                <Button type="submit" value={12} color='red' onClick={rollDice} inverted> 
+        <Button.Group widths={3}>
+                <Button className="dice-button" type="submit" value={12} color='red' onClick={rollDice} inverted> 
                     D12
-                </Button>
-            </Button>
-
-            <Button as='div' labelPosition='right'>
-                <Button type="submit" value={20} color='red' onClick={rollDice} inverted> 
+                </Button>            
+                <Button className="dice-button" type="submit" value={20} color='red' onClick={rollDice} inverted> 
                     D20
                 </Button>
-            </Button>
-
-            <Button as='div' labelPosition='right'>
-                <Button type="submit" value={100} color='red' onClick={rollDice} inverted> 
+                <Button className="dice-button" type="submit" value={100} color='red' onClick={rollDice} inverted> 
                     D100
                 </Button>
-            </Button>
         </Button.Group>
         
         <div className="diceResult">

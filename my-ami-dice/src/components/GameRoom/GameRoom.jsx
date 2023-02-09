@@ -1,10 +1,10 @@
-import "./style.scss";
 import DiceGenerator from "../DiceGenerator/DiceGenerator";
 import Notes from "../Notes/Notes";
 import Map from "../Map/Map"
 import AvatarContainer from "../AvatarContainer/AvatarContainer";
 import ChatRoom from "../ChatRoom/Chatroom";
 import { UserContext } from "../../Context/UserContext";
+import { NavLink } from 'react-router-dom';
 
 import { socket, SocketContext } from "../../Context/SocketContext";
 import { useContext, useEffect } from "react";
@@ -12,12 +12,15 @@ import api from '../../api';
 import InviteGameButton from "../InviteGameButton/InviteGameButton";
 import MapUploadButton from "../MapUploadButton/MapUploadButton";
 import masterIMG from "../../assets/images/masterIMG.png";
+import { Button } from "semantic-ui-react";
+import "./style.scss";
 
 
 function GameRoom() {
 
   const [user, setUser] = useContext(UserContext);
-  const masterId = user.currentMasterID
+  const masterId = user.currentMasterID;
+  const isMj = user.id === masterId;
 
   // Au mount initial, on lance la requête pour récupérer toutes les informations
   useEffect(() => {
@@ -61,6 +64,11 @@ console.log("user GAMEROOM", user);
 
           <div className="center-container">
             <Map />
+            {isMj ?
+              <Button className="home-button" as={NavLink} to="/home/admin" >Retour à l'accueil </Button>
+              :
+              <Button className="home-button" as={NavLink} to="/home/user" >Retour à l'accueil </Button>
+            }
           </div>
           
           <div className="right-container">

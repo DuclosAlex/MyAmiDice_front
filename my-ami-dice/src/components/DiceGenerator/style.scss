@@ -6,10 +6,11 @@
 
 .diceGenerator {
     display: flex;
-    flex-direction: column;
-    
+    flex-direction: column;    
 }
 
-.ui.red.invertd.button.dice-button {
-    margin: 10px;
+.ui.red.inverted.button.dice-button {
+    height: 50px;
+    padding: 0;
+    margin: 0;
 }
