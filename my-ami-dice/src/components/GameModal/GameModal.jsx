@@ -7,13 +7,17 @@ import { useNavigate } from 'react-router';
 import api from '../../api';
 
 function GameModal({name, id, masterName, masterId, status, description, nbPlayer }) {
-    console.log("gamemodal: ", name, id, masterName, masterId, status, description, nbPlayer);
+    
     const [open, setOpen] = useState(false)
     const [user, setUser] = useContext(UserContext);
     const [confirmOpen, setConfirmOpen] = useState(false);
 
     const navigate = useNavigate();
-    const isAdmin = user.is_admin;
+    let isAdmin = false;
+    
+    if(user) {
+        isAdmin = user.is_admin;
+    }
 
     function handleClick(id, masterId) {
         setUser({...user, currentGameID: id, currentMasterID: masterId});

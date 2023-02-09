@@ -4,7 +4,7 @@ import { Button, Header, Modal } from 'semantic-ui-react'
 import api from '../../api';
 import './style.scss';
 
-function UserModal({id, pseudo, email, firstname, lastname }) {
+function UserModal({id, pseudo, email, firstname, lastname, onDelete }) {
 
   const [open, setOpen] = useState(false);
   
@@ -13,6 +13,8 @@ function UserModal({id, pseudo, email, firstname, lastname }) {
       const response = await api.delete(`/users/${id}`);
         
       setOpen(false);
+
+      onDelete(id);
 
     } catch (error) {
       throw new Error (error);
@@ -58,6 +60,7 @@ UserModal.propTypes = {
     id: PropTypes.number.isRequired,
     email: PropTypes.string.isRequired,
     pseudo: PropTypes.string.isRequired,
+    onDelete: PropTypes.func.isRequired
 };
 
 

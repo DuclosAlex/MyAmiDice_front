@@ -8,18 +8,22 @@ function UsersList() {
   
   const [allUsers, setAllUsers] = useState([]);
 
-    useEffect(() => {
-      async function getAllUsers(){
-        try {
-          const response = await api.get("/users/getall")
-          setAllUsers(response.data)        
-          console.log("alluser", response.data)
-            } catch (error) {
-            throw new Error (error)
-            }
-        }
-        getAllUsers()
-    }, [])
+  function handleOnDelete(userId) {
+    setAllUsers(allUsers.filter(u => u.id !== userId))
+  }
+
+  useEffect(() => {
+    async function getAllUsers(){
+      try {
+        const response = await api.get("/users/getall")
+        setAllUsers(response.data)        
+        console.log("alluser", response.data)
+          } catch (error) {
+          throw new Error (error)
+          }
+      }
+      getAllUsers()
+  }, [])
   
   return (
     <div className='usersList-container'>
@@ -32,6 +36,7 @@ function UsersList() {
                 email = {user.email}
                 firstname = {user.firstname}
                 lastname= {user.lastname}
+                onDelete={handleOnDelete}
               />
             ))}
         </div>

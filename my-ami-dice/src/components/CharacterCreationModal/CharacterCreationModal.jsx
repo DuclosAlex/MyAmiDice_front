@@ -305,7 +305,7 @@ function CharacterCreationModal() {
                     class: state.class.trim(),
                     userId: user.id, 
                     gameId: user.games_invite[0].game_id, 
-                    avatar: "/stateavatarFile"
+                    avatar: state.avatarFile
                 },
                 {
                     fakeId: 0,
