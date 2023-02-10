@@ -20,7 +20,7 @@ function GameRoom() {
 
   const [user, setUser] = useContext(UserContext);
   const masterId = user.currentMasterID;
-  const isMj = user.id === masterId;
+  const isAdmin = user.is_admin;
 
   // Au mount initial, on lance la requête pour récupérer toutes les informations
   useEffect(() => {
@@ -64,7 +64,7 @@ console.log("user GAMEROOM", user);
 
           <div className="center-container">
             <Map />
-            {isMj ?
+            {isAdmin ?
               <Button className="home-button" as={NavLink} to="/home/admin" >Retour à l'accueil </Button>
               :
               <Button className="home-button" as={NavLink} to="/home/user" >Retour à l'accueil </Button>
