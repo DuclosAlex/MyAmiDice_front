@@ -1,3 +1,4 @@
+// Import des différents éléments
 import React, { useState, useReducer, useContext } from 'react';
 import api from "../../api";
 import { Button, Form, Icon, Modal } from 'semantic-ui-react';
@@ -11,20 +12,23 @@ import validator from "email-validator";
 
 function LoginSigninModal() {
 
+    // On récupère la fonction navigate de react-router-dom
     const navigate = useNavigate();
 
+    // On initialise les states d'ouverture / fermeture des deux modales
     const [firstOpen, setFirstOpen] = useState(false);
     const [secondOpen, setSecondOpen] = useState(false);
     
+    // On récupère le contexte UserContext
     const [user, setUser] = useContext(UserContext);
     
-
+    // On initialise le state qui sera géré par le reducer
     const initialState = {
+        // Partie login
         email: "",
         password: "",
-        // token: "",
-        error: "",
 
+        // Partie signin
         pseudo: "",
         emailSignin: "",
         emailConfirmSignin: "",
@@ -32,9 +36,12 @@ function LoginSigninModal() {
         lastName: "",
         passwordSignin: "",
         confirmPasswordSignin: "",
+
+        // Message d'erreur
+        error: "",
     }
 
-    // A chaque ouverture / fermeture d'une modale, on reset error.
+    // A chaque ouverture / fermeture d'une modale, on reset error et les champs du formulaire
     useEffect(() => {
         dispatch({
             type: RESET_ERROR,
@@ -45,16 +52,22 @@ function LoginSigninModal() {
 
     }, [firstOpen, secondOpen])
 
+    // Actions qui seront utilisées par les dispatch du reducer
+    // Sauvegarde de la valeur associée à l'input
     const SAVE_FORM = "SAVE_FORM";
     const actionSaveForm = (name, value) => ({type: SAVE_FORM, payload: {name, value}});
 
+    // Sauvegarde du message d'erreur
     const ERROR = "ERROR";
     const actionError = (error) => ({type: ERROR, payload: {error}}); //TODO: A supprimer si inutile
 
+    // Réinitialisation du message d'erreur
     const RESET_ERROR = "RESET_ERROR";
 
+    // Réinitialisation des champs des formulaires et du message d'erreur
     const RESET_FORM = "RESET_FORM"
 
+    // Reducer qui gère les changements d'initialState suivant l'action spécifiée
     function userReducer(state, action) {
         switch (action.type) {
             case SAVE_FORM:
@@ -94,45 +107,55 @@ function LoginSigninModal() {
 
     }    
 
+    // On utilise le hook useReducer pour gérer les changements de initialState
     const [state, dispatch] = useReducer(userReducer, initialState);
 
+    // Gestion du changement des inputs via le dispatch du reducer
     function handleChange(event) {
         dispatch(actionSaveForm(event.target.name, event.target.value));
     }
 
+    // Fonction qui vérifie si le password respecte la regex (au moins 1 majuscule, 1 chiffre, 1 caractère spécial, 10 caractères minimum)
     function isValidPassword(password) {
         let pattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{10,})/;
         return pattern.test(password);
       }
     
+    // Fonction qui gère le login
     async function handleLogin(event) {
         event.preventDefault();
         let isAdmin = false;
         try {           
-
+            // On récupère les données nécessaires pour la requête
             const formData = {
                 email: state.email,
                 password: state.password
             }
-//console.log(`api.post("/users/login", formData);`, formData);
+            // console.log(`api.post("/users/login", formData);`, formData);
+            
+            // On envoie la requête
             const response = await api.post("/users/login", formData); 
-console.log("response : ", response);
+            // console.log("response : ", response);
 
+            // Si la requête est ok, on check si l'utilisateur est admin, on stocke les infos du user dans le userContext, on stocke le token dans le localStorage, on paramètre le header de l'api avec le token et on ferme la première modale
             if (response.status === 200) {
                 isAdmin = response.data.user.is_admin;
 
                 const userInfos= response.data.user;
                 setUser(userInfos);
 
-                // On stocke le token dans le localStorage
                 localStorage.setItem("token", response.data.token);
-                console.log("token : ", response.data.token);
+
                 api.defaults.headers.token = `${response.data.token}`; //TODO: Voir pour remettre le Bearer
                 setFirstOpen(false);
+            
+                // Si la requête n'est pas ok, on affiche un message d'erreur
             } else {
                 dispatch(actionError("Email ou mot de passe incorrect."));
             }
-console.log("USER : ", user);
+            // console.log("USER : ", user);
+            
+            // On redirige vers la page d'accueil associée
             if(isAdmin) {
                 navigate("home/admin");
             } else {
@@ -144,15 +167,18 @@ console.log("USER : ", user);
         }
     }
   
+    // Fonction qui gère la déconnexion : suppression du token du localStorage, suppression des infos du userContext et redirection vers la page d'accueil
     function handleLogout() {
         localStorage.removeItem("token");
         setUser(null);
         navigate("/");
     }
 
+    // Fonction qui gère la création de compte
     async function handleSignin(event) {
         event.preventDefault();
         
+        // On récupère les données nécessaires pour la requête
         const formData = {
             pseudo: state.pseudo.trim(),
             email: state.emailSignin.trim(),
@@ -182,7 +208,9 @@ console.log("USER : ", user);
             return;
         }
 
+        // Si le password et la confirmation sont identiques
         if(state.passwordSignin === state.confirmPasswordSignin) {
+            // On check si le password est valide
             if(!isValidPassword(state.passwordSignin)) {
                 dispatch({
                     type: ERROR,
@@ -192,6 +220,7 @@ console.log("USER : ", user);
                 return;
             }
                 
+            // Appel à l'api pour créer le compte, si ok => redirection vers la page d'accueil
             try {
 
                 setSecondOpen(false);
@@ -201,14 +230,10 @@ console.log("USER : ", user);
                 });
 
             } catch (error) {
-                //TODO:
-                {/*dispatch({   // l'erreur sera a adapter pour soit le pseudo soit pour l'email en fonction de la syntaxer de l'erreur
-                    type: ERROR,
-                    payload: { error: "Votre pseudo est déja utilisé. Veuillez en choisir un autre" },
-                });*/} 
                 throw new Error (error)
             }
 
+        // Si le password et la confirmation sont différents => ERROR
         } else {
             dispatch({
                 type: ERROR,
@@ -218,10 +243,11 @@ console.log("USER : ", user);
 
     }
 
+    // Affichage du composant
     return (
         <>
             {/* Si l'utilisateur est connecté, on affiche le bouton "Déconnexion", sinon "Connexion */} 
-            {(user !== null) ? ( // pas touche c'est normal je t'explique demain :P
+            {(user !== null) ? (
                 <Button onClick={handleLogout} negative>Déconnexion</Button>
             ) : ( 
                 <>
@@ -262,17 +288,13 @@ console.log("USER : ", user);
                                         required
                                     />
                                 </Form.Group>
-                               {/*  <Form.Checkbox
-                                    name="not-a-robot"
-                                    label='Je ne suis pas ChatGPT'
-                                    required
-                                /> */}
                                 <Button
                                     type='submit'
                                     negative
                                 >
                                     Je me connecte !
                                 </Button>
+                                {/* Si il y a une erreur, on l'affiche */}
                                 {state.error && <p>{state.error}</p>}
                             </Form>
                         </Modal.Content>
@@ -359,10 +381,6 @@ console.log("USER : ", user);
                                         onChange={handleChange}
                                         required
                                     />
-                                   {/*  <Form.Checkbox
-                                        label='Je ne suis pas ChatGPT'
-                                        required
-                                    /> */}
                                     <Button type='submit' negative>Je crée mon compte !</Button>
                                     {state.error && <p>{state.error}</p>}
                                 </Form>
@@ -375,4 +393,5 @@ console.log("USER : ", user);
     );
 }
 
+// Export du composant
 export default LoginSigninModal;
