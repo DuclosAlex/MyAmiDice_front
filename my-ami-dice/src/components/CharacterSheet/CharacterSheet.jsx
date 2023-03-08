@@ -34,7 +34,6 @@ function CharacterSheet({characterId}) {
     }
   }
     
-  console.log("character", character)
 
   const handleClickAvatar = () => {
     if(user.id !== user.currentMasterID){
