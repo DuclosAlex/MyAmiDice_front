@@ -11,7 +11,6 @@ import './style.scss';
 function Header() {
 
   const [user, setUser] = useContext(UserContext);
-  const areUser = localStorage.getItem("User")
 
   const location = useLocation();
   

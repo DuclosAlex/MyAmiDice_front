@@ -230,7 +230,7 @@ function LoginSigninModal() {
                 });
 
             } catch (error) {
-                throw new Error (error)
+                throw new Error (error);
             }
 
         // Si le password et la confirmation sont différents => ERROR
